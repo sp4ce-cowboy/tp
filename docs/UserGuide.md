@@ -5,7 +5,7 @@ title: User Guide
 
 UniCa$h is a **is a desktop application used for university students who want to be more financially conscious,
 optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface (
-GUI). If you can type fast, UniCa$h can get your contact management tasks done faster than traditional GUI apps.
+GUI). If you can type fast, UniCa$h can get your finance management tasks done faster than traditional GUI apps.
 
 * Table of Contents
   {:toc}
@@ -14,11 +14,11 @@ GUI). If you can type fast, UniCa$h can get your contact management tasks done f
 
 ## Quick start
 
-1. Ensure you have Java `11` or above installed in your Computer.
+1. Ensure you have Java `11` or above installed in your Computer. 
 
-2. Download the latest `unicash.jar` from [coming soon]().
+2. Download the latest `unicash.jar` from this link --> [coming soon]().
 
-3. Copy the file to the folder you want to use as the _home folder_ for your UniCa$h.
+3. Copy the file to the folder you want to use as the _home folder_ for UniCa$h.
 
 4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar unicash.jar` command to
    run the application.

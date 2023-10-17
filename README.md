@@ -10,12 +10,12 @@
 [//]: # (TODO Change this image)
 ![Ui](docs/images/Ui.png)
 
-User Target Profile: Our application is for university students who want to be more financially conscious about their
+Target User Profile: Our application is for university students who want to be more financially conscious about their
 spending habits, to enable them to make more economical decisions that provide students on a limited budget with more
 purchasing power.
 
 Value Proposition: It provides university students with an intuitive and frictionless experience to have transparency on
-their expenditure to help them better understand their spendings so they can develop better financial habits as they
+their expenditure to help them better understand their spending so they can develop better financial habits as they
 transition into adulthood.
 
 ## Credits
