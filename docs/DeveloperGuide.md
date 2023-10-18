@@ -3,7 +3,7 @@ layout: page
 title: Developer Guide
 ---
 
-# UniCa$h Developer Guide [CS2103 T16-Group_3 TP]
+# UniCa$h Developer Guide [CS2103 T16-3]
 
 **Name:** UniCa$h
 
