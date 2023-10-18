@@ -34,6 +34,12 @@ public class TransactionCard extends UiPart<Region> {
     @FXML
     private Label dateTime;
 
+    @FXML
+    private Label transactionLocation;
+
+    @FXML
+    private Label categories;
+
     /**
      * Creates a {@code PersonCode} with the given {@code Person} and index to display.
      */
@@ -44,5 +50,8 @@ public class TransactionCard extends UiPart<Region> {
         name.setText(transaction.getName().toString());
         amount.setText(transaction.getAmount().toString());
         dateTime.setText(transaction.getDateTime().toString());
+        transactionLocation.setText(transaction.getLocation().toString());
+        categories.setText(transaction.getCategories().toString());
+
     }
 }
