@@ -16,7 +16,7 @@ GUI). If you can type fast, UniCa$h can get your contact management tasks done f
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-2. Download the latest `unicash.jar` from [coming soon]().
+2. Download the latest `unicash.jar` release from [here](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.2).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your UniCa$h.
 
@@ -30,7 +30,8 @@ GUI). If you can type fast, UniCa$h can get your contact management tasks done f
    open the help window.<br>
    Some example commands you can try:
 
-    * `commands coming soon!`
+    * `add_transaction n/Food type/expense amt/10.00 dt/10-10-2023 12:00 l/NUS c/food`
+    * `delete_transaction 1`
 
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -40,7 +41,7 @@ GUI). If you can type fast, UniCa$h can get your contact management tasks done f
 
 ---
 
-### Create Expense [coming soon]
+### Create Expense
 
 Allows a user to create an expense and all information associated with that expense including the name, amount,
 category (defaults to "Others"), location (optional), and date (defaults to the current date) of the expense.
