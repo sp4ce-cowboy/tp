@@ -31,3 +31,19 @@
 .my-custom-menubar .menu-button:hover {
     -fx-background-color: #3f3f3f;  // Hover color for individual menu items
 }
+
+#calendarGrid {
+    -fx-background-color: #EAEAEA;
+    -fx-padding: 10;
+}
+
+#calendarGrid .label {
+    -fx-text-fill: #333333;
+}
+
+#calendarGrid .button {
+    -fx-background-radius: 5;
+    -fx-border-radius: 5;
+    -fx-border-width: 1;
+    -fx-border-color: #CCCCCC;
+}
