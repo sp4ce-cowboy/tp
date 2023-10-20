@@ -1,24 +1,24 @@
 package unicash.logic.commands;
 
 import static unicash.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static unicash.logic.commands.HelpCommandUniCash.SHOWING_HELP_MESSAGE;
+import static unicash.logic.commands.ShowUserGuideCommand.SHOWING_USER_GUIDE_MESSAGE;
 
 import org.junit.jupiter.api.Test;
 
 import unicash.model.Model;
 import unicash.model.ModelManager;
 
-public class HelpCommandUniCashTest {
+public class ShowUserGuideCommandTest {
 
     @Test
-    public void execute_help_success() {
+    public void execute_showUserGuide_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
 
         CommandResult expectedCommandResult =
-                new CommandResult(SHOWING_HELP_MESSAGE, true, false, false);
+                new CommandResult(SHOWING_USER_GUIDE_MESSAGE, false, false, true);
 
-        assertCommandSuccess(new HelpCommandUniCash(), model,
+        assertCommandSuccess(new ShowUserGuideCommand(), model,
                 expectedCommandResult, expectedModel);
     }
 }

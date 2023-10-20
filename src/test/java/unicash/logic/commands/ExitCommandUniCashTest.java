@@ -16,7 +16,7 @@ public class ExitCommandUniCashTest {
         Model expectedModel = new ModelManager();
 
         CommandResult expectedCommandResult =
-                new CommandResult(ExitCommandUniCash.MESSAGE_EXIT_ACKNOWLEDGEMENT, false, true);
+                new CommandResult(ExitCommandUniCash.MESSAGE_EXIT_ACKNOWLEDGEMENT, false, true, false);
 
         assertCommandSuccess(new ExitCommandUniCash(), model,
                 expectedCommandResult, expectedModel);

@@ -29,12 +29,13 @@ import unicash.logic.parser.exceptions.ParseException;
  * a menu bar and space where other JavaFX elements can be placed.
  */
 public class MainWindow extends UiPart<Stage> {
+    public static final String FILE_ERROR_MESSAGE = "A FILE ERROR OCCURRED.";
+    public static final String UNKNOWN_ERROR_MESSAGE = "AN UNKNOWN ERROR OCCURRED.";
+
     public static final String USER_GUIDE_NAME_PREFIX = "userguide_local";
     public static final String USER_GUIDE_NAME_SUFFIX = ".pdf";
     public static final String USER_GUIDE_NAME = USER_GUIDE_NAME_PREFIX + USER_GUIDE_NAME_SUFFIX;
     public static final String PATH_TO_USER_GUIDE = "/documents/" + USER_GUIDE_NAME;
-    public static final String FILE_ERROR_MESSAGE = "A FILE ERROR OCCURRED.";
-    public static final String UNKNOWN_ERROR_MESSAGE = "AN UNKNOWN ERROR OCCURRED.";
 
     private static final String FXML = "MainWindow.fxml";
     private final Logger logger = LogsCenter.getLogger(getClass());
@@ -196,6 +197,10 @@ public class MainWindow extends UiPart<Stage> {
 
             if (commandResult.isExit()) {
                 handleExit();
+            }
+
+            if (commandResult.isShowUserGuide()) {
+                handleOpenUserGuide();
             }
 
             return commandResult;

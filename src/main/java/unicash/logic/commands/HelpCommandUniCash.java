@@ -3,7 +3,7 @@ package unicash.logic.commands;
 import unicash.model.Model;
 
 /**
- * Format full help instructions for every command for display.
+ * Shows UniCa$h help via a Help Window.
  */
 public class HelpCommandUniCash extends Command {
 
@@ -17,6 +17,6 @@ public class HelpCommandUniCash extends Command {
 
     @Override
     public CommandResult execute(Model model) {
-        return new CommandResult(SHOWING_HELP_MESSAGE, true, false);
+        return new CommandResult(SHOWING_HELP_MESSAGE, true, false, false);
     }
 }
