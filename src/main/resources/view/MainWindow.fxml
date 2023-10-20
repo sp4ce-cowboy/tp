@@ -34,15 +34,15 @@
           </Menu>
         </MenuBar>
 
+        <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border-command">
+          <padding>
+            <Insets bottom="5" left="10" right="10" top="5" />
+          </padding>
+        </StackPane>
+
         <!-- The below code contains the SplitPane, so the MenuBar runs across -->
         <SplitPane dividerPositions="0.7" VBox.vgrow="ALWAYS">
           <VBox minWidth="400" prefWidth="400" styleClass="pane-with-border">
-            <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-              <padding>
-                <Insets bottom="5" left="10" right="10" top="5" />
-              </padding>
-            </StackPane>
-
             <VBox fx:id="personList" minWidth="400" prefWidth="400" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
               <padding>
                 <Insets bottom="10" left="10" right="10" top="10" />

@@ -150,6 +150,13 @@
      -fx-border-top-width: 1px;
 }
 
+.pane-with-border-command {
+     -fx-background-color: derive(#F3F3F3, 20%);
+     -fx-border-color: derive(#F3F3F3, 10%);
+     -fx-border-top-width: 1px;
+     -fx-text-size: 10pt;
+}
+
 .pane-with-black-border {
      -fx-background-color: derive(#F3F3F3, 20%);
      -fx-background-color: black;
