@@ -24,12 +24,11 @@ public class TransactionDateTimeContainsKeywordsPredicate
         this.keywords = keywords;
     }
 
+    // TODO: Make datetime matching case sensitive
     @Override
     public boolean test(Transaction transaction) {
-        //return keywords.stream()
-            //    .anyMatch(keyword -> StringUtil.containsSubstringIgnoreCase(
-                      //  transaction.getDateTime().toString(), keyword));
-        return transaction.getDateTime().toString().contains(String.join(" ", keywords));
+        return transaction.getDateTime().toString().toLowerCase()
+                .contains(String.join(" ", keywords));
     }
 
     @Override
