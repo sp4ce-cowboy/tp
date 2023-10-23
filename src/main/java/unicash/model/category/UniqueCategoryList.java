@@ -22,9 +22,13 @@ import unicash.model.category.exceptions.MaxCategoryException;
  * Supports a minimal set of list operations.
  */
 public class UniqueCategoryList implements Iterable<Category> {
-    public static final String MESSAGE_CONSTRAINTS =
+
+    public static final String MESSAGE_SIZE_CONSTRAINTS =
             "There should only be a maximum of 5 unique categories.";
+    public static final String MESSAGE_DUPLICATION_CONSTRAINTS =
+            "All categories must be unique, duplicate categories are not allowed.";
     public static final int MAX_CATEGORIES = 5;
+
     private final ObservableList<Category> internalList = FXCollections.observableArrayList();
     private final ObservableList<Category> internalUnmodifiableList =
             FXCollections.unmodifiableObservableList(internalList);
@@ -164,6 +168,15 @@ public class UniqueCategoryList implements Iterable<Category> {
     @Override
     public String toString() {
         return internalList.toString();
+    }
+
+    /**
+     * Returns the size of the encapsulated ObservableList
+     *
+     * @return int size of the list
+     */
+    public int getSize() {
+        return internalList.size();
     }
 
     /**

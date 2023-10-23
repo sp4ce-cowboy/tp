@@ -1,5 +1,7 @@
 package unicash.logic.commands;
 
+import static unicash.logic.UniCashMessages.MESSAGE_UNICASH_WELCOME;
+
 import unicash.model.Model;
 
 /**
@@ -13,7 +15,7 @@ public class HelpCommand extends Command {
             + "\n"
             + "Example: " + COMMAND_WORD;
 
-    public static final String SHOWING_HELP_MESSAGE = "Opened UniCa$h help window.";
+    public static final String SHOWING_HELP_MESSAGE = MESSAGE_UNICASH_WELCOME;
 
     @Override
     public CommandResult execute(Model model) {

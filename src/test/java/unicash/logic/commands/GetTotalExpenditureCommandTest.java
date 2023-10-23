@@ -189,7 +189,7 @@ public class GetTotalExpenditureCommandTest {
     public void toString_noInput_returnsCommandStringFormatted() {
         var command = new GetTotalExpenditureCommand(8, new Category("Food"));
         var toStringResult = command.toString();
-        String expected = GetTotalExpenditureCommand.class.getCanonicalName() + "{month=8, categoryFilter=Food}";
+        String expected = GetTotalExpenditureCommand.class.getCanonicalName() + "{month=8, categoryFilter=food}";
         assertEquals(expected, toStringResult);
     }
 

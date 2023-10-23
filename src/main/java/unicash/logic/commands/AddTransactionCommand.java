@@ -30,11 +30,11 @@ public class AddTransactionCommand extends Command {
             + CliSyntax.PREFIX_NAME + "Buying groceries "
             + CliSyntax.PREFIX_TYPE + "expense "
             + CliSyntax.PREFIX_AMOUNT + "300 "
-            + CliSyntax.PREFIX_DATETIME + "18-08-2001 19:30 "
+            + CliSyntax.PREFIX_DATETIME + "18-08-2023 19:30 "
             + CliSyntax.PREFIX_LOCATION + "ntuc "
             + CliSyntax.PREFIX_CATEGORY + "household";
 
-    public static final String MESSAGE_SUCCESS = "New transaction added: %1$s";
+    public static final String MESSAGE_SUCCESS = "New transaction added: \n\n%1$s";
 
     private final Transaction toAdd;
 

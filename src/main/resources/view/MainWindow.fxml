@@ -8,10 +8,14 @@
 <?import javafx.scene.layout.*?>
 <?import javafx.stage.*?>
 
-<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="UniCa$h" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17.0.2-ea" xmlns:fx="http://javafx.com/fxml/1">
+<fx:root minHeight="600" minWidth="450" onCloseRequest="#handleExit" title="UniCa$h"
+         type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/17.0.2-ea"
+         xmlns:fx="http://javafx.com/fxml/1">
+
   <icons>
     <Image url="@/images/wallet_icon.png" />
   </icons>
+
   <scene>
     <Scene>
       <stylesheets>
@@ -19,7 +23,8 @@
         <URL value="@Extensions.css" />
       </stylesheets>
 
-      <VBox>
+      <VBox> <!-- Main VBox -->
+        <!-- The below code contains the MenuBar -->
         <MenuBar fx:id="menuBar" VBox.vgrow="NEVER" styleClass="bold-label-menubar">
           <Menu mnemonicParsing="false" text="File">
             <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" styleClass="normal-label" />
@@ -34,32 +39,46 @@
           </Menu>
         </MenuBar>
 
-        <!-- The below code contains the SplitPane, so the MenuBar runs across -->
-        <SplitPane dividerPositions="0.7" VBox.vgrow="ALWAYS">
-          <VBox minWidth="400" prefWidth="400" styleClass="pane-with-border">
-            <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
-              <padding>
-                <Insets bottom="5" left="10" right="10" top="5" />
-              </padding>
-            </StackPane>
+        <!-- The below code contains the CommandBox -->
+        <VBox minWidth="400" prefWidth="400" styleClass="pane-with-border">
+          <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border">
+            <padding>
+              <Insets bottom="2" left="10" right="10" top="2" />
+            </padding>
+          </StackPane>
+        </VBox>
 
+        <!-- The below code contains the Vertical SplitPane,
+        but the MenuBar and CommandBars run across -->
+        <SplitPane dividerPositions="0.7" VBox.vgrow="ALWAYS"> <!-- Start of VSplitPane -->
+
+          <!-- The below code contains the left side of the Split Pane -->
+          <VBox minWidth="400" prefWidth="400" styleClass="pane-with-border">
+
+            <!-- The below code contains the TransactionListPanel -->
             <VBox fx:id="personList" minWidth="400" prefWidth="400" styleClass="pane-with-border" VBox.vgrow="ALWAYS">
               <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="8" left="10" right="10" top="8" />
               </padding>
               <StackPane fx:id="transactionListPanelPlaceholder" VBox.vgrow="ALWAYS" />
             </VBox>
+
           </VBox>
 
-          <VBox minWidth="300" prefWidth="300" styleClass="pane-with-border">
-            <StackPane fx:id="resultDisplayPlaceholder" maxHeight="310" minHeight="310" prefHeight="310" styleClass="pane-with-border">
+          <!-- The below VBox sits on the right side of the Split Pane-->
+          <VBox minWidth="300" prefWidth="300" styleClass="pane-with-border" >
+            <StackPane fx:id="resultDisplayPlaceholder" maxHeight="310" minHeight="310"
+                       prefHeight="310" styleClass="pane-with-border">
               <padding>
-                <Insets bottom="5" left="5" right="10" top="5" />
+                <Insets bottom="5" left="4" right="10" top="5" />
               </padding>
             </StackPane>
           </VBox>
-        </SplitPane>
-        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />
+
+        </SplitPane> <!-- End of SplitPane -->
+
+        <!-- The below code contains the StatusBarFooter -->
+        <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER"/>
       </VBox>
     </Scene>
   </scene>

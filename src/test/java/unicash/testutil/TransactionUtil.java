@@ -34,7 +34,7 @@ public class TransactionUtil {
         StringBuilder sb = new StringBuilder();
         sb.append(PREFIX_NAME).append(transaction.getName().fullName).append(" ");
         sb.append(PREFIX_TYPE).append(transaction.getType().type.getOriginalString()).append(" ");
-        sb.append(PREFIX_AMOUNT).append(transaction.getAmount().toString()).append(" ");
+        sb.append(PREFIX_AMOUNT).append(transaction.getAmount().amountString()).append(" ");
         sb.append(PREFIX_DATETIME).append(transaction.getDateTime().originalString()).append(" ");
         sb.append(PREFIX_LOCATION).append(transaction.getLocation().location).append(" ");
         transaction.getCategories().forEach(

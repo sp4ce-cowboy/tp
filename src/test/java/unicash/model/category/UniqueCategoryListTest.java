@@ -73,7 +73,7 @@ public class UniqueCategoryListTest {
         for (int i = 0; i < UniqueCategoryList.MAX_CATEGORIES; i++) {
             uniqueCategoryList.add(new Category("Test" + i));
         }
-        assertThrows(MaxCategoryException.class, () -> uniqueCategoryList.add(new Category("test4")));
+        assertThrows(MaxCategoryException.class, () -> uniqueCategoryList.add(new Category("test5")));
     }
 
     @Test
@@ -191,6 +191,12 @@ public class UniqueCategoryListTest {
     @Test
     public void toStringMethod() {
         assertEquals(uniqueCategoryList.asUnmodifiableObservableList().toString(), uniqueCategoryList.toString());
+    }
+
+    @Test
+    public void getSize_test() {
+        UniqueCategoryList categoryList = new UniqueCategoryList();
+        assertEquals(uniqueCategoryList.getSize(), 0);
     }
 
     @Test

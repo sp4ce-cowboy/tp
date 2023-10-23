@@ -61,6 +61,10 @@ public class TransactionTest {
         // different categories -> returns false
         editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withCategories("TEST").build();
         assertFalse(BUYING_GROCERIES.equals(editedGroceries));
+
+        // different type -> returns false
+        editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withType("expense").build();
+        assertFalse(editedGroceries.getTypeString().equalsIgnoreCase("income"));
     }
 
     @Test

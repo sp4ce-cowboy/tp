@@ -1,7 +1,7 @@
 package unicash.logic.commands;
 
+import static unicash.logic.UniCashMessages.MESSAGE_UNICASH_WELCOME;
 import static unicash.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static unicash.logic.commands.HelpCommand.SHOWING_HELP_MESSAGE;
 
 import org.junit.jupiter.api.Test;
 
@@ -16,7 +16,7 @@ public class HelpCommandTest {
         Model expectedModel = new ModelManager();
 
         CommandResult expectedCommandResult =
-                new CommandResult(SHOWING_HELP_MESSAGE, true, false);
+                new CommandResult(MESSAGE_UNICASH_WELCOME, true, false);
 
         assertCommandSuccess(new HelpCommand(), model,
                 expectedCommandResult, expectedModel);

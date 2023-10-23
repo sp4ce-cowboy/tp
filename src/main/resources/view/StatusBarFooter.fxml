@@ -6,7 +6,17 @@
 
 <GridPane styleClass="status-bar" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
   <columnConstraints>
-    <ColumnConstraints hgrow="SOMETIMES" minWidth="10" />
+    <ColumnConstraints hgrow="ALWAYS" minWidth="10" />
+    <ColumnConstraints hgrow="SOMETIMES"  /> <!-- New column constraint -->
   </columnConstraints>
-  <Label fx:id="saveLocationStatus" styleClass="bold-label" />
+
+  <!-- Storage Location: LEFT SIDE OF STATUS BAR -->
+  <Label fx:id="saveLocationStatus" styleClass="bold-label" GridPane.columnIndex="0"
+         GridPane.halignment="LEFT" style="-fx-padding: 0 0 0 10;"/>
+
+  <!-- BalanceIndicator: RIGHT SIDE OF STATUS BAR -->
+  <Label fx:id="balanceIndicator" styleClass="bold-label" GridPane.columnIndex="1"
+         GridPane.halignment="RIGHT" style="-fx-padding: 0 10 0 0;"/>
+
 </GridPane>
+

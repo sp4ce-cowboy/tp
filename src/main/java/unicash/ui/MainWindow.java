@@ -1,5 +1,7 @@
 package unicash.ui;
 
+import static unicash.logic.UniCashMessages.MESSAGE_UNICASH_WELCOME;
+
 import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
@@ -64,6 +66,7 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane statusbarPlaceholder;
+
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -130,9 +133,11 @@ public class MainWindow extends UiPart<Stage> {
         transactionListPanelPlaceholder.getChildren().add(transactionListPanel.getRoot());
 
         resultDisplay = new ResultDisplay();
+        resultDisplay.setFeedbackToUser(MESSAGE_UNICASH_WELCOME);
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getUniCashFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(
+                logic.getUniCashFilePath(), logic.getFilteredTransactionList());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(this::executeCommand);

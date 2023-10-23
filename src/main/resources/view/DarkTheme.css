@@ -29,6 +29,11 @@
     -fx-font-family: "Inter";
 }
 
+.text-field-small-command-box {
+    -fx-font-size: 8pt;
+    -fx-font-family: "Inter";
+}
+
 .tab-pane {
     -fx-padding: 0 0 0 1;
 }
@@ -337,8 +342,8 @@
     -fx-border-insets: 3;
     -fx-border-width: 1;
     -fx-font-family: "Inter";
-    -fx-font-size: 13pt;
-    -fx-text-fill: #575757;
+    -fx-font-size: 12pt;
+    -fx-text-fill: #262626;
 }
 
 #filterField, #personListPanel, #personWebpage {
@@ -372,9 +377,61 @@
     -fx-background-color: #FFD43E;
     -fx-background-radius: 4;
     -fx-font-weight: bold;
-    -fx-font-style: italic;
-
+    -fx-font-size: 10pt;
 }
+
+#categoriesLabel {
+    -fx-font-family: "Inter";
+    -fx-label-padding: 2 3 2 3;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+#categoriesFlowPane {
+}
+
+#firstCategory {
+    -fx-font-family: "Inter";
+    -fx-label-padding: 2 3 2 3;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+#secondCategory {
+    -fx-font-family: "Inter";
+    -fx-label-padding: 2 3 2 3;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+#thirdCategory {
+    -fx-font-family: "Inter";
+    -fx-label-padding: 2 3 2 3;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+#fourthCategory {
+    -fx-font-family: "Inter";
+    -fx-label-padding: 2 3 2 3;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+#fifthCategory {
+    -fx-font-family: "Inter";
+    -fx-label-padding: 2 3 2 3;
+    -fx-background-radius: 4;
+    -fx-font-weight: bold;
+    -fx-font-size: 10pt;
+}
+
+
 
 .bold-label {
     -fx-font-weight: bold;

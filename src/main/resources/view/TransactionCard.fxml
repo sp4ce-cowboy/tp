@@ -40,12 +40,19 @@
                 <Label styleClass="transaction-subtitle" text="Location: " />
                 <Label fx:id="transactionLocation" styleClass="cell_small_label" text="\$location" />
             </HBox>
-            <HBox>
+
+            <HBox spacing="5">
                 <padding>
                     <Insets top="10" />
                 </padding>
-                <Label styleClass="cell_small_label_bold categories" alignment="CENTER_LEFT" fx:id="categories" />
+                <Label alignment="CENTER_LEFT" fx:id="firstCategory" />
+                <Label alignment="CENTER_LEFT" fx:id="secondCategory" />
+                <Label alignment="CENTER_LEFT" fx:id="thirdCategory" />
+                <Label alignment="CENTER_LEFT" fx:id="fourthCategory" />
+                <Label alignment="CENTER_LEFT" fx:id="fifthCategory" />
             </HBox>
+
+
         </VBox>
     </GridPane>
 </HBox>

@@ -150,12 +150,13 @@ public class ParserUtil {
         for (String categoryName : categories) {
             categoryList.add(parseCategory(categoryName));
         }
-        if (!UniqueCategoryList.categoriesAreUnique(categoryList)) {
-            throw new ParseException(UniqueCategoryList.MESSAGE_CONSTRAINTS);
-        }
 
         if (UniqueCategoryList.isMoreThanMax(categoryList)) {
-            throw new ParseException(UniqueCategoryList.MESSAGE_CONSTRAINTS);
+            throw new ParseException(UniqueCategoryList.MESSAGE_SIZE_CONSTRAINTS);
+        }
+
+        if (!UniqueCategoryList.categoriesAreUnique(categoryList)) {
+            throw new ParseException(UniqueCategoryList.MESSAGE_DUPLICATION_CONSTRAINTS);
         }
 
         return new UniqueCategoryList(categoryList);
