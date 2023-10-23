@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 
 import unicash.commons.util.StringUtil;
 import unicash.commons.util.ToStringBuilder;
-import unicash.model.transaction.Amount;
+import unicash.model.commons.Amount;
 import unicash.model.transaction.Transaction;
 
 /**

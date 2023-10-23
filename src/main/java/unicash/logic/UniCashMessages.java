@@ -15,7 +15,7 @@ import unicash.logic.commands.HelpCommand;
 import unicash.logic.commands.ListCommand;
 import unicash.logic.commands.ResetCommand;
 import unicash.logic.parser.Prefix;
-import unicash.model.transaction.Amount;
+import unicash.model.commons.Amount;
 import unicash.model.transaction.Transaction;
 
 /**
