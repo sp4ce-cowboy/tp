@@ -67,7 +67,7 @@ public class DateTime {
 
     /**
      * Helper method to stringify LocalDateTime objects into original text string
-     * pass by the user.
+     * passed by the user.
      *
      * @return text string of the LocalDateTime object
      */
@@ -89,7 +89,7 @@ public class DateTime {
 
     @Override
     public String toString() {
-        return dateTime.format(DateTimeFormatter.ofPattern("HHmm, MMM d yyyy"));
+        return dateTime.format(DateTimeFormatter.ofPattern("MMM d yyyy, HH:mm"));
     }
 
     @Override
