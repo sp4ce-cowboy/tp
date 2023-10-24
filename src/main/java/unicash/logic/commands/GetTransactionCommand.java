@@ -2,7 +2,6 @@ package unicash.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static unicash.logic.UniCashMessages.MESSAGE_INVALID_TRANSACTION_DISPLAYED_INDEX;
-import static unicash.model.Model.PREDICATE_SHOW_ALL_TRANSACTIONS;
 
 import java.util.List;
 

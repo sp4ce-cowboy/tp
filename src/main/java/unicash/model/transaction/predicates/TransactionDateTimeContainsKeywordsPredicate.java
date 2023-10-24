@@ -3,7 +3,6 @@ package unicash.model.transaction.predicates;
 import java.util.List;
 import java.util.function.Predicate;
 
-import unicash.commons.util.StringUtil;
 import unicash.commons.util.ToStringBuilder;
 import unicash.model.transaction.Transaction;
 
