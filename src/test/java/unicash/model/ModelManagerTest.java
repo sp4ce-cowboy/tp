@@ -20,7 +20,7 @@ import org.junit.jupiter.api.Test;
 
 import unicash.commons.core.GuiSettings;
 import unicash.model.transaction.exceptions.TransactionNotFoundException;
-import unicash.model.transaction.predicates.TransactionContainsKeywordsPredicate;
+import unicash.model.transaction.predicates.TransactionContainsAnyKeywordsPredicate;
 import unicash.testutil.UniCashBuilder;
 
 public class ModelManagerTest {
@@ -157,7 +157,7 @@ public class ModelManagerTest {
         // different filteredList -> returns false
         String[] keywords = new String[] {"internship"};
         modelManager.updateFilteredTransactionList(
-                new TransactionContainsKeywordsPredicate(Arrays.asList(keywords))
+                new TransactionContainsAnyKeywordsPredicate(Arrays.asList(keywords))
         );
         assertFalse(modelManager.equals(new ModelManager(uniCash, userPrefs)));
 

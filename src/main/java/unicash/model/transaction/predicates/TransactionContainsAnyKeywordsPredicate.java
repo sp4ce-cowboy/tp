@@ -16,11 +16,11 @@ import unicash.model.transaction.Transaction;
  * simulates a composed predicate that represents a short-circuiting logical OR of all property
  * predicates.
  */
-public class TransactionContainsKeywordsPredicate
+public class TransactionContainsAnyKeywordsPredicate
         implements Predicate<Transaction> {
     private final List<String> keywords;
 
-    public TransactionContainsKeywordsPredicate(List<String> keywords) {
+    public TransactionContainsAnyKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
@@ -46,12 +46,12 @@ public class TransactionContainsKeywordsPredicate
         }
 
         // instanceof handles nulls
-        if (!(other instanceof TransactionContainsKeywordsPredicate)) {
+        if (!(other instanceof TransactionContainsAnyKeywordsPredicate)) {
             return false;
         }
 
-        TransactionContainsKeywordsPredicate otherNameContainsKeywordsPredicate =
-                (TransactionContainsKeywordsPredicate) other;
+        TransactionContainsAnyKeywordsPredicate otherNameContainsKeywordsPredicate =
+                (TransactionContainsAnyKeywordsPredicate) other;
         return keywords.equals(otherNameContainsKeywordsPredicate.keywords);
     }
 

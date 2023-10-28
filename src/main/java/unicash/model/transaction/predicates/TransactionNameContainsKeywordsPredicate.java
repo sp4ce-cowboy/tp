@@ -12,6 +12,7 @@ import unicash.model.transaction.Transaction;
  */
 public class TransactionNameContainsKeywordsPredicate
         implements Predicate<Transaction> {
+
     private final List<String> keywords;
 
     public TransactionNameContainsKeywordsPredicate(List<String> keywords) {
