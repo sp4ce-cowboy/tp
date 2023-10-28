@@ -1,13 +1,13 @@
 package unicash.model.transaction.predicates;
 
+import java.util.Collections;
+import java.util.HashMap;
 import java.util.List;
 import java.util.function.Predicate;
 
+import unicash.commons.enums.TransactionProperty;
 import unicash.commons.util.ToStringBuilder;
 import unicash.model.transaction.Transaction;
-
-
-
 
 /**
  * Tests that any of a {@code Transactions}'s properties matches all the keywords given.
@@ -24,45 +24,39 @@ public class TransactionContainsAllKeywordsPredicate
     public static final String EMPTY_STRING = "";
     public static final List<String> EMPTY_STRING_LIST = List.of(EMPTY_STRING);
 
-    private TransactionAmountContainsValuePredicate amountPredicate;
-    private boolean amountPredicateExists;
-
-    private TransactionCategoryContainsKeywordsPredicate categoryPredicate;
-    private TransactionDateTimeContainsValuePredicate dateTimePredicate;
-    private TransactionLocationContainsKeywordsPredicate locationPredicate;
-    private TransactionNameContainsKeywordsPredicate namePredicate;
-    private boolean namePredicateExists;
-
-    private TransactionTypeContainsValuePredicate typePredicate;
-    private Predicate<Transaction> composedTransactionPredicate;
-
+    public HashMap<TransactionProperty, BooleanPredicatePair>
+            predicatePairMap = new HashMap<>();
 
     /**
      * Creates a composed predicate object.
      */
     public TransactionContainsAllKeywordsPredicate() {
-        amountPredicate = new TransactionAmountContainsValuePredicate(EMPTY_STRING_LIST);
-        amountPredicateExists = false;
 
-        categoryPredicate = new TransactionCategoryContainsKeywordsPredicate(EMPTY_STRING_LIST);
-        dateTimePredicate = new TransactionDateTimeContainsValuePredicate(EMPTY_STRING_LIST);
-        locationPredicate = new TransactionLocationContainsKeywordsPredicate(EMPTY_STRING_LIST);
+        TransactionAmountContainsValuePredicate amountPredicate =
+                new TransactionAmountContainsValuePredicate(EMPTY_STRING_LIST);
+        TransactionCategoryContainsKeywordsPredicate categoryPredicate =
+                new TransactionCategoryContainsKeywordsPredicate(EMPTY_STRING_LIST);
+        TransactionDateTimeContainsValuePredicate dateTimePredicate =
+                new TransactionDateTimeContainsValuePredicate(EMPTY_STRING_LIST);
+        TransactionLocationContainsKeywordsPredicate locationPredicate =
+                new TransactionLocationContainsKeywordsPredicate(EMPTY_STRING_LIST);
+        TransactionNameContainsKeywordsPredicate namePredicate =
+                new TransactionNameContainsKeywordsPredicate(EMPTY_STRING_LIST);
+        TransactionTypeContainsValuePredicate typePredicate =
+                new TransactionTypeContainsValuePredicate(EMPTY_STRING_LIST);
 
-        namePredicate = new TransactionNameContainsKeywordsPredicate(EMPTY_STRING_LIST);
-        namePredicateExists = false;
+        predicatePairMap.put(TransactionProperty.AMOUNT, new BooleanPredicatePair(amountPredicate));
+        predicatePairMap.put(TransactionProperty.CATEGORY, new BooleanPredicatePair(categoryPredicate));
+        predicatePairMap.put(TransactionProperty.DATETIME, new BooleanPredicatePair(dateTimePredicate));
+        predicatePairMap.put(TransactionProperty.LOCATION, new BooleanPredicatePair(locationPredicate));
+        predicatePairMap.put(TransactionProperty.NAME, new BooleanPredicatePair(namePredicate));
+        predicatePairMap.put(TransactionProperty.TYPE, new BooleanPredicatePair(typePredicate));
 
-        typePredicate = new TransactionTypeContainsValuePredicate(EMPTY_STRING_LIST);
-        composedTransactionPredicate = amountPredicate
-                .and(categoryPredicate)
-                .and(dateTimePredicate)
-                .and(locationPredicate)
-                .and(namePredicate)
-                .and(typePredicate);
     }
 
     @Override
     public boolean test(Transaction transaction) {
-        Predicate<Transaction> composedPredicate = composeAllPredicates();
+        Predicate<Transaction> composedPredicate = composeAllActivePredicates();
         return composedPredicate.test(transaction);
 
     }
@@ -72,28 +66,35 @@ public class TransactionContainsAllKeywordsPredicate
      *
      * @return a composed predicate
      */
-    public Predicate<Transaction> composeAllPredicates() {
+    public Predicate<Transaction> composeAllActivePredicates() {
         Predicate<Transaction> composedPredicate = unused -> true;
 
-        if (amountPredicateExists) {
-            composedPredicate = composedPredicate.and(amountPredicate);
-        }
+        for (TransactionProperty property : predicatePairMap.keySet()) {
+            Boolean predicateState = predicatePairMap.get(property).getFirst();
+            Predicate<Transaction> predicate = predicatePairMap.get(property).getSecond();
 
-        if (namePredicateExists) {
-            composedPredicate = composedPredicate.and(namePredicate);
+            if (predicateState) {
+                composedPredicate = composedPredicate.and(predicate);
+            }
         }
 
         return composedPredicate;
     }
 
     public void setAmount(String amount) {
-        amountPredicate = new TransactionAmountContainsValuePredicate(List.of(amount));
-        amountPredicateExists = true;
+        BooleanPredicatePair predicatePair = new BooleanPredicatePair(true,
+                        new TransactionAmountContainsValuePredicate(
+                                Collections.singletonList(amount)));
+
+        predicatePairMap.put(TransactionProperty.AMOUNT, predicatePair);
     }
 
     public void setName(String name) {
-        namePredicate = new TransactionNameContainsKeywordsPredicate(List.of(name));
-        namePredicateExists = true;
+        BooleanPredicatePair predicatePair = new BooleanPredicatePair(true,
+                new TransactionNameContainsKeywordsPredicate(
+                        Collections.singletonList(name)));
+
+        predicatePairMap.put(TransactionProperty.NAME, predicatePair);
     }
 
 
@@ -111,19 +112,15 @@ public class TransactionContainsAllKeywordsPredicate
         TransactionContainsAllKeywordsPredicate otherContainsKeywordsPredicate =
                 (TransactionContainsAllKeywordsPredicate) other;
 
-        return amountPredicate.equals(otherContainsKeywordsPredicate.amountPredicate)
-                && namePredicate.equals(otherContainsKeywordsPredicate.namePredicate)
-                && composedTransactionPredicate.equals(otherContainsKeywordsPredicate
-                .composedTransactionPredicate);
+        return predicatePairMap.equals(
+                otherContainsKeywordsPredicate.predicatePairMap);
 
     }
 
     @Override
     public String toString() {
         return new ToStringBuilder(this)
-                .add("composedTransactionPredicate", composedTransactionPredicate)
-                .add("amountPredicate", amountPredicate)
-                .add("namePredicate", namePredicate)
+                .add("predicatePairMap", predicatePairMap)
                 .toString();
     }
 }
