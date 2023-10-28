@@ -726,21 +726,104 @@ Some general and miscellaneous classes
 
 ## 5. Features & Implementation
 
-Some features that we have come up with.
+This section aims to describe the implementation of the features in UniCa$h.
+
+There are 4 main groups of features that we have designed and either implemented
+or propose to implement in the future.
+
+These are:
+1. Transaction Management Features
+2. Budget Management and Monitoring Features
+3. General Utility Features
+4. User Interface Features
 
 ### 5.1. Transaction Management Features
 
-Some features directly relating to the management of transactions.
+#### 5.1.1 Transaction Model
 
-#### 5.1.1. Add Transaction
+<img src="images/unicash/TransactionClassDiagram.png" width="700" />
 
-#### 5.1.2. Delete Transaction
+UniCa$h tracks transactions with the use of `TransactionList` and `Transaction`. `TransactionList` acts
+as a wrapper for a list of `Transaction` that enforces no `null`. `TransactionList` does not enforce any equality
+constraints, thus any forms of duplicated `Transaction` are allowed to be stored. This was an intentional decision, 
+as we want to allow users to record recurring transactions.
 
-#### 5.1.3. Edit Transaction
+The `Transaction` class is composed of the following fields
 
-#### 5.1.4. etc
+1. `Name`: The name of the transaction.
+2. `Type`: The transaction type of the transaction. UniCash supports expense and income only.
+   1. `TransactionType`: An enum comprising of the values `income` and `expense`.
+3. `Amount`: The monetary value of the transaction.
+4. `DateTime`: The date and time of the transaction to be recorded.
+5. `Location`: The location where the transaction took place.
+6. `UniqueCategoryList`: A list of categories to be tagged with the transaction.
+   1. `Category`: The name of a category tagged to a transaction.
+
+The following are some noteworthy points regarding the attributes
+1. There are 3 compulsory fields, namely `Name`, `Type` and `Amount`. The remaining fields would fall back to a default value if not specified.
+2. There is a character limit for `Name` and `Location` set at up to 500 characters.
+3. `Amount` entered has to be positive for both `income` and `expense`.
+4. `Amount` is automatically rounded to 2 decimal places.
+5. `UniqueCategoryList` enforces a unique constraint on `Category` it stores.
+6. There is a character limit for `Category` set at up to 15 characters/
+
+#### 5.1.2 Add Transaction
+
+##### Overview
+
+The `add_transaction` command adds a new `Transaction` to the `TransactionList` in UniCash.
+
+The activity diagram of adding a Transaction is as shown below
+
+<img src="images/unicash/AddTransactionActivityDiagram.png" width="500" />
+
+The following sequence diagram shows how the different components of UniCash interact with each other
+
+<img src="images/unicash/AddTransactionSequenceDiagram.png" width="2000" />
+
+The above sequence diagram omits details on the creation of the attributes of a `Transaction` such as
+`Name`, `Type` and `Amount` as it would make the diagram cluttered and difficult to read without adding
+additional value.
+
+ℹ️ **Note:** The lifeline for `AddTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML,
+the lifeline reaches the end of diagram.
+
+##### Details
+
+1. The user specifies the transaction to be added by stating the name, amount, transaction type as well as any other optional fields.
+2. The input will be parsed by `AddCommandTransactionParser`, and if it is invalid, `ParserException` is thrown, prompting for the user to enter again.
+3. If the input is valid, a `Transaction` object is created and passed into the `AddTransactionCommand` to be executed by the `LogicManager`.
+4. The `LogicManager` will then invoke the execute command, adding the `Transaction` to UniCash.
+
+Note that only the `Category` field is allowed to be specified multiple times, while the other fields can only be specified once, else
+a `ParserException` is thrown. Another noteworthy point is that `Category` that are added are to be case-insensitively unique and can only be up to
+a specified value in the `UniqueCategoryList` class. Else, a `ParserException` would be thrown.
+
+
+
+#### 5.1.3. Delete Transaction
+
+#### 5.1.4. Edit Transaction
+
+#### 5.1.5. etc
 
 ### 5.2. Budget Management Features
+
+#### 5.2.1 Budget Model
+
+<img src="images/unicash/BudgetClassDiagram.png" width="250" />
+
+UniCa$h tracks a user's budget with the use of `Budget`.
+
+The `Budget` class is composed of the following fields
+
+1. `Amount`: The name of the transaction.
+2. `Interval`: The budget interval of the transaction. UniCash supports expense and income only.
+   1. `BudgetInterval`: An enum consiting of the values `daily`, `weekly` and `monthly`.
+
+The following are some noteworthy points regarding the attributes
+1. `Amount` here follows the same constraints as the one mentioned in the `Transaction`'s `Amount` class.
+
 
 Some features about the management of budgets
 
@@ -783,6 +866,29 @@ Some project requirements under the scope of CS2103
 ### 6.2. User Stories
 
 ### 6.3. Use Cases
+The following documents use cases for our application
+
+For the following Use Cases (unless specified otherwise):
+- The System is `UniCa$h`
+- The Actor is `User`
+
+#### 6.3.1 Use Case: UC01 - Adding a transaction
+
+**MSS:**
+1. User enters the command to add a transaction with the correct format.
+2. User submits the request.
+3. UniCa$h adds the transaction to the transactions list and displays success message.
+
+   Use Case ends
+
+**Extensions**
+- 2a. User enters an incorrect format
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+- 2b. User enters an extremely high number
+    - 2b1. UniCa$h prompts the user with a warning of the input
+    - 2b2. User confirms the request
+    - Use case resumes at step 3.
 
 ### 6.4. Non-Functional Requirements
 

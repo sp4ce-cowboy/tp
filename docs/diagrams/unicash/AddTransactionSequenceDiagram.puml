@@ -52,7 +52,7 @@ UniCashParser --> LogicManager : command
 deactivate UniCashParser
 destroy AddTransactionCommandParser
 
-LogicManager -> AddTransactionCommand : command.execute(model)
+LogicManager -> AddTransactionCommand : execute(model)
 activate AddTransactionCommand
 
 AddTransactionCommand -> Model : addTransaction(transaction)
