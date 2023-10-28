@@ -27,7 +27,7 @@ public class UniqueCategoryList implements Iterable<Category> {
     public static final String MESSAGE_SIZE_CONSTRAINTS =
             "There should only be a maximum of 5 unique categories.";
     public static final String MESSAGE_DUPLICATION_CONSTRAINTS =
-            "All categories must be unique, duplicate categories are not allowed.";
+            "All categories must be case-insensitively unique, duplicate categories are not allowed.";
     public static final int MAX_CATEGORIES = 5;
 
     private final ObservableList<Category> internalList = FXCollections.observableArrayList();
@@ -163,9 +163,16 @@ public class UniqueCategoryList implements Iterable<Category> {
 
     @Override
     public boolean equals(Object other) {
-        return other == this
-                || (other instanceof UniqueCategoryList
-                && new HashSet<>(internalList).equals(new HashSet<>(((UniqueCategoryList) other).internalList)));
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof UniqueCategoryList)) {
+            return false;
+        }
+
+        UniqueCategoryList otherList = (UniqueCategoryList) other;
+        return new HashSet<>(internalList).equals(new HashSet<>(otherList.internalList));
     }
 
     @Override

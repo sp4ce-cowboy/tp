@@ -15,6 +15,8 @@ import org.junit.jupiter.api.Test;
 
 
 public class DateTimeTest {
+    private static final Clock clock = Clock.fixed(Instant.parse("2014-12-21T10:15:30.00Z"), ZoneId.of("UTC"));
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new DateTime(null));
@@ -24,7 +26,6 @@ public class DateTimeTest {
 
     @Test
     public void constructor_noDateTime_setDefault() {
-        Clock clock = Clock.fixed(Instant.parse("2014-12-21T10:15:30.00Z"), ZoneId.of("UTC"));
         String empty = "";
         assertEquals("21 Dec 2014 10:15", new DateTime(empty, clock).toString());
     }
@@ -49,6 +50,10 @@ public class DateTimeTest {
 
     @Test
     public void inputString() {
+        DateTime emptyDateTime = new DateTime("", clock);
+        String stringifyEmptyDateTime = emptyDateTime.inputString();
+        assertEquals("21 Dec 2014 10:15", stringifyEmptyDateTime);
+
         DateTime dateTimeFormatOne = new DateTime("18-12-2023 01:01");
         String stringifyOne = dateTimeFormatOne.inputString();
         assertEquals("18-12-2023 01:01", stringifyOne);

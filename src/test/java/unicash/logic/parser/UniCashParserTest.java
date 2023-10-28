@@ -4,7 +4,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static unicash.logic.UniCashMessages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static unicash.logic.UniCashMessages.MESSAGE_UNKNOWN_COMMAND;
+import static unicash.logic.parser.CliSyntax.PREFIX_AMOUNT;
+import static unicash.logic.parser.CliSyntax.PREFIX_INTERVAL;
 import static unicash.testutil.Assert.assertThrows;
+import static unicash.testutil.TypicalBudgets.MONTHLY;
 import static unicash.testutil.TypicalIndexes.INDEX_FIRST_TRANSACTION;
 
 import java.util.Arrays;
@@ -13,6 +16,7 @@ import java.util.stream.Collectors;
 
 import org.junit.jupiter.api.Test;
 
+import unicash.logic.commands.AddBudgetCommand;
 import unicash.logic.commands.AddTransactionCommand;
 import unicash.logic.commands.ClearTransactionsCommand;
 import unicash.logic.commands.DeleteTransactionCommand;
@@ -25,8 +29,10 @@ import unicash.logic.commands.ListCommand;
 import unicash.logic.commands.ResetCommand;
 import unicash.logic.commands.SummaryCommand;
 import unicash.logic.parser.exceptions.ParseException;
+import unicash.model.budget.Budget;
 import unicash.model.transaction.Transaction;
 import unicash.model.transaction.predicates.TransactionContainsAnyKeywordsPredicate;
+import unicash.testutil.BudgetBuilder;
 import unicash.testutil.EditTransactionDescriptorBuilder;
 import unicash.testutil.TransactionBuilder;
 import unicash.testutil.TransactionUtil;
@@ -147,5 +153,14 @@ public class UniCashParserTest {
     @Test
     public void parseCommand_unknownCommand_throwsParseException() {
         assertThrows(ParseException.class, MESSAGE_UNKNOWN_COMMAND, () -> parser.parseCommand("unknownCommand"));
+    }
+    @Test
+    public void parseCommand_addBudget() throws Exception {
+        Budget budget = new BudgetBuilder().build();
+        String validCommand = "add_budget " + PREFIX_AMOUNT + MONTHLY.getAmount().toString() + " "
+                + PREFIX_INTERVAL + MONTHLY.getInterval().toString();
+        AddBudgetCommand command = (AddBudgetCommand) parser.parseCommand(validCommand);
+        //TODO: to change when parseCommand is implemented fully
+        assertEquals(null, command);
     }
 }

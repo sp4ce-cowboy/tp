@@ -55,6 +55,13 @@ public class BudgetTest {
     }
 
     @Test
+    public void setBudget() {
+        Budget budget = new BudgetBuilder(DAILY).build();
+        budget.setBudget(MONTHLY);
+        assertEquals(MONTHLY, budget);
+    }
+
+    @Test
     public void hashCode_test() {
         assertEquals(DAILY.hashCode(), DAILY.hashCode());
         assertNotEquals(DAILY.hashCode(), MONTHLY.hashCode());

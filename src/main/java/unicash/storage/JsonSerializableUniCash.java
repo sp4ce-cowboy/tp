@@ -56,9 +56,6 @@ class JsonSerializableUniCash {
         UniCash uniCash = new UniCash();
         for (var jsonAdaptedTransaction : transactions) {
             Transaction transaction = jsonAdaptedTransaction.toModelType();
-            if (uniCash.hasTransaction(transaction)) {
-                throw new IllegalValueException(MESSAGE_DUPLICATE_TRANSACTION);
-            }
             uniCash.addTransaction(transaction);
         }
         return uniCash;

@@ -1,18 +1,16 @@
 package unicash.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static unicash.testutil.Assert.assertThrows;
-import static unicash.testutil.TypicalTransactions.INTERN;
-import static unicash.testutil.TypicalTransactions.NUS;
+import static unicash.testutil.TypicalBudgets.DAILY;
+import static unicash.testutil.TypicalBudgets.MONTHLY;
+import static unicash.testutil.TypicalBudgets.WEEKLY;
 
 import java.nio.file.Path;
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
@@ -26,71 +24,74 @@ import unicash.model.ReadOnlyUserPrefs;
 import unicash.model.UniCash;
 import unicash.model.budget.Budget;
 import unicash.model.transaction.Transaction;
-import unicash.testutil.TransactionBuilder;
 
-public class AddTransactionCommandTest {
-
+public class AddBudgetCommandTest {
     @Test
     public void constructor_nullTransaction_throwsNullPointerException() {
-        assertThrows(NullPointerException.class, () -> new AddTransactionCommand(null));
+        assertThrows(NullPointerException.class, () -> new AddBudgetCommand(null));
     }
 
     @Test
-    public void execute_transactionAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingTransactionAdded modelStub = new ModelStubAcceptingTransactionAdded();
-        Transaction validTransaction = new TransactionBuilder().build();
+    public void execute_nullModel_throwsNullPointerException() {
+        var command = new AddBudgetCommand(DAILY);
+        assertThrows(NullPointerException.class, () -> command.execute(null));
+    }
 
-        CommandResult commandResult = new AddTransactionCommand(validTransaction).execute(modelStub);
+    @Test
+    public void execute_budgetAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingBudgetAdded modelStub = new ModelStubAcceptingBudgetAdded();
+        Budget validBudget = DAILY;
 
-        assertEquals(String.format(AddTransactionCommand.MESSAGE_SUCCESS,
-                        UniCashMessages.formatTransaction(validTransaction)),
+        CommandResult commandResult = new AddBudgetCommand(validBudget).execute(modelStub);
+
+        assertEquals(String.format(AddBudgetCommand.MESSAGE_SUCCESS,
+                UniCashMessages.formatBudget(validBudget)),
                 commandResult.getFeedbackToUser());
-        assertEquals(List.of(validTransaction), modelStub.transactionsAdded);
-    }
-
-    @Test
-    public void execute_duplicateTransaction_success() {
-        Transaction validTransaction = new TransactionBuilder().build();
-        AddTransactionCommand addTransactionCommand = new AddTransactionCommand(validTransaction);
-        ModelStub modelStub = new ModelStubWithTransaction(validTransaction);
-
-        assertDoesNotThrow(() -> addTransactionCommand.execute(modelStub));
+        assertEquals(validBudget, modelStub.budget);
     }
 
     @Test
     public void equals() {
-        AddTransactionCommand addNusCommand = new AddTransactionCommand(NUS);
-        AddTransactionCommand addInternCommand = new AddTransactionCommand(INTERN);
+        AddBudgetCommand addBudgetCommand = new AddBudgetCommand(DAILY);
+        AddBudgetCommand addBudgetCommandCopy = new AddBudgetCommand(DAILY);
+        AddBudgetCommand addDifferentBudgetCommand = new AddBudgetCommand(WEEKLY);
 
-        // same object -> returns true
-        assertEquals(addNusCommand, addNusCommand);
+        //same values -> returns true
+        assertEquals(addBudgetCommand, addBudgetCommandCopy);
 
-        // same values -> returns true
-        AddTransactionCommand addNusCommandCopy = new AddTransactionCommand(NUS);
-        assertEquals(addNusCommand, addNusCommandCopy);
+        //same budget command -> returns true
+        assertEquals(addBudgetCommand, addBudgetCommand);
 
-        // different types -> returns false
-        assertNotEquals(1, addNusCommand);
+        //null -> returns false
+        assertNotEquals(null, addBudgetCommand);
 
-        // null -> returns false
-        assertNotEquals(null, addNusCommand);
+        //different type -> returns false
+        assertNotEquals(addDifferentBudgetCommand, addBudgetCommand);
 
-        // different Transaction -> returns false
-        assertNotEquals(addNusCommand, addInternCommand);
-
-        assertFalse(addNusCommand.equals(2));
+        assertFalse(addBudgetCommand.equals(5));
     }
 
     @Test
     public void toStringMethod() {
-        AddTransactionCommand addTransactionCommand = new AddTransactionCommand(NUS);
-        String expected = AddTransactionCommand.class.getCanonicalName() + "{toAdd=" + NUS + "}";
-        assertEquals(expected, addTransactionCommand.toString());
+        AddBudgetCommand addBudgetCommand = new AddBudgetCommand(DAILY);
+        String expected =
+                AddBudgetCommand.class.getCanonicalName() + "{budget=" + DAILY + "}";
+        assertEquals(expected, addBudgetCommand.toString());
     }
 
-    /**
-     * A default model stub that have all of the methods failing.
-     */
+    @Test
+    public void formatBudget() {
+        String expectedDaily = "Amount: " + DAILY.getAmount().toString()
+                + "; \nInterval: " + DAILY.getInterval().toString();
+        String expectedWeekly = "Amount: " + WEEKLY.getAmount().toString()
+                + "; \nInterval: " + WEEKLY.getInterval().toString();
+        String expectedMonthly = "Amount: " + MONTHLY.getAmount().toString()
+                + "; \nInterval: " + MONTHLY.getInterval().toString();
+        assertEquals(expectedDaily, UniCashMessages.formatBudget(DAILY));
+        assertEquals(expectedWeekly, UniCashMessages.formatBudget(WEEKLY));
+        assertEquals(expectedMonthly, UniCashMessages.formatBudget(MONTHLY));
+    }
+
     private class ModelStub implements Model {
         @Override
         public void setUserPrefs(ReadOnlyUserPrefs userPrefs) {
@@ -118,7 +119,7 @@ public class AddTransactionCommandTest {
         }
 
         @Override
-        public void setUniCashFilePath(Path uniCashFilePath) {
+        public void setUniCashFilePath(Path addressBookFilePath) {
             throw new AssertionError("This method should not be called.");
         }
 
@@ -167,12 +168,10 @@ public class AddTransactionCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-
         @Override
         public Budget getBudget() {
             throw new AssertionError("This method should not be called.");
         }
-
         @Override
         public void updateExpenseSummary() {
             throw new AssertionError("This method should not be called.");
@@ -184,44 +183,18 @@ public class AddTransactionCommandTest {
         }
     }
 
-    /**
-     * A Model stub that contains a single transaction.
-     */
-    private class ModelStubWithTransaction extends AddTransactionCommandTest.ModelStub {
-        private final Transaction transaction;
+    private class ModelStubAcceptingBudgetAdded extends AddBudgetCommandTest.ModelStub {
+        private Budget budget;
 
-        ModelStubWithTransaction(Transaction transaction) {
-            requireNonNull(transaction);
-            this.transaction = transaction;
+        public boolean hasBudget(Budget budget) {
+            requireNonNull(budget);
+            return this.budget.equals(budget);
         }
 
         @Override
-        public boolean hasTransaction(Transaction transaction) {
-            requireNonNull(transaction);
-            return this.transaction.equals(transaction);
-        }
-
-        @Override
-        public void addTransaction(Transaction transaction) {
-        }
-    }
-
-    /**
-     * A Model stub that always accept the transaction being added.
-     */
-    private class ModelStubAcceptingTransactionAdded extends AddTransactionCommandTest.ModelStub {
-        final ArrayList<Transaction> transactionsAdded = new ArrayList<>();
-
-        @Override
-        public boolean hasTransaction(Transaction transaction) {
-            requireNonNull(transaction);
-            return transactionsAdded.stream().anyMatch(transaction::equals);
-        }
-
-        @Override
-        public void addTransaction(Transaction transaction) {
-            requireNonNull(transaction);
-            transactionsAdded.add(transaction);
+        public void setBudget(Budget budget) {
+            requireNonNull(budget);
+            this.budget = budget;
         }
 
         @Override
@@ -229,5 +202,6 @@ public class AddTransactionCommandTest {
             return new UniCash();
         }
     }
-
 }
+
+

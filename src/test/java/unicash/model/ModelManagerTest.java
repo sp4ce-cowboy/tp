@@ -7,6 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static unicash.model.Model.PREDICATE_SHOW_ALL_TRANSACTIONS;
 import static unicash.testutil.Assert.assertThrows;
+import static unicash.testutil.TypicalBudgets.DAILY;
 import static unicash.testutil.TypicalTransactions.BUYING_GROCERIES;
 import static unicash.testutil.TypicalTransactions.INTERN;
 import static unicash.testutil.TypicalTransactions.NUS;
@@ -19,6 +20,7 @@ import java.util.HashMap;
 import org.junit.jupiter.api.Test;
 
 import unicash.commons.core.GuiSettings;
+import unicash.model.budget.Budget;
 import unicash.model.transaction.exceptions.TransactionNotFoundException;
 import unicash.model.transaction.predicates.TransactionContainsAnyKeywordsPredicate;
 import unicash.testutil.UniCashBuilder;
@@ -130,6 +132,18 @@ public class ModelManagerTest {
         expectedExpenseSummary.put("food", 8.8);
 
         assertEquals(modelManager.getExpenseSummary(), expectedExpenseSummary);
+    }
+
+    @Test
+    public void setBudget_nullBudget_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> modelManager.setBudget(null));
+    }
+
+    @Test
+    public void setBudget_validBudget_success() {
+        Budget budget = DAILY;
+        modelManager.setBudget(budget);
+        assertEquals(modelManager.getBudget(), budget);
     }
 
     @Test

@@ -17,6 +17,7 @@ import unicash.logic.commands.ListCommand;
 import unicash.logic.commands.ResetCommand;
 import unicash.logic.commands.SummaryCommand;
 import unicash.logic.parser.Prefix;
+import unicash.model.budget.Budget;
 import unicash.model.commons.Amount;
 import unicash.model.transaction.Transaction;
 
@@ -102,22 +103,14 @@ public class UniCashMessages {
     }
 
     /**
-     * Formats the {@code transaction} for output as a continuous string.
+     * Formats the {@code budget} for display to the user.
      */
-    public static String formatTransactionAsString(Transaction transaction) {
+    public static String formatBudget(Budget budget) {
         final StringBuilder builder = new StringBuilder();
-        builder.append("Name: ")
-                .append(transaction.getName())
-                .append("; Type: ")
-                .append(transaction.getType())
-                .append("; Amount: ")
-                .append(transaction.getAmount())
-                .append("; Date: ")
-                .append(transaction.getDateTime())
-                .append("; Location: ")
-                .append(transaction.getLocation())
-                .append("; Category: ");
-        transaction.getCategories().forEach(builder::append);
+        builder.append("Amount: ")
+                .append(budget.getAmount())
+                .append("; \nInterval: ")
+                .append(budget.getInterval());
         return builder.toString();
     }
 }

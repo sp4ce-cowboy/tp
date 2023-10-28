@@ -12,8 +12,8 @@ import unicash.model.commons.Amount;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Budget {
-    private final Amount amount;
-    private final Interval interval;
+    private Amount amount;
+    private Interval interval;
 
 
     /**
@@ -63,5 +63,10 @@ public class Budget {
                 .add("amount", amount)
                 .add("interval", interval)
                 .toString();
+    }
+
+    public void setBudget(Budget budget) {
+        amount = budget.getAmount();
+        interval = budget.getInterval();
     }
 }

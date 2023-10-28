@@ -234,6 +234,29 @@ public class UniqueCategoryListTest {
     }
 
     @Test
+    public void equals() {
+        // same object -> returns true
+        UniqueCategoryList categoryList = new UniqueCategoryList();
+        assertEquals(categoryList, categoryList);
+
+        // same lists
+        categoryList.add(ENTERTAINMENT);
+        UniqueCategoryList anotherList = new UniqueCategoryList();
+        anotherList.add(ENTERTAINMENT);
+        assertEquals(categoryList, anotherList);
+
+        // different lists
+        anotherList = new UniqueCategoryList();
+        anotherList.add(EDUCATION);
+        assertNotEquals(categoryList, anotherList);
+
+        // null -> returns false
+        assertNotEquals(null, categoryList);
+
+        assertFalse(categoryList.equals(null));
+    }
+
+    @Test
     public void hashCode_test() {
         UniqueCategoryList categoryList1 = new UniqueCategoryList();
         UniqueCategoryList categoryList2 = new UniqueCategoryList();

@@ -36,13 +36,4 @@ public class JsonSerializableUniCashTest {
                 JsonSerializableUniCash.class).get();
         assertThrows(IllegalValueException.class, dataFromFile::toModelType);
     }
-
-    @Test
-    public void toModelType_duplicateTransactions_throwsIllegalValueException() throws Exception {
-        JsonSerializableUniCash dataFromFile = JsonUtil.readJsonFile(DUPLICATE_TRANSACTION_FILE,
-                JsonSerializableUniCash.class).get();
-        assertThrows(IllegalValueException.class, JsonSerializableUniCash.MESSAGE_DUPLICATE_TRANSACTION,
-                dataFromFile::toModelType);
-    }
-
 }

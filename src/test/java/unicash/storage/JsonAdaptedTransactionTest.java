@@ -41,7 +41,7 @@ public class JsonAdaptedTransactionTest {
             .collect(Collectors.toList());
 
     @Test
-    public void toModelType_validPersonDetails_returnsPerson() throws Exception {
+    public void toModelType_validPersonDetails_returnsTransaction() throws Exception {
         var transaction = new JsonAdaptedTransaction(SHOPPING);
         assertEquals(SHOPPING, transaction.toModelType());
     }

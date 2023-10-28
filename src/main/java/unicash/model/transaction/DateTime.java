@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeFormatterBuilder;
 import java.time.format.DateTimeParseException;
 import java.time.format.ResolverStyle;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 /**
  * Represents a Transaction's dateTime.
@@ -18,7 +19,6 @@ public class DateTime {
     public static final String DATETIME_PATTERN_ONE = "dd-MM-uuuu HH:mm";
     public static final String DATETIME_PATTERN_TWO = "uuuu-MM-dd HH:mm";
     public static final String DATETIME_STORAGE_PATTERN = "dd MMM uuuu HH:mm";
-    public static final String DATETIME_FIND_PATTERN = "dd MMM uuuu_HH:mm";
     public static final String MESSAGE_CONSTRAINTS =
             "DateTime should be in either of the following formats: " + "\n"
                     + "1. " + DATETIME_PATTERN_ONE + "\n"
@@ -26,12 +26,14 @@ public class DateTime {
                     + "3. " + DATETIME_STORAGE_PATTERN + "\n";
     //accept date in multiple formats
     private static final DateTimeFormatterBuilder DATETIME_FORMATTER_BUILDER =
-            new DateTimeFormatterBuilder().append(DateTimeFormatter.ofPattern("[dd-MM-uuuu HH:mm]"
-                    + "[uuuu-MM-dd HH:mm]"
-                    + "[dd MMM uuuu HH:mm]"));
+            new DateTimeFormatterBuilder()
+                    .appendOptional(DateTimeFormatter.ofPattern(DATETIME_PATTERN_ONE))
+                    .appendOptional(DateTimeFormatter.ofPattern(DATETIME_PATTERN_TWO))
+                    .appendOptional(DateTimeFormatter.ofPattern(DATETIME_STORAGE_PATTERN));
+
     private static final DateTimeFormatter DATETIME_FORMATTER = DATETIME_FORMATTER_BUILDER.toFormatter();
 
-    private final String originalDateTime;
+    private String originalDateTime;
     private LocalDateTime dateTime;
 
     /**
@@ -43,7 +45,6 @@ public class DateTime {
     public DateTime(String dateTime) {
         requireAllNonNull(dateTime);
         init(dateTime, Clock.systemDefaultZone());
-        originalDateTime = dateTime;
     }
 
     /**
@@ -57,7 +58,6 @@ public class DateTime {
     public DateTime(String dateTime, Clock clock) {
         requireAllNonNull(dateTime, clock);
         init(dateTime, clock);
-        originalDateTime = dateTime;
     }
 
     /**
@@ -69,11 +69,14 @@ public class DateTime {
      */
     private void init(String dateTime, Clock clock) {
         if (dateTime.isBlank()) {
-            this.dateTime = LocalDateTime.now(clock);
+            LocalDateTime now = LocalDateTime.now(clock).truncatedTo(ChronoUnit.MINUTES);
+            this.dateTime = now;
+            originalDateTime = now.format(DateTimeFormatter.ofPattern(DATETIME_STORAGE_PATTERN));
             return;
         }
         checkArgument(isValidDateTime(dateTime), MESSAGE_CONSTRAINTS);
         this.dateTime = LocalDateTime.parse(dateTime, DATETIME_FORMATTER);
+        originalDateTime = dateTime;
     }
 
     public LocalDateTime getDateTime() {

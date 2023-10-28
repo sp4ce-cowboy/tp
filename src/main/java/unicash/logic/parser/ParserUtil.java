@@ -161,5 +161,4 @@ public class ParserUtil {
 
         return new UniqueCategoryList(categoryList);
     }
-
 }

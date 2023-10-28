@@ -6,6 +6,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import unicash.commons.core.GuiSettings;
+import unicash.model.budget.Budget;
 import unicash.model.transaction.Transaction;
 
 /**
@@ -16,6 +17,11 @@ public interface Model {
      * {@code Predicate} that always evaluates to true
      */
     Predicate<Transaction> PREDICATE_SHOW_ALL_TRANSACTIONS = unused -> true;
+
+    /**
+     * Returns true if a budget with the same identity as {@code budget} exists in UniCash.
+     */
+    Predicate<Budget> PREDICATE_SHOW_ALL_BUDGETS = unused -> true;
 
     /**
      * Replaces user prefs data with the data in {@code userPrefs}.
@@ -91,6 +97,16 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredTransactionList(Predicate<Transaction> predicate);
+
+    /**
+     * Adds the given budget
+     */
+    void setBudget(Budget budget);
+
+    /**
+     * Returns the budget
+     */
+    Budget getBudget();
 
     /**
      * Updates the summary of expenses saved in UniCash.
