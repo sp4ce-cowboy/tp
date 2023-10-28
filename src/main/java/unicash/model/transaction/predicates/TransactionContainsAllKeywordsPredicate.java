@@ -81,7 +81,7 @@ public class TransactionContainsAllKeywordsPredicate
         return composedPredicate;
     }
 
-    public void setAmount(String amount) {
+    public void setAmountKeyword(String amount) {
         BooleanPredicatePair predicatePair = new BooleanPredicatePair(true,
                         new TransactionAmountContainsValuePredicate(
                                 Collections.singletonList(amount)));
@@ -89,13 +89,47 @@ public class TransactionContainsAllKeywordsPredicate
         predicatePairMap.put(TransactionProperty.AMOUNT, predicatePair);
     }
 
-    public void setName(String name) {
+    public void setNameKeyword(String name) {
         BooleanPredicatePair predicatePair = new BooleanPredicatePair(true,
                 new TransactionNameContainsKeywordsPredicate(
                         Collections.singletonList(name)));
 
         predicatePairMap.put(TransactionProperty.NAME, predicatePair);
     }
+
+    public void setLocationKeyword(String location) {
+        BooleanPredicatePair predicatePair = new BooleanPredicatePair(true,
+                new TransactionLocationContainsKeywordsPredicate(
+                        Collections.singletonList(location)));
+
+        predicatePairMap.put(TransactionProperty.LOCATION, predicatePair);
+    }
+
+    public void setDateTimeKeyword(String dateTime) {
+        BooleanPredicatePair predicatePair = new BooleanPredicatePair(true,
+                new TransactionDateTimeContainsValuePredicate(
+                        Collections.singletonList(dateTime)));
+
+        predicatePairMap.put(TransactionProperty.NAME, predicatePair);
+    }
+
+    public void setTypeKeyword(String type) {
+        BooleanPredicatePair predicatePair = new BooleanPredicatePair(true,
+                new TransactionTypeContainsValuePredicate(
+                        Collections.singletonList(type)));
+
+        predicatePairMap.put(TransactionProperty.TYPE, predicatePair);
+    }
+
+    public void setCategoryKeyword(String category) {
+        BooleanPredicatePair predicatePair = new BooleanPredicatePair(true,
+                new TransactionTypeContainsValuePredicate(
+                        Collections.singletonList(category)));
+
+        predicatePairMap.put(TransactionProperty.CATEGORY, predicatePair);
+    }
+
+
 
 
     @Override

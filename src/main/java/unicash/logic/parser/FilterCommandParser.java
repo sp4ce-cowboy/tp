@@ -13,8 +13,13 @@ import java.util.List;
 
 import unicash.logic.commands.FilterCommand;
 import unicash.logic.parser.exceptions.ParseException;
+import unicash.model.category.Category;
+import unicash.model.category.UniqueCategoryList;
 import unicash.model.commons.Amount;
+import unicash.model.transaction.DateTime;
+import unicash.model.transaction.Location;
 import unicash.model.transaction.Name;
+import unicash.model.transaction.Type;
 import unicash.model.transaction.predicates.TransactionContainsAllKeywordsPredicate;
 
 /**
@@ -22,10 +27,7 @@ import unicash.model.transaction.predicates.TransactionContainsAllKeywordsPredic
  */
 public class FilterCommandParser implements Parser<FilterCommand> {
 
-    public static final String EMPTY_STRING = "";
-    public static final List<String> EMPTY_STRING_LIST = List.of(EMPTY_STRING);
-
-    private static TransactionContainsAllKeywordsPredicate filterPredicate =
+    private TransactionContainsAllKeywordsPredicate filterPredicate =
             new TransactionContainsAllKeywordsPredicate();
 
     /**
@@ -46,19 +48,41 @@ public class FilterCommandParser implements Parser<FilterCommand> {
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
 
-        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_TYPE, PREFIX_AMOUNT, PREFIX_DATETIME,
-                PREFIX_LOCATION);
+        argMultimap.verifyNoDuplicatePrefixesFor(PREFIX_NAME, PREFIX_CATEGORY, PREFIX_TYPE,
+                PREFIX_AMOUNT, PREFIX_DATETIME, PREFIX_LOCATION);
 
 
         if (argMultimap.getValue(PREFIX_NAME).isPresent()) {
             Name transactionName = ParserUtil.parseTransactionName(argMultimap.getValue(PREFIX_NAME).get());
-            filterPredicate.setName(transactionName.toString());
+            filterPredicate.setNameKeyword(transactionName.toString());
 
         }
 
         if (argMultimap.getValue(PREFIX_AMOUNT).isPresent()) {
             Amount transactionAmount = ParserUtil.parseAmount(argMultimap.getValue(PREFIX_AMOUNT).get());
-            filterPredicate.setAmount(Amount.amountToDecimalString(transactionAmount));
+            filterPredicate.setAmountKeyword(Amount.amountToDecimalString(transactionAmount));
+        }
+
+        if (argMultimap.getValue(PREFIX_CATEGORY).isPresent()) {
+            Category transactionCategory = ParserUtil.parseCategory(argMultimap.getValue(PREFIX_CATEGORY).get());
+            filterPredicate.setCategoryKeyword(transactionCategory.toString());
+        }
+
+        if (argMultimap.getValue(PREFIX_LOCATION).isPresent()) {
+            Location transactionLocation = ParserUtil.parseLocation(
+                    argMultimap.getValue(PREFIX_LOCATION).get());
+            filterPredicate.setLocationKeyword(transactionLocation.toString());
+        }
+
+        if (argMultimap.getValue(PREFIX_DATETIME).isPresent()) {
+            DateTime transactionDateTime = ParserUtil.parseDateTime(
+                    argMultimap.getValue(PREFIX_DATETIME).get());
+            filterPredicate.setDateTimeKeyword(transactionDateTime.toString());
+        }
+
+        if (argMultimap.getValue(PREFIX_TYPE).isPresent()) {
+            Type transactionType = ParserUtil.parseType(argMultimap.getValue(PREFIX_TYPE).get());
+            filterPredicate.setTypeKeyword(transactionType.toString());
         }
 
         return new FilterCommand(filterPredicate);
