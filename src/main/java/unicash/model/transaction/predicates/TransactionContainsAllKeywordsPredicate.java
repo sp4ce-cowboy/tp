@@ -24,7 +24,7 @@ public class TransactionContainsAllKeywordsPredicate
     public static final String EMPTY_STRING = "";
     public static final List<String> EMPTY_STRING_LIST = List.of(EMPTY_STRING);
 
-    public HashMap<TransactionProperty, BooleanPredicatePair>
+    private HashMap<TransactionProperty, BooleanPredicatePair>
             predicatePairMap = new HashMap<>();
 
     /**

@@ -5,7 +5,7 @@ package unicash.commons.util;
  * @param <T> type parameter of the first type of {@code Object} to be contained
  * @param <U> type parameter of the second type of {@code Object} to be contained
  */
-public class Pair<T,U> {
+public class Pair<T, U> {
     private T t;
     private U u;
 

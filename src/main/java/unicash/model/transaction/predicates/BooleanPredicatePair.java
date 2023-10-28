@@ -1,9 +1,10 @@
 package unicash.model.transaction.predicates;
 
+import java.util.function.Predicate;
+
 import unicash.commons.util.Pair;
 import unicash.model.transaction.Transaction;
 
-import java.util.function.Predicate;
 
 /**
  * A wrapper class for containing Boolean and TransactionPredicate pairs.

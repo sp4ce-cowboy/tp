@@ -9,12 +9,9 @@ import static unicash.logic.parser.CliSyntax.PREFIX_LOCATION;
 import static unicash.logic.parser.CliSyntax.PREFIX_NAME;
 import static unicash.logic.parser.CliSyntax.PREFIX_TYPE;
 
-import java.util.List;
-
 import unicash.logic.commands.FilterCommand;
 import unicash.logic.parser.exceptions.ParseException;
 import unicash.model.category.Category;
-import unicash.model.category.UniqueCategoryList;
 import unicash.model.commons.Amount;
 import unicash.model.transaction.DateTime;
 import unicash.model.transaction.Location;
