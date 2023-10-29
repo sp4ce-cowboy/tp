@@ -40,7 +40,7 @@ public class FilterCommandParser implements Parser<FilterCommand> {
                         PREFIX_CATEGORY, PREFIX_LOCATION);
 
         String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
+        if (trimmedArgs.isEmpty() || !argMultimap.getPreamble().isEmpty()) {
             throw new ParseException(
                     String.format(MESSAGE_INVALID_COMMAND_FORMAT, FilterCommand.MESSAGE_USAGE));
         }
