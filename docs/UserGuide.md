@@ -732,3 +732,210 @@ the data of your previous UniCa$h home folder.
 | **Create Income**          | `create_income <name> [-value <value of income>] [-date <date of expense>]` <br> e.g., `create_income work at liho -date 19/09/2023 -value 900`                                                                                        |
 | **Delete Income**          | `delete_income <name>`                                                                                                                                                                                                                 |
 | **Find Income**            | `find_income <name> [-value_more <value of income>] [-value_less <value of income>] [-date <date of income>]` <br> e.g., `find_income work at liho`                                                                                    |
+
+
+---
+# START OF NEW UG
+This header exists to separate the old and new UG format. Add your contributions to the
+relevant sections below and copy over previous contributions while doing so.  By submission time, this header should be at the top of the
+page, right below the page frontmatter.
+
+**Remove this header before final submission.**
+
+End of header.
+
+---
+
+## 1. About UniCa$h 
+
+Unicash is this and that ...
+
+## 2. Index of Contents
+
+## 3. Quick Start
+
+### 3.1 Installation
+
+1. Ensure you have Java `11` or above installed in your Computer.
+
+2. Download the latest `unicash.jar` from [our latest release](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3).
+
+3. Copy the file to the folder you want to use as the _home folder_ for your UniCa$h.
+
+4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar unicash.jar` command to
+   run the application.
+
+   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
+   ![Ui](images/Ui.png)
+
+5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will
+   open the help window.<br>
+
+6. Refer to the [Features](#features) below for details of each command.
+
+### 3.2 UI Layout 
+
+UI layout and description of what each section means
+
+### 3.3 Command Breakdown
+
+Breakdown the command and the different prefixes
+
+Talk about how capitalised names are used as example placeholders of values
+n/NAME, means the capitalised NAME is a placeholder value
+
+### 3.4 Command Execution Tutorial
+
+Walkthrough of how to run a command with visual guides
+
+## 4. Features
+
+### 4.1 Transaction Commands
+
+#### 4.1.1 AddTransactionCommand
+
+Adds a new `Transaction` to UniCa$h.
+
+Command: `add_transaction n/NAME type/TYPE amt/AMOUNT dt/DATETIME l/LOCATION c/CATEGORY`
+
+Command Options:
+
+| Option Name | Optional? | Purpose                                                                                       |
+|-------------|-----------|-----------------------------------------------------------------------------------------------|
+| n/          | No        | Name of the transaction.                                                                      |
+| type/       | No        | Transaction type of transaction.<br/>Valid types are `income` and `expense`.                  |
+| amt/        | No        | Monetary amount of transaction. Has to be a positive value.                                   |
+| dt/         | Yes       | Date and time where transaction was made.<br/>Defaults to current date time if not specified. |
+| l/          | Yes       | Location where transaction was made.<br/>Defaults to `''` if not specified.                   |
+| c/          | Yes       | Category tagged to that transaction.<br/>No categories tagged if not specified.               |
+
+Important notes:
+1. There is a character limit for `Name` and `Location` set at up to 500 characters.
+2. `Amount` entered has to be positive for both `income` and `expense`.
+3. `Amount` is automatically rounded to 2 decimal places.
+4. `UniqueCategoryList` enforces a unique (case-insensitive) constraint on `Category` it stores.
+5. `UniqueCategoryList` enforces a max size of 5 `Category`
+6. There is a character limit for `Category` set at up to 15 characters/
+
+##### Successful Execution
+
+###### Example 1
+
+> **Case**: Add transaction with name, amount, type, datetime, location and a category.
+>
+> **Input**: `add_transaction n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/ntuc c/household`
+>
+> **Output**:
+> ```
+> New transaction added:
+> 
+> Name: Buying groceries;
+> Type: expense;
+> Amount: $300.00;
+> Date: 18 Aug 2023 19:30;
+> Location: ntuc;
+> Categories: #household
+> ```
+> 
+> <img src="images/unicash/command-outputs/addTransactionSuccessOutput1.png" width="1000" />
+
+###### Example 2
+
+> **Case**: Add transaction with name, amount and type.
+>
+> **Input**: `add_transaction n/Working type/income amt/8000`
+>
+> **Output**:
+> ```
+> New transaction added:
+> 
+> Name: Working;
+> Type: income;
+> Amount: $8000.00;
+> Date: 28 Oct 2023 19:01;
+> Location: -;
+> Categories:
+> ```
+>
+> <img src="images/unicash/command-outputs/addTransactionSuccessOutput2.png" width="1000" />
+
+##### Failed Execution
+
+###### Example 1
+
+> **Case**: Missing compulsary fields.
+>
+> **Input**: `add_transaction`
+>
+> **Output**:
+> ```
+> Invalid command format! 
+>
+> add_transaction: Adds a transaction to UniCa$h.
+>
+> Parameters: n/NAME type/TYPE amt/AMOUNT dt/DATETIME l/LOCATION [c/CATEGORY]...
+>
+> Example: add_transaction n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/ntuc c/household
+> ```
+> <img src="images/unicash/command-outputs/addTransactionFailedOutput1.png" width="1000" />
+
+###### Example 2
+
+> **Case**: Duplicate categories with valid compulsory fields.
+>
+> **Input**: `add_transaction n/Buying groceries type/expense amt/300 c/household c/household`
+>
+> **Output**:
+> ```
+> All categories must be case-insensitively unique, duplicate categories are not allowed.
+> ```
+> <img src="images/unicash/command-outputs/addTransactionFailedOutput2.png" width="1000" />
+
+###### Example 3
+
+> **Case**: More than 5 categories with valid compulsory fields.
+>
+> **Input**: `add_transaction n/Buying groceries type/expense amt/300 c/household c/entertainment c/education c/fun c/school c/test`
+>
+> **Output**:
+> ```
+> There should only be a maximum of 5 unique categories.
+> ```
+> > <img src="images/unicash/command-outputs/addTransactionFailedOutput3.png" width="1000" />
+
+
+#### 4.1.3 EditTransactionCommand
+
+#### 4.1.4 DeleteTransactionCommand
+
+#### 4.1.5 FindCommand
+
+#### 4.1.6 GetCommand
+
+#### 4.1.7 ListCommand
+
+#### 4.1.8 ClearTransactionsCommand
+
+### 4.2 Summary Commands
+
+#### 4.2.1 GetTotalExpenditureCommand
+
+#### 4.2.2 SummaryCommand
+
+### 4.3 General Utility Commands
+
+#### 4.3.1 HelpCommand
+
+#### 4.3.2 ResetCommand
+
+#### 4.3.3 ExitCommand
+
+## 5. Troubleshoot
+
+## 6. Known Issues
+
+## 7. FAQ
+
+## 8. Acknowledgements
+
+## 9. Glossary

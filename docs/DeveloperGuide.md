@@ -764,7 +764,8 @@ The following are some noteworthy points regarding the attributes
 2. There is a character limit for `Name` and `Location` set at up to 500 characters.
 3. `Amount` entered has to be positive for both `income` and `expense`.
 4. `Amount` is automatically rounded to 2 decimal places.
-5. `UniqueCategoryList` enforces a unique constraint on `Category` it stores.
+5. `UniqueCategoryList` enforces a unique (case-insensitive) constraint on `Category` it stores.
+6. `UniqueCategoryList` enforces a max size of 5 `Category`
 6. There is a character limit for `Category` set at up to 15 characters/
 
 #### 5.1.2 Add Transaction
@@ -797,7 +798,7 @@ the lifeline reaches the end of diagram.
 
 Note that only the `Category` field is allowed to be specified multiple times, while the other fields can only be specified once, else
 a `ParserException` is thrown. Another noteworthy point is that `Category` that are added are to be case-insensitively unique and can only be up to
-a specified value in the `UniqueCategoryList` class. Else, a `ParserException` would be thrown.
+a specified value of 5 in the `UniqueCategoryList` class. Else, a `ParserException` would be thrown.
 
 
 
