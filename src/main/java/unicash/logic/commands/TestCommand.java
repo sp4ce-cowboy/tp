@@ -12,9 +12,9 @@ import unicash.model.Model;
  */
 public class TestCommand extends Command {
 
-    public static final String COMMAND_WORD = "test_unicash_1234";
+    public static final String COMMAND_WORD = "test_unicash";
     public static final String MESSAGE_SUCCESS =
-            "UNICA$H TEST MODE TRANSACTIONS!";
+            "UNICA$H TEST MODE TRANSACTIONS ADDED!";
 
     @Override
     public CommandResult execute(Model model) {
