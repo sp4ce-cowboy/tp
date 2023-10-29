@@ -5,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import unicash.commons.core.index.Index;
+import unicash.commons.util.CommandUsage;
+import unicash.commons.util.ExampleGenerator;
 import unicash.commons.util.ToStringBuilder;
 import unicash.logic.UniCashMessages;
 import unicash.logic.commands.exceptions.CommandException;
@@ -18,12 +20,15 @@ public class DeleteTransactionCommand extends Command {
 
     public static final String COMMAND_WORD = "delete_transaction";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the transaction identified by the index number used in the displayed transaction list.\n"
-            + "\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "\n"
-            + "Example: " + COMMAND_WORD + " 1";
+    public static final String MESSAGE_USAGE = new CommandUsage.Builder()
+            .setCommandWord(COMMAND_WORD)
+            .setDescription(
+                    "Deletes the transaction identified by the index number used in the displayed transaction list."
+            )
+            .setArgument("Index (must be a positive integer)")
+            .setExample(ExampleGenerator.generate(COMMAND_WORD, "1"))
+            .build()
+            .toString();
 
     public static final String MESSAGE_DELETE_TRANSACTION_SUCCESS = "Deleted Transaction:\n\n%1$s";
 

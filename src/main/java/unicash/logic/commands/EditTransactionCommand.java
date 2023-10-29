@@ -15,6 +15,8 @@ import java.util.Optional;
 
 import unicash.commons.core.index.Index;
 import unicash.commons.util.CollectionUtil;
+import unicash.commons.util.CommandUsage;
+import unicash.commons.util.ExampleGenerator;
 import unicash.commons.util.ToStringBuilder;
 import unicash.logic.UniCashMessages;
 import unicash.logic.commands.exceptions.CommandException;
@@ -33,26 +35,33 @@ import unicash.model.transaction.Type;
 public class EditTransactionCommand extends Command {
 
     public static final String COMMAND_WORD = "edit_transaction";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the transaction identified "
-            + "by the index number used in the displayed transaction list."
-            + "Existing values will be overwritten by the input values!"
-            + "\n\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_TYPE + "TYPE] "
-            + "[" + PREFIX_AMOUNT + "AMOUNT] "
-            + "[" + PREFIX_DATETIME + "DATETIME] "
-            + "[" + PREFIX_LOCATION + "LOCATION]"
-            + "[" + PREFIX_CATEGORY + "CATEGORY]..."
-            + "\n\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_NAME + "Buying groceries "
-            + PREFIX_TYPE + "expense "
-            + PREFIX_AMOUNT + "300 "
-            + PREFIX_DATETIME + "18-08-2001 19:30 "
-            + PREFIX_LOCATION + "ntuc"
-            + PREFIX_CATEGORY + "household expenses ";
+    public static final String MESSAGE_USAGE = new CommandUsage.Builder()
+            .setCommandWord(COMMAND_WORD)
+            .setDescription(
+                    "Edits the details of the transaction identified by the "
+                            + "index number used in the displayed transaction list."
+            )
+            .setArgument("Index (must be a positive integer)")
+            .addParameter(PREFIX_NAME, "Name", true, false)
+            .addParameter(PREFIX_TYPE, "Type", true, false)
+            .addParameter(PREFIX_AMOUNT, "Amount", true, false)
+            .addParameter(PREFIX_DATETIME, "DateTime", true, false)
+            .addParameter(PREFIX_LOCATION, "Location", true, false)
+            .addParameter(PREFIX_CATEGORY, "Category", true, true)
+            .setExample(
+                    ExampleGenerator.generate(
+                            COMMAND_WORD,
+                            "1",
+                            PREFIX_NAME,
+                            PREFIX_TYPE,
+                            PREFIX_AMOUNT,
+                            PREFIX_DATETIME,
+                            PREFIX_LOCATION,
+                            PREFIX_CATEGORY
+                    )
+            )
+            .build()
+            .toString();
 
 
     public static final String MESSAGE_EDIT_TRANSACTION_SUCCESS = "Edited Transaction: \n\n%1$s";
