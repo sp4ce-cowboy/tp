@@ -6,7 +6,7 @@ import java.util.Arrays;
 
 import unicash.logic.commands.FindCommand;
 import unicash.logic.parser.exceptions.ParseException;
-import unicash.model.transaction.predicates.TransactionContainsKeywordsPredicate;
+import unicash.model.transaction.predicates.TransactionContainsAnyKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new FindCommand object
@@ -27,7 +27,7 @@ public class FindCommandParser implements Parser<FindCommand> {
 
         String[] nameKeywords = trimmedArgs.split("\\s+");
 
-        return new FindCommand(new TransactionContainsKeywordsPredicate(
+        return new FindCommand(new TransactionContainsAnyKeywordsPredicate(
                 Arrays.asList(nameKeywords)));
     }
 

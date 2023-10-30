@@ -31,7 +31,7 @@ import unicash.logic.commands.SummaryCommand;
 import unicash.logic.parser.exceptions.ParseException;
 import unicash.model.budget.Budget;
 import unicash.model.transaction.Transaction;
-import unicash.model.transaction.predicates.TransactionContainsKeywordsPredicate;
+import unicash.model.transaction.predicates.TransactionContainsAnyKeywordsPredicate;
 import unicash.testutil.BudgetBuilder;
 import unicash.testutil.EditTransactionDescriptorBuilder;
 import unicash.testutil.TransactionBuilder;
@@ -52,7 +52,7 @@ public class UniCashParserTest {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
         FindCommand command = (FindCommand) parser.parseCommand(
                 FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new TransactionContainsKeywordsPredicate(keywords)), command);
+        assertEquals(new FindCommand(new TransactionContainsAnyKeywordsPredicate(keywords)), command);
     }
 
     @Test

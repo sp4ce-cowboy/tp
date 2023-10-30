@@ -7,7 +7,7 @@ import unicash.commons.util.ExampleGenerator;
 import unicash.commons.util.ToStringBuilder;
 import unicash.logic.UniCashMessages;
 import unicash.model.Model;
-import unicash.model.transaction.predicates.TransactionContainsKeywordsPredicate;
+import unicash.model.transaction.predicates.TransactionContainsAnyKeywordsPredicate;
 
 /**
  * Finds and lists all transactions in UniCa$h whose name contains any of the argument keywords.
@@ -28,9 +28,9 @@ public class FindCommand extends Command {
             .build()
             .toString();
 
-    private final TransactionContainsKeywordsPredicate predicate;
+    private final TransactionContainsAnyKeywordsPredicate predicate;
 
-    public FindCommand(TransactionContainsKeywordsPredicate predicate) {
+    public FindCommand(TransactionContainsAnyKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 

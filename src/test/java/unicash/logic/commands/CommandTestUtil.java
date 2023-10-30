@@ -19,7 +19,7 @@ import unicash.logic.commands.exceptions.CommandException;
 import unicash.model.Model;
 import unicash.model.UniCash;
 import unicash.model.transaction.Transaction;
-import unicash.model.transaction.predicates.TransactionContainsKeywordsPredicate;
+import unicash.model.transaction.predicates.TransactionContainsAnyKeywordsPredicate;
 import unicash.testutil.EditTransactionDescriptorBuilder;
 
 /**
@@ -147,7 +147,7 @@ public class CommandTestUtil {
         Transaction transaction = model.getFilteredTransactionList().get(targetIndex.getZeroBased());
         final String[] splitName = transaction.getName().fullName.split("\\s+");
         model.updateFilteredTransactionList(
-                new TransactionContainsKeywordsPredicate(Collections.singletonList(splitName[0])));
+                new TransactionContainsAnyKeywordsPredicate(Collections.singletonList(splitName[0])));
 
         assertEquals(1, model.getFilteredTransactionList().size());
     }
