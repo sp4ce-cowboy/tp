@@ -1,0 +1,23 @@
+@startuml
+!include ../style.puml
+skinparam arrowThickness 1.1
+skinparam arrowColor MODEL_COLOR
+skinparam classBackgroundColor MODEL_COLOR
+
+title Transaction Class Diagram
+
+TransactionList *-down- "0...*" Transaction
+
+Transaction "1" *-down- "1" UniqueCategoryList: Composition
+Transaction "1" *-down- "1" Name: Composition
+Transaction "1" *-down- "1" Amount: Composition
+Transaction "1" *-down- "1" Type: Composition
+Transaction "1" *-down- "1" DateTime: Composition
+Transaction "1" *-down- "1" Location: Composition
+
+Type "1" *-down- "1" TransactionType: Composition
+
+UniqueCategoryList *-down- "0...5" Category: Composition
+note right: 5 Unique Category maximum enforced by UniqueCategoryList
+
+@enduml

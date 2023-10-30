@@ -1,0 +1,20 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+
+start
+:User enters get total expenditure command;
+if () then ([else])
+  :Parse exception thrown;
+  stop
+else ([All compulsory fields are present and in the correct format])
+  if () then ([else])
+    :Return total of all expenses in given month;
+  else ([Category provided])
+    :Return total of all expenses in given month and category;
+  endif
+endif
+stop
+
+@enduml

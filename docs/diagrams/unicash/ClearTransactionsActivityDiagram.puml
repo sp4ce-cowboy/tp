@@ -1,0 +1,14 @@
+@startuml
+
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+
+: User enters clear_transactions command;
+
+: All transactions have been cleared;
+
+stop
+
+@enduml

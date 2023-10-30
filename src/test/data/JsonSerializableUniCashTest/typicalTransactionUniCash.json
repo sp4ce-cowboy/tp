@@ -1,0 +1,31 @@
+{
+  "transactions" : [ {
+    "name" : "Lunch at McDonalds",
+    "amount" : 17.4,
+    "dateTime" : "15-09-2023 11:00",
+    "location" : "Clementi Mall",
+    "type" : "expense",
+    "categories" : [ "food" ]
+  }, {
+    "name" : "Buy clothes",
+    "amount" : 109.0,
+    "dateTime" : "17-09-2023 18:30",
+    "location" : "Uniqlo Bugis",
+    "type" : "expense",
+    "categories" : [ "shopping" ]
+  }, {
+    "name" : "Intern allowance september",
+    "amount" : 1800.0,
+    "dateTime" : "17-09-2023 00:00",
+    "location" : "-",
+    "type" : "income",
+    "categories" : [ "salary" ]
+  }, {
+    "name" : "Evening with friends",
+    "amount" : 49.5,
+    "dateTime" : "17-09-2023 00:00",
+    "location" : "Clarke Quay",
+    "type" : "expense",
+    "categories" : [ "social" ]
+  } ]
+}

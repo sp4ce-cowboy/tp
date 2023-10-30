@@ -1,0 +1,17 @@
+{
+  "transactions": [ {
+    "name" : "Valid transaction",
+    "amount" : 17.0,
+    "category" : "Food",
+    "dateTime" : "15-09-2023 00:00",
+    "location" : "-",
+    "type" : "expense"
+  }, {
+    "name" : "Invalid transaction",
+    "amount" : -17.0,
+    "category" : "@@@",
+    "dateTime" : "15-09-2023 00:00",
+    "location" : "-",
+    "type" : "others"
+  } ]
+}

@@ -1,0 +1,76 @@
+
+@startuml
+!include ../style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant ":AddTransactionCommandParser" as AddTransactionCommandParser LOGIC_COLOR
+participant "transaction:Transaction" as Transaction LOGIC_COLOR
+participant "command:AddTransactionCommand" as AddTransactionCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+
+
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("add_transaction n/shopping t/expense amt/30")
+activate LogicManager
+
+LogicManager -> UniCashParser : parseCommand("add_transaction n/shopping t/expense amt/30")
+activate UniCashParser
+
+create AddTransactionCommandParser
+UniCashParser -> AddTransactionCommandParser
+activate AddTransactionCommandParser
+
+AddTransactionCommandParser --> UniCashParser
+deactivate AddTransactionCommandParser
+
+UniCashParser -> AddTransactionCommandParser : parse("n/shopping t/expense amt/30")
+activate AddTransactionCommandParser
+
+create Transaction
+AddTransactionCommandParser -> Transaction
+activate Transaction
+Transaction --> AddTransactionCommandParser : transaction
+deactivate Transaction
+
+create AddTransactionCommand
+AddTransactionCommandParser -> AddTransactionCommand : AddTransactionCommand("transaction")
+activate AddTransactionCommand
+AddTransactionCommand --> AddTransactionCommandParser
+deactivate AddTransactionCommand
+
+AddTransactionCommandParser --> UniCashParser : command
+deactivate AddTransactionCommandParser
+
+UniCashParser --> LogicManager : command
+deactivate UniCashParser
+destroy AddTransactionCommandParser
+
+LogicManager -> AddTransactionCommand : execute(model)
+activate AddTransactionCommand
+
+AddTransactionCommand -> Model : addTransaction(transaction)
+activate Model
+
+Model --> AddTransactionCommand
+deactivate Model
+
+create CommandResult
+AddTransactionCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> AddTransactionCommand
+deactivate CommandResult
+
+AddTransactionCommand --> LogicManager
+deactivate AddTransactionCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

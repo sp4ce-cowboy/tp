@@ -1,0 +1,24 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+
+start
+:Set up repository;
+:Check out repository and use master branch;
+:Force merge to master;
+if () then ([else])
+else ([if runner OS is Linux])
+  :Run repository-wide tests;
+endif
+:Validate Gradle wrapper;
+:Setup JDK 11 for both JDK and JavaFX;
+:Build and check project with Gradle;
+if () then ([else])
+else ([if runner OS is Windows])
+  :Upload coverage reports to Codecov;
+endif
+
+stop
+
+@enduml

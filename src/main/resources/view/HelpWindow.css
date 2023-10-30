@@ -1,0 +1,21 @@
+#copyButton, #helpMessage {
+    -fx-text-fill: black;
+    -fx-font-size: 16px;
+    -fx-font-family: "Inter";
+}
+
+#copyButton {
+    -fx-background-color: dimgray;
+}
+
+#copyButton:hover {
+    -fx-background-color: darkgray;
+}
+
+#copyButton:armed {
+    -fx-background-color: gray;
+}
+
+#helpMessageContainer {
+    -fx-background-color: white;
+}

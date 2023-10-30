@@ -1,0 +1,84 @@
+
+@startuml
+!include ../style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant ":EditTransactionCommandParser" as EditTransactionCommandParser LOGIC_COLOR
+participant ":EditTransactionDescriptor" as EditTransactionDescriptor LOGIC_COLOR
+participant "editedTransaction:Transaction" as Transaction LOGIC_COLOR
+participant "command:EditTransactionCommand" as EditTransactionCommand LOGIC_COLOR
+participant "commandResult:CommandResult" as CommandResult LOGIC_COLOR
+
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("edit_transaction 4 c/food")
+activate LogicManager
+
+LogicManager -> UniCashParser : parseCommand("edit_transaction 4 c/food")
+activate UniCashParser
+
+create EditTransactionCommandParser
+UniCashParser -> EditTransactionCommandParser
+activate EditTransactionCommandParser
+
+EditTransactionCommandParser --> UniCashParser
+deactivate EditTransactionCommandParser
+
+UniCashParser -> EditTransactionCommandParser : parse("4 c/food")
+activate EditTransactionCommandParser
+
+create EditTransactionDescriptor
+EditTransactionCommandParser -> EditTransactionDescriptor
+activate EditTransactionDescriptor
+
+EditTransactionDescriptor --> EditTransactionCommandParser
+deactivate EditTransactionDescriptor
+
+create EditTransactionCommand
+EditTransactionCommandParser -> EditTransactionCommand
+activate EditTransactionCommand
+
+EditTransactionCommand --> EditTransactionCommandParser
+deactivate EditTransactionCommand
+
+EditTransactionCommandParser --> UniCashParser : command
+deactivate EditTransactionCommandParser
+
+UniCashParser --> LogicManager : command
+deactivate UniCashParser
+
+LogicManager -> EditTransactionCommand : command.execute(model)
+activate EditTransactionCommand
+
+create Transaction
+EditTransactionCommand -> Transaction
+activate Transaction
+
+Transaction --> EditTransactionCommand
+deactivate Transaction
+
+EditTransactionCommand -> Model : setTransaction(transactionToEdit, editedTransaction)
+activate Model
+
+Model --> EditTransactionCommand
+deactivate Model
+
+create CommandResult
+EditTransactionCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> EditTransactionCommand
+deactivate CommandResult
+
+EditTransactionCommand --> LogicManager : commandResult
+deactivate EditTransactionCommand
+
+[<--LogicManager : commandResult
+deactivate LogicManager
+@enduml

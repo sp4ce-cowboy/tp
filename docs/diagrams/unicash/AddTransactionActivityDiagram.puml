@@ -1,0 +1,20 @@
+@startuml
+
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+
+: User enters add transaction command;
+
+if () then ([else])
+  :Parse exception thrown;
+  stop
+else ([All compulsory fields are present and in the correct format])
+  :Transaction successfully added ;
+endif
+
+
+stop
+
+@enduml

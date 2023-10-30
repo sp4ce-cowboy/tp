@@ -1,0 +1,10 @@
+{
+  "transactions": [ {
+    "name" : "Invalid transaction",
+    "amount" : -17.0,
+    "categories" : ["@@@"],
+    "dateTime" : "15-09-2023 00:00",
+    "location" : "-",
+    "type" : "others"
+  } ]
+}
