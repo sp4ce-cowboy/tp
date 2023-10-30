@@ -1,11 +1,18 @@
 package unicash.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static unicash.logic.parser.CliSyntax.PREFIX_AMOUNT;
+import static unicash.logic.parser.CliSyntax.PREFIX_CATEGORY;
+import static unicash.logic.parser.CliSyntax.PREFIX_DATETIME;
+import static unicash.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static unicash.logic.parser.CliSyntax.PREFIX_NAME;
+import static unicash.logic.parser.CliSyntax.PREFIX_TYPE;
 
+import unicash.commons.util.CommandUsage;
+import unicash.commons.util.ExampleGenerator;
 import unicash.commons.util.ToStringBuilder;
 import unicash.logic.UniCashMessages;
 import unicash.logic.commands.exceptions.CommandException;
-import unicash.logic.parser.CliSyntax;
 import unicash.model.Model;
 import unicash.model.transaction.Transaction;
 
@@ -16,23 +23,28 @@ import unicash.model.transaction.Transaction;
 public class AddTransactionCommand extends Command {
     public static final String COMMAND_WORD = "add_transaction";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a transaction to UniCa$h. \n"
-            + "\n"
-            + "Parameters: "
-            + CliSyntax.PREFIX_NAME + "NAME "
-            + CliSyntax.PREFIX_TYPE + "TYPE "
-            + CliSyntax.PREFIX_AMOUNT + "AMOUNT "
-            + CliSyntax.PREFIX_DATETIME + "DATETIME "
-            + CliSyntax.PREFIX_LOCATION + "LOCATION "
-            + "[" + CliSyntax.PREFIX_CATEGORY + "CATEGORY]...\n"
-            + "\n"
-            + "Example: " + COMMAND_WORD + " "
-            + CliSyntax.PREFIX_NAME + "Buying groceries "
-            + CliSyntax.PREFIX_TYPE + "expense "
-            + CliSyntax.PREFIX_AMOUNT + "300 "
-            + CliSyntax.PREFIX_DATETIME + "18-08-2023 19:30 "
-            + CliSyntax.PREFIX_LOCATION + "ntuc "
-            + CliSyntax.PREFIX_CATEGORY + "household";
+    public static final String MESSAGE_USAGE = new CommandUsage.Builder()
+            .setCommandWord(COMMAND_WORD)
+            .setDescription("Adds a transaction to UniCa$h.")
+            .setExample(
+                    ExampleGenerator.generate(
+                            "add_transaction",
+                            PREFIX_NAME,
+                            PREFIX_TYPE,
+                            PREFIX_AMOUNT,
+                            PREFIX_DATETIME,
+                            PREFIX_LOCATION,
+                            PREFIX_CATEGORY
+                    )
+            )
+            .addParameter(PREFIX_NAME, "Name")
+            .addParameter(PREFIX_TYPE, "Type")
+            .addParameter(PREFIX_AMOUNT, "Amount")
+            .addParameter(PREFIX_DATETIME, "DateTime", true, false)
+            .addParameter(PREFIX_LOCATION, "Location", true, false)
+            .addParameter(PREFIX_CATEGORY, "Category", true, true)
+            .build()
+            .toString();
 
     public static final String MESSAGE_SUCCESS = "New transaction added: \n\n%1$s";
 
@@ -45,6 +57,7 @@ public class AddTransactionCommand extends Command {
         requireNonNull(transaction);
         toAdd = transaction;
     }
+
     @Override
     public CommandResult execute(Model model) throws CommandException {
         requireNonNull(model);

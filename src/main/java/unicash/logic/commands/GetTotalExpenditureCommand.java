@@ -8,6 +8,8 @@ import static unicash.logic.parser.CliSyntax.PREFIX_YEAR;
 import java.time.Month;
 
 import unicash.commons.enums.TransactionType;
+import unicash.commons.util.CommandUsage;
+import unicash.commons.util.ExampleGenerator;
 import unicash.commons.util.StringUtil;
 import unicash.commons.util.ToStringBuilder;
 import unicash.logic.UniCashMessages;
@@ -21,12 +23,15 @@ import unicash.model.category.Category;
 public class GetTotalExpenditureCommand extends Command {
     public static final String COMMAND_WORD = "get_total_expenditure";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Retrieves the total expenditure by month with optional filters for category and year.\n"
-            + "Parameters: "
-            + PREFIX_MONTH + "MONTH "
-            + PREFIX_CATEGORY + "CATEGORY "
-            + PREFIX_YEAR + "YEAR\n";
+    public static final String MESSAGE_USAGE = new CommandUsage.Builder()
+            .setCommandWord(COMMAND_WORD)
+            .setDescription("Retrieves the total expenditure by month with optional filters for category and year.")
+            .addParameter(PREFIX_MONTH, "Month")
+            .addParameter(PREFIX_CATEGORY, "Category", true, false)
+            .addParameter(PREFIX_YEAR, "Year", true, false)
+            .setExample(ExampleGenerator.generate(COMMAND_WORD, PREFIX_MONTH, PREFIX_CATEGORY, PREFIX_YEAR))
+            .build()
+            .toString();
 
     public static final String MESSAGE_SUCCESS = "Your total expenditure in %1$s %2$d was %3$.2f";
 
