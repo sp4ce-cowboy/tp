@@ -27,6 +27,9 @@ public class TransactionContainsAllKeywordsPredicate
     private HashMap<TransactionProperty, BooleanPredicatePair>
             predicatePairMap = new HashMap<>();
 
+    // From parser, get all possible predicates. Add them to a predicate array list in
+
+
     /**
      * Creates a composed predicate object.
      */
