@@ -1,0 +1,91 @@
+
+@startuml
+!include ../../style.puml
+
+skinparam noteTextAlignment left
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant "command:GetBudgetCommand" as GetBudgetCommand LOGIC_COLOR
+participant "commandResult:CommandResult" as CommandResult LOGIC_COLOR
+
+
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+note left LogicManager
+In this sequence diagram, we set
+""command"" = "get_budget"
+""body"" is empty
+end note
+
+[-> LogicManager : execute(command)
+activate LogicManager
+
+LogicManager -> UniCashParser : parseCommand(command)
+activate UniCashParser
+
+create GetBudgetCommand
+UniCashParser -> GetBudgetCommand
+activate GetBudgetCommand
+GetBudgetCommand --> UniCashParser
+deactivate GetBudgetCommand
+
+UniCashParser --> LogicManager
+deactivate UniCashParser
+
+LogicManager -> GetBudgetCommand : execute(model)
+activate GetBudgetCommand
+
+GetBudgetCommand -> Model : getBudget()
+activate Model
+Model --> GetBudgetCommand : budget
+deactivate Model
+
+alt budget is null
+
+    create CommandResult
+    GetBudgetCommand -> CommandResult
+    activate CommandResult
+
+    CommandResult --> GetBudgetCommand : no budget message
+    deactivate CommandResult
+
+    GetBudgetCommand --> LogicManager
+
+else else
+
+    GetBudgetCommand -> Model : getFilteredTransactionList()
+    activate Model
+    Model --> GetBudgetCommand
+    deactivate Model
+    GetBudgetCommand -> GetBudgetCommand : calculate expense relative to budget
+    activate GetBudgetCommand
+    GetBudgetCommand --> GetBudgetCommand : remainder
+    deactivate GetBudgetCommand
+
+    alt remainder is negative
+        create CommandResult
+        GetBudgetCommand -> CommandResult
+        activate CommandResult
+        CommandResult --> GetBudgetCommand : negative amount message
+        deactivate CommandResult
+        GetBudgetCommand --> LogicManager
+    else else
+        create CommandResult
+        GetBudgetCommand -> CommandResult
+        activate CommandResult
+        CommandResult --> GetBudgetCommand : non-negative amount message
+        deactivate CommandResult
+        GetBudgetCommand --> LogicManager
+    end
+
+end
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

@@ -3,19 +3,29 @@ layout: page
 title: User Guide
 ---
 
-UniCa$h is a **is a desktop application used for university students who want to be more financially conscious,
-optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface 
+UniCa$h **is a desktop application used for university students who want to be more financially conscious,
+optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface
 (GUI). If you can type fast, UniCa$h can get your contact management tasks done faster than traditional GUI apps.
+
+<div class="callout callout-important" markdown="span">
+Please read through sections [Installation](#installation) and [Command Breakdown](#command-breakdown) before approaching any command documentation
+</div>
 
 {% include toc.html %}
 
---------------------------------------------------------------------------------------------------------------------
+---
 
-## Quick start
+## Quick Start
+
+<div class="callout callout-important" markdown="span">
+Please read through sections [Installation](#installation) and [Command Breakdown](#command-breakdown) before approaching any command documentation
+</div>
+
+### Installation
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-2. Download the latest `unicash.jar` from [coming soon]().
+2. Download the latest `unicash.jar` from [GitHub](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3.1).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your UniCa$h.
 
@@ -25,827 +35,254 @@ optimized for use via a Command Line Interface** (CLI) while still having the be
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
    ![Ui](images/Ui.png)
 
-5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will
-   open the help window.<br>
-   Some example commands you can try:
+5. Type the command in the command box and press `Enter` to execute it. e.g. typing **`help`** and pressing `Enter` will
+   open the help window.
 
-    * `commands coming soon!`
+   To get started with UniCa$h, you can run the `add_transactions` command!
 
 6. Refer to the [Features](#features) below for details of each command.
 
---------------------------------------------------------------------------------------------------------------------
+### Command Breakdown
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+This section is important in understanding the constraints and components of a command. All constraints apply to all usages of these prefixes in the commands.
+</div>
+
+Commands in UniCa$h have the following structure:
+
+<p style="text-align: center;">
+`command_word (ARGUMENT) (PREFIXES)`
+</p>
+
+| command_word                                                                                                    | ARGUMENT                                                                                                      | PREFIXES                                                                                                               |
+|-----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| Represents the command to run. May be referenced by alternative shorthands as described in each command section | Comes before all prefixes and often used to reference an index within the transactions list<br>Often optional | Often referred to as "Parameters"<br>Commonly used to specify various attributes/properties for a given `command_word` |
+
+#### Argument Types
+
+| Argument              | Meaning                                  | Constraints                                                                                               | Remarks                                                                          |
+|-----------------------|------------------------------------------|-----------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------|
+| `INDEX`<sup>1,2</sup> | Index of transaction in transaction list | Integer indices that must be `>= 1` (positive integer) and are one-indexed, i.e. start with `1`, not `0`. | Commonly used in edit and delete to reference transactions in a transaction list |
+
+**Notes:**
+
+1. `INDEX` uses positive integers which we define as integers that are strictly greater than `0`. 
+2. UniCa$h divides the error handling for `INDEX` into two cases, non-positive integers, i.e. `<= 0` values, are treated as invalid command formats while values that exceed the transaction list will be treated as being an invalid index as the supported values are `[1, transaction list size]`.
+
+<div class="callout callout-info" markdown="span">
+For more clarity about how commands are parsed and why `INDEX` is parsed this way, please refer to our [developer guide](DeveloperGuide.html#delete-transaction) on how some commands like `delete_transaction` handles `INDEX`.
+</div>
+
+#### Prefixes
+
+Prefixes are in the format: 
+
+<p style="text-align: center;">
+`prefix/Value`
+</p>
+
+Prefixes have several variations with different notations:
+
+||Mandatory|Optional<sup>1</sup>|
+||---------|--------|
+|Not variadic|`prefix/Value`|`[prefix/Value]`|
+|Variadic|`prefix/Value...`|`[prefix/Value]...`|
+
+**Notes:**
+
+1. Optional fields imply that the _omission_, not the absence of value when used, is supported. This means that `l/` is **_NOT_** an optional parameter, but rather a blank one.
+
+#### Prefix Types
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The constraints for the prefixes used in UniCa$h are universal across all commands.
+<br><br>
+Note that each command might use the prefixes slightly differently so refer to each command's details for more information.
+</div>
+
+| Prefix                                                                 | Constraints                                                                                                                                           | Remarks                                                                                                                                                                                                  | Valid                                                                             | Invalid                                               |
+|------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------|
+| `n/`<br><br>(Transaction name)                                         | At least 1 character but no more than 500 characters.<br><br>Only supports alphanumeric characters, spaces, (, ), _, @, -, #, &, ., and , characters. | Blank names are not allowed.                                                                                                                                                                             | `n/Hi (John)`                                                                     | `n/`<br>`n/Two ^`                                     |
+| `type/`<br><br>(Type of transaction)                                   | Only supported values are `expense` and `income`.                                                                                                     | Case-sensitive, any other values, including blank values (i.e. `type/`), will be rejected.                                                                                                               | `type/expense`<br>`type/income`                                                   | `type/`<br>`type/EXPENSE`<br>`type/hi`                |
+| `amt/`<sup>1</sup><br><br>(Monetary amount of budget and transactions) | Values must be `>= 0.00` and `<= 2,147,483,647`.                                                                                                      | Supported inputs allow an optional leading `$` character and all amount values are rounded to the nearest 2 decimal places so `$0.001` will be treated as `$0.00`.                                       | `amt/0`<br>`amt/$10.09`<br>`amt/$0.00`                                            | `amt/`<br>`amt/-100`<br>`amt/hi`<br>`amt/%0.00`       |
+| `dt/`<br><br>(Date & time of transaction)                              | Only supported formats are: `dd-MM-yyyy HH:mm`, `yyyy-MM-dd HH:mm`, and `dd MMM yyyy HH:mm`                                                           | If no value is provided, i.e. `dt/`, then it defaults to the current date time the command is run on with timezone of Singapore (GMT+8).                                                                 | `dt/`<br>`dt/15-02-2023 14:30`<br>`dt/2023-02-15 14:30`<br>`dt/15 Feb 2023 14:30` | `dt/15 August 2023`<br>`dt/ 14:30`<br>`dt/15-11-2023` |
+| `l/`<br><br>(Location of transaction)                                  | At least 1 character but no more than 500 characters.<br><br>Only supports alphanumeric characters, spaces, (, ), _, @, -, #, &, ., and , characters. | Blank locations are not allowed.<br><br>Omit this prefix entirely to indicate that there is no location, `l/` alone is not permitted (blank location).                                                   | `l/NTUC @ UTown`                                                                  | `l/`<br>`l/Two ^`                                     |
+| `c/`<br><br>(Category of transaction)                                  | At least 1 character but no more than 15 characters.<br><br>Only supports alphanumeric characters.                                                    | Blank categories are not allowed.<br><br>Omit this prefix entirely to indicate that there is no category, `c/` alone is not permitted (blank category).<br><br>Categories are always saved in lowercase. | `c/Hi`<br>`c/JustExactly15Ch`                                                     | `c/`<br>`c/Over15Characters`<br>`c/#books`            |
+| `month/`<br><br>(Month that transaction was performed)                 | Values must be `>= 1` and `<= 12`                                                                                                                     | Assumes January corresponds to `1`, February to `2` and so on.                                                                                                                                           | `month/1`<br>`month/10`<br>`month/12`                                             | `month/`<br>`month/0`<br>`month/-10`<br>`month/15`    | 
+| `year/`<br><br>(Year that transaction was performed)                   | Values must be `>= 1920` and `<= 2,157,483,647`                                                                                                       | Intentional restriction to have years be `>= 1920`.                                                                                                                                                      | `year/1920`<br>`year/2023`                                                        | `year/`<br>`year/1919`                                |
+| `interval/`<sup>2</sup><br><br>(Budget interval)                       | Only supported values are `day`, `week`, and `month`.                                                                                                 | Case-sensitive, any other values, including blank values (i.e. `interval/`), will be rejected.                                                                                                           | `interval/day`<br>`interval/week`<br>`interval/month`                             | `interval/`<br>`interval/DAY`<br>`interval/hi`        |
+
+**Notes:**
+
+1. Amounts can be exactly `$0.00` as users may want to simply track that a transaction is present but not specify the amount.
+2. Intervals work by filtering by the specified time period. 
+   1. For `day` intervals, only transactions of the same day are found. 
+   2. For `week` intervals, only transactions of the same [week of year](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/temporal/WeekFields.html#weekOfYear()) are found. 
+   3. For `month` intervals, only transactions of the same month are found.
+
+### UI Layout
+
+UniCa$h is designed with users who prefer to use the keyboard in mind. Thus, almost all
+user input is designed for CLI-type usage, i.e. text-based keyboard input, and UI elements are intended 
+to supplement this main functionality.
+
+When UniCa$h is first opened, it would look something like this:
+
+![img_1.png](images/unicash/UniCashWelcome.png)
+
+By default, the Welcome Message will be displayed in the `Results Display`.
+This message can also be invoked with the `help` command which will be explained
+later on in this User Guide. Below are the main User Interface (UI) component features
+we have implemented in UniCa$h.
+
+![img_2.png](images/unicash/UniCashUIAnnotated.png)
+
+Explained below are the main UI components. For the purposes of demonstrating certain UI features, certain commands
+and inputs that are yet to be explained are mentioned here. However, at a later section of this User Guide,
+all of these commands and inputs will be explained, feel free to refer to them at your discretion. _Where applicable,
+consider those explanations as the single source of authority for those commands as the representation here is merely
+for UI demonstration purposes only._
+
+
+#### UniCa$h Main Window Components
+
+- The Main Window in UniCa$h is resizeable, but has a minimum size enforced.
+- The Menu bar contains the `File` and `Help` menus, of which `Help` can be opened with the
+`F1` keyboard shortcut, which is also default to the original `AB-3`.
+
+
+- _Note: On macOS, using UniCa$h in fullscreen will cause the Summary Window and Help Window to also
+open in fullscreen, however this is an expected behaviour caused by macOS's window management style, and does not
+cause any functional issues._ 
+
+#### Command Box
+- The `Command Box` is the primary means by which the user interacts actively with the application.
+- The user types specific inputs into the `Command Box` and presses `ENTER` after typing to "communicate" with UniCa$h.
+- The responses from UniCa$h for each input will be as defined in the subsection for each command in the later part of this User Guide
+- Given that our application is targeted for users who prefer CLI-type text input interaction, the `Command Box`
+is configured such that it can remember up to `10` latest user inputs. 
+  - When a user presses `ENTER` on any input, the input is stored regardless of its validity.
+  - These inputs can be traversed through with the `UP` and `DOWN` arrow keys on the keyboard.
+  - Only the `10` most recent inputs are stored by the `Command Box`
+
+  - _Note that due to a JavaFX built-in cursor control functionality (i.e. arrows keys can be used to navigate the menu bar),
+  the mouse cursor being too close to the menu can occasionally trigger this functionality instead, simply move your
+  mouse cursor away from the menu bar if this happens to alleviate the issue._
+- At any point in time, the user can press the `ESC` to empty the current text field in the `Command Box` 
+
+#### Transactions List
+- Each transaction input by the user is displayed in the `Transactions List`. 
+- The entire `Transactions List` will be displayed initially, however certain commands might limit this
+listing, which can be reversed with the `list` command to show the entire list again.
+- The `Transactions List` is ordered by the time at which the user inputs the transaction,
+not the actual date and time associated with that particular transactions.
+- Transactions added will immediately appear at the top of the `Transactions List`, and this is to
+provide immediate response to the user as they will be able to see their most recently input 
+transaction right away.
+- The most recent transactions appear at the top of the `Transactions List`.
+
+#### Transaction
+- The `Transactions List` contains individual `Transactions` that look like this:
+
+![img_1.png](images/unicash/TransactionCardAnnotated.png)
+
+- **Transaction ID/Index/Number:** All terms used synonymously to refer to the number shown on the left partition of the blue box. Based
+on the configuration of `Transactions List`, this number might change, and that is the intended effect, the use for which 
+will be explained in the applicable commands, including `delete`, `edit` and `get` commands.
+- **Transaction Name:** The name of the given transaction, shown on the right partition of the blue box.
+- **Transaction Date:** The date assigned to the transaction, shown inside the pink box.
+- **Transaction Location:** The location assigned to the transaction, shown inside the red box.
+- **Transaction Categories:** The category/categories assigned to the transaction, shown inside the yellow box.
+- **Transaction Amount:** The expense or income assigned to the transaction, shown inside the black box.
+  - Expenses will be preceded with a `negative` sign and in red color, whereas incomes will not be preceded with any
+  sign and displayed in green color. 
+  - _This applies to the amount `0.00` as well, thus display color
+is based only on transaction type`._
+
+
+Note: Certain properties above (such as name, location, categories and amount)
+are allowed values that exceed the UI's capacity to display them fully. For 
+example, a transaction name that is too long will be shortened by the application,
+
+![img_1.png](images/unicash/TransactionCardFull.png)
+
+This effect is accounted for as we do not wish to limit the user to arbitrary
+lengths. Thus, the `get` command is available to retrieve the full, expanded details
+of these transactions and display them in the `Results Display` component.
+
+#### Results Display
+
+- The `Results Display` is the primary means by which UniCa$h "responds" back
+to the user via text output.
+- The `Results Display` can be scrolled if the text output displayed is too long.
+
+#### Data Source Indicator
+
+- The `Data Source Indicator` shows the location of the current UniCa$h storage file.
+
+
+#### Rolling Balance Indicator
+
+- The `Rolling Balance Indicator` shows the net sum (i.e. `total income - total expense`) 
+for the **currently displayed `Transactions List`**.
+- For example, if the input `find n/friends` was used to find transactions whose names 
+contain the keyword `friends`, the `Transactions List` would be updated to
+only show matching transactions and likewise the `Rolling Balance Indicator` 
+would reflect the net sum for these transactions.
+- If the currently displayed `Transactions List` is the entire list (i.e. after using 
+the `list` command), then the `Rolling Balance Indicator` would show the net sum of all 
+transactions in UniCa$h. 
+- _Note: Unlike the color of an amount of a transaction in `Transactions List`, the color of
+the `Rolling Balance Indicator` will change based on whether the net sum is positive (green)
+or negative (red) or zero (black)._
+
+[//]: # ()
+
+[//]: # (UI layout and description of what each section means)
+
+
+---
 
 ## Features
 
----
-
-### Create Expense [coming soon]
-
-Allows a user to create an expense and all information associated with that expense including the name, amount,
-category (defaults to "Others"), location (optional), and date (defaults to the current date) of the expense.
-
-Command: `create <name> -amount <expense amount> [-category <category of expense>] [-date <date of expense>] [-location <location of expense>]`
-
-Command Argument: `name` represents the name of the expense to be added.
-
-Command Options:
-
-| Option Name | Optional? | Purpose                                                                                                            |
-|-------------|-----------|--------------------------------------------------------------------------------------------------------------------|
-| -amount     | No        | Amount of expense. Currency is SGD.                                                                                |
-| -category   | Yes       | Category/type of expense, used to group and filter expenses.<br/>Defaults to "Others" if not specified.            |
-| -date       | Yes       | Date of when the expense was made. Follows format `dd/MM/yyyy`.<br/>Defaults to date of creation if not specified. |
-| -location   | Yes       | Location where expense was made.<br/>Defaults to `NULL` if not specified.                                          |
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**: Create expense with name, amount, date, location, and category
->
-> **Input**: `create buy food -amount 7.50 -date 19/09/2023 -location Food Clique -category Food`
->
-> **Output**:
-> ```
-> Successfully created expense "buy food" of category "Food"!
-> ```
->
-> **Remark**: The expense will be dated 19/09/2023.
-
-###### Example 2
-
-> **Case**: Create expense with name, amount, location, and category but without date
->
-> **Input**: `create buy groceries -amount 14.30 -category Food -location Fairprice`
->
-> **Output**:
-> ```
-> Successfully created expense "buy groceries" of category "Food"!
-> ```
->
-> **Remark**: The expense will be dated whenever the `create` command was executed.
-
-###### Example 3
-
-> **Case**: Create expense with name, amount, and category but without date and location
->
-> **Input**: `create buy stuff -amount 13.00 -category Misc`
->
-> **Output**:
-> ```
-> Successfully created expense "buy stuff" of category "Misc"!
-> ```
->
-> **Remark**: The expense will be dated whenever the `create` command was executed and have a `NULL` location.
-
-###### Example 4
-
-> **Case**: Create expense with name and amount but without date, location, or category
->
-> **Input**: `create buy things -amount 10.00`
->
-> **Output**:
-> ```
-> Successfully created expense "buy things" of category "Others"!
-> ```
->
-> **Remark**: The expense will be dated whenever the `create` command was executed, have a `NULL` location, and be
-> assigned to the "Others" category by default.
-
-##### Failed Execution
-
-###### Example 1
-
-> **Case**: Missing `name` of expense
->
-> **Input**: `create`
->
-> **Output**:
-> ```
-> Cannot create expense without expense name. Please specify the expense name as such: `create <expense name>`
-> ```
-
-###### Example 2
-
-> **Case**: Missing `amount` option of expense
->
-> **Input**: `create buy something!`
->
-> **Output**:
-> ```
-> Cannot create expense without amount of expenditure. Please specify the expense amount as such: `create <expense name> -amount <expense amount>`
-> ```
-
-###### Example 3
-
-> **Case**: Invalid `amount` option value.
->
-> **Input**: `create buy something! -amount hi`
->
-> **Output**:
-> ```
-> Failed to create expense as amount is invalid, ensure that it is a number.
-> ```
-
-###### Example 4
-
-> **Case**: Invalid `date` option value.
->
-> **Input**: `create buy something! -amount 14.30 -date today`
->
-> **Output**:
-> ```
-> Failed to create expense as date is invalid, ensure that it is the following format: `dd/MM/yyyy`.
-> ```
-
-### Edit Expense [coming soon]
-
-Allows a user to make edits to an existing expense, and all associated information.
-
-Command: `edit <expense_id> -<name of attribute 1> <new attribute 1 value> [-<name of attribute N> <new attribute N value> …]`
-
-Command Argument: `expense_id` is the ID of the expense to edit.
-
-Command Options:
-
-| Option Name        | Optional? | Purpose                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
-|--------------------|-----------|---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| -name of attribute | No        | The attribute to make edits to. Possible values: `name`, `amount`, `category`, `date`, `location`<br/><br/>Note: If `name of attribute` is date, then the associated `new attribute value` must be in format: `dd/MM/yyyy`.<br/>Note: If `name of attribute` is amount, then the associated `new attribute value` must be a number.<br/>Note: If `name of attribute` is not name or amount, then the associated `new attribute value` can be empty if the user wants to reset the attribute to the default value (NULL for location and Others for category). |
-| ...                | Yes       | More `name of attribute` `new attribute value` pairs to make more edits to the same expense                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**: Editing one attribute of expense 3
->
->**Input**: `edit 3 -location online`
->
->**Output**:
-> ```
-> Successful edits to expense 3:
-> location : online
-> ```
-
-###### Example 2
-
-> **Case**: Setting the expense’s category to be default of “Others”
->
->**Input**: `edit 2 -category -location frontier pasta express -amount 5.8
-`
->
->**Output**:
-> ```
-> Successful edits to expense 1:
-> category : “Others”
-> location : frontier pasta express
-> amount : $5.80
-> ```
-
-#### Failed Execution
-
-###### Example 1
-
-> **Case**: No attributes to edit
->
->**Input**: `edit 1`
->
->**Output**:
-> ```
-> Please input an attribute to edit, and the new value to change the attribute to.
-> Syntax: edit <integer> -<name of attribute> <new attribute value>
-> ```
-
-###### Example 2
-
-> **Case**: New attribute value for `name` is empty
->
->**Input**: `edit 1 -name`
->
->**Output**:
-> ```
-> Attributes “name” and “amount” cannot be empty
-> ```
-
-###### Example 3
-
-> **Case**: There are only 10 expenses in the list, but user tries to edit expense 100000
->
->**Input**: `edit 100000 -location online`
->
->**Output**:
-> ```
-> There are only 10 expenses. Please provide an integer between 1 and 10 (received: 100000)
-> ```
-
-###### Example 4
-
-> **Case**: Wrong input format for “date” and “amount” attribute
->
->**Input**: `edit 2 -date yesterday -amount 5.80.`
->
->**Output**:
-> ```
-> Attribute “date” must be of the form dd/MM/yyyy (received: yesterday)
-> Attribute “amount” must be a number (received: 5.80.)
-> ```
-
-### Delete Expense [coming soon]
-
-Allows a user to delete a previously added expense and all information associated with that expense.
-
-Command: `delete <name>`
-
-Command Argument: `name` represents the exact name of the expense intended to be deleted.
-Has to exactly match a given expense, or else the command will do nothing,
-so as to ensure the integrity of user data.
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**:  Delete expense named “friday mcdonalds”
->
->**Input**: `delete "friday mcdonalds"`
->
-> **Output**:
->```
->Successfully deleted expense “friday mcdonalds”!
->```
->**Remark**: The expense will be removed from file
-
-##### Unsuccessful Execution
-
-###### Example 1
-
-> **Case**:  Delete expense command entered with no argument provided
->
->**Input**: `delete `
->
->**Output**:
->```
->No expense deleted. Delete command must be followed with an expense to be deleted like this: delete <expense>.
->```
->**Remark**: No expenses will be removed and no changes made to file.
-
-###### Example 2
-
-> **Case**:  Delete expense command entered with no matching expense name
->
->**Input**: `delete asdf`
->
->**Output**:
->```
->No expense deleted. Delete command must be followed with a valid expense name.
->```
->**Remark**: No expenses will be removed and no changes made to file.
-
-### Mass Delete Expense [coming soon]
-
-Allows a user to delete all added expenses, and all associated information.
-
-Command: `delete_all_expenses`
-
-Command Argument:  No arguments are needed for this command.
-The command is intentionally lengthy to ensure that mass deletion of all expenses is done intentionally.
-
-Remarks: Confirmation for mass deletion to be implemented at a later date.
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**:  Delete all expenses
->
->**Input**: `delete_all_expenses`
->
->**Output**:
->```
->Successfully deleted all expenses!
->```
->**Remark**: All expenses will be removed from file
-
-##### Unsuccessful Execution
-
-###### Example 1
-
-> **Case**:  Mass deletion command entered improperly
->
->**Input**: `delete_all `
->
->**Output**:
->```
-> Invalid command.
->```
->**Remark**: No expenses will be removed and no changes made to file.
-
-###### Example 2
-
-> **Case**:  Wrong delete command entered
->
->**Input**: `delete`
->
->**Output**:
->```
-> No expense deleted. Delete command must be followed with an expense to be deleted like this: delete <expense>.
->```
->**Remark**: No expenses will be removed and no changes made to file.
-> The above error is the same as the one for the simple “delete” function.
-> In the above example, the delete_all_expenses functionality is
-> intentionally obfuscated to prevent the user from accidental mass deletions.
-> The rationale is that a user unsure of a basic command like delete is probably a new user,
-> and a new user should not be directed to mass delete information.
-> There are other, more proper ways to convey this information, such as this User Guide.
-
-### List Expenses [coming soon]
-
-Allows a user to retrieve a list of all their past expenses with details on where it was spent, type of spending and how
-much was spent.
-
-Command: `list`
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**:  Calling the command when there are no existing expenses.
->
->**Input**: `list`
->
->**Output**:
->```
->You have no expenses!
->```
-
-###### Example 2
-
-> **Case**:  Calling the command with existing expenses.
->
->**Input**: `list`
->
->**Output**:
->```
->1. buy groceries 23/09/23 - $15.20 (groceries)
->2. lunch at fc 23/09/23 - $5.50 (meals)
->```
-
-##### Failed Execution
-
-###### Example 1
-
-> **Case**: Calling the command with any parameters
->
->**Input**: `list 5`
->
->**Output**:
->```
->Command not recognised. Try using the command “list” instead.
->```
-
-### Find Expenses [coming soon]
-
-Allows a user to retrieve the expense(s) that contain/matches any of the given keywords.
-
-Command: `find <keyword>`
-
-Command Parameters: `<keyword>` is the keyword to look for in any of the stored expenses, it can be a single word or
-multiple words separated by spaces.
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**:  Calling the command when there are no matching expenses.
->
->**Input**: `find chicken`
->
->**Output**:
->```
->You have no matching expenses!
->```
-
-###### Example 2
-
-> **Case**:  Calling the command with keywords that match existing expenses.
->
->**Input**: `find lunch`
->
->**Output**:
->```
->2 expenses found containing the word(s) “groceries”:
->
->1. lunch at holland 16/09/23 - $15.20 (groceries)
->4. lunch at fc 23/09/23 - $5.50 (meals)
->```
->**Note:** Index of retrieved list is respective to the order of the full expense list so index of 4 is the 4th expense
-> stored in the system.
-
-##### Failed Execution
-
-###### Example 1
-
-> **Case**: Calling the command without any parameters
->
->**Input**: `find`
->
->**Output**:
->```
->The “find” command requires at least one word to search.
->```
-
-### Tabulate Total Expense [coming soon]
-
-Allows a user to view their total expenditure, filtered by category of spending or by month.
-
-Command: `total [-category <category>] [-month <month>]`
-
-Command Options:
-
-| Option Name | Optional? | Purpose                                                                                                                                                |
-|-------------|-----------|--------------------------------------------------------------------------------------------------------------------------------------------------------|
-| -category   | Yes       | Category / type of expense. Defaults to accounting for all categories if not specified.                                                                |
-| -month      | Yes       | Month of expenditure. Can either be the shorthand of the name like Sep or full name like September. <br/><br/>Defaults to all months if not specified. |
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**:  Calling the command with no options.
->
->**Input**: `total`
->
->**Output**:
->```
->Your total expenditure recorded is $1388.
->```
-
-###### Example 2
-
-> **Case**:  Calling the command with a specified category.
->
->**Input**: `total -category food`
->
->**Output**:
->```
->Your total expenditure recorded for food is $780.
->```
-
-###### Example 3
-
-> **Case**:  Calling the command with a specified month.
->
->**Input**: `total -month June`
->
->**Output**:
->```
->Your total expenditure recorded for June is $400.
->```
-
-###### Example 4
-
-> **Case**:  Calling the command with a specified category and month.
->
->**Input**: `total -category food -month June`
->
->**Output**:
->```
->Your total expenditure recorded for food in June is $230.
->```
-
-##### Failed Execution
-
-###### Example 1
-
-> **Case**: Calling the command with a category that doesn’t exist.
->
->**Input**: `total -category chicken -month june`
->
->**Output**:
->```
->The category "chicken" doesn't exist.
->```
-
-###### Example 2
-
-> **Case**: Calling the command with a month that doesn’t exist.
->
->**Input**: `total -category food -month juely`
->
->**Output**:
->```
->The month "juely" doesn't exist.
->```
-
-###### Example 3
-
-> **Case**: Calling the command with a category and month that doesn’t exist.
->
->**Input**: `total -category chicken -month juely`
->
->**Output**:
->```
->The category "chicken" and month "juely" doesn't exist.
->```
-
-### Create Income
-
-Allows a user to register an inflow of money (income) into the application.
-Our application will store an income based on the name, value, date.
-
-Command: `create_income <name> [-value <value of income>] [-date <date of expense>]`
-
-Command Argument: `name` represents the name of the income to be added.
-
-Command Options:
-
-| Option Name | Optional? | Purpose                                                                                                                |
-|-------------|-----------|------------------------------------------------------------------------------------------------------------------------|
-| -value      | No        | Value of expense. Represents a positive number (integer/ float).                                                       |
-| -date       | Yes       | Date of when the expense was made. Follows format  dd/MM/yyyy <br><br>  Defaults to date of creation if not specified. |
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**:  Create “work at lifo” income dated 19/09/2023 with value of 900.
->
->**Input**: `create_income work at liho -date 19/09/2023 -value 900`
->
->**Output**: Successfully created income “work at liho”!
->
->**Remark**: The income will be dated 19/09/2023.
-
-##### Failed Execution
-
-###### Example 1
-
-> **Case**: Missing `name` of income
->
->**Input**: `create_income`
->
->**Output**: Cannot create income without income name.
-> Please specify the income name as such: `create_income <name> -value <value>`
-
-###### Example 2
-
-> **Case**: Missing `value` of income
->
->**Input**: `create_income working`
->
->**Output**: Cannot create income without income value.
-> Please specify the income name as such: `create_income <name> -value <value>`
-
-###### Example 3
-
-> **Case**: Invalid `value` form (not positive number)
->
->**Input**: `create_income working -value hi`
->
->**Output**: Cannot create income due to invalid income value type. Ensure that it is a positive number.
-
-###### Example 4
-
-> **Case**: Invalid `date` of income
->
->**Input**: `create_income working -value 1300 -date today`
->
->**Output**: Cannot create income due to invalid date format. Ensure that it follows dd/MM/yyyy.
-
-### Delete Income
-
-Allows a user to delete an income previously added into the application.
-
-Command: `delete_income <name>`
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**: Delete “work at liho” income.
->
->**Input**: `delete_income work at liho`
->
->**Output**: Successfully deleted expense “work at liho”
-
-##### Failed Execution
-
-###### Example 1
-
-> **Case**: Missing `name` of income
->
->**Input**: `delete_income`
->
->**Output**: Cannot delete income without income `name`.
-> Please specify the income name as such: `delete_income <name>`
-
-### Find Income
-
-Allows a user to search for an income(s) that was previously entered.
-User can find income(s) through name.
-
-Command: `find_income [-name <name of income>] [-value_more <value of income>] [-value_less <value of income>] [-date <date of income>]`
-
-Command Options:
-
-| Option Name | Optional? | Purpose                                                                                                |
-|-------------|-----------|--------------------------------------------------------------------------------------------------------|
-| -name       | Yes       | Name of income to find.                                                                                |
-| -value_more | Yes       | Value of income, used to filter income more than value.                                                |
-| -value_less | Yes       | Value of income, used to filter income less than value.                                                |
-| -date       | Yes       | Date of when the income was made. Follows format dd/MM/yyyy.<br><br>Filters income added on that date. |
-
-<div markdown="span" class="alert alert-primary">:bulb: **Note:**
-If no options are specified, all income is returned.
-</div>
-
-#### Expected Outputs
-
-##### Successful Execution
-
-###### Example 1
-
-> **Case**: Find “work at liho” income.
->
->**Input**: `find_income work at liho`
->
->**Output**: Successfully found income “work at liho”. Display information related to the income
-
-##### Failed Execution
-
-###### Example 1
-
-> **Case**: Missing `name` of income
->
->**Input**: `find_income`
->
->**Output**: Cannot find income without income name.
-> Please specify the income name as such: `find_income <name>`
-
-###### Example 2
-
-> **Case**: Invalid `date` format
->
->**Input**: `find_income work at liho -date tomorrow`
->
->**Output**: Cannot find income due to invalid date format. Ensure that it follows dd/MM/yyyy.
-
-### Archiving data files `[coming in v2.0]`
-
-_Details coming soon ..._
-
---------------------------------------------------------------------------------------------------------------------
-
-## FAQ
-
-**Q**: How do I transfer my data to another Computer?
-
-**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains
-the data of your previous UniCa$h home folder.
-
---------------------------------------------------------------------------------------------------------------------
-
-## Known issues
-
-1. Currently no known issues!
-
---------------------------------------------------------------------------------------------------------------------
-
-## Command summary
-
-| Action                     | Format, Examples                                                                                                                                                                                                                       |
-|----------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| **Create Expense**         | `create <name> -amount <expense amount> [-category <category of expense>] [-date <date of expense>] [-location <location of expense>]` <br> e.g., `create buy food -amount 7.50 -date 19/09/2023 -location Food Clique -category Food` |
-| **Delete Expense**         | `delete <name>`<br> e.g., `delete grabfood_lunch`                                                                                                                                                                                      |                                                                                                                                                                                                                       |
-| **Mass Delete Expenses**   | `delete_all_expenses`                                                                                                                                                                                                                  |
-| **Edit Expenses**          | `edit <expense_id> -<name of attribute 1> <new attribute 1 value> [-<name of attribute N> <new attribute N value> …​]`<br> e.g.,`edit 3 -location online`                                                                              |
-| **List Expenses**          | `list`                                                                                                                                                                                                                                 |
-| **Find Expenses**          | `find <keyword>` <br> e.g., `find lunch`                                                                                                                                                                                               |
-| **Tabulate Total Expense** | `total [-category <category>] [-month <month>]` <br> e.g., `total -category Food -month June`                                                                                                                                          |
-| **Create Income**          | `create_income <name> [-value <value of income>] [-date <date of expense>]` <br> e.g., `create_income work at liho -date 19/09/2023 -value 900`                                                                                        |
-| **Delete Income**          | `delete_income <name>`                                                                                                                                                                                                                 |
-| **Find Income**            | `find_income <name> [-value_more <value of income>] [-value_less <value of income>] [-date <date of income>]` <br> e.g., `find_income work at liho`                                                                                    |
-
----
-
-# START OF NEW UG
-
-This header exists to separate the old and new UG format. Add your contributions to the
-relevant sections below and copy over previous contributions while doing so. By submission time, this header should be
-at the top of the
-page, right below the page frontmatter.
-
-**Remove this header before final submission.**
-
-End of header.
-
----
-
-## 1. About UniCa$h
-
-Unicash is this and that ...
-
-## 2. Index of Contents
-
-## 3. Quick Start
-
-### 3.1 Installation
-
-1. Ensure you have Java `11` or above installed in your Computer.
-
-2. Download the latest `unicash.jar`
-   from [our latest release](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3).
-
-3. Copy the file to the folder you want to use as the _home folder_ for your UniCa$h.
-
-4. Open a command terminal, `cd` into the folder you put the jar file in, and use the `java -jar unicash.jar` command to
-   run the application.
-
-   A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
-
-5. Type the command in the command box and press Enter to execute it. e.g. typing **`help`** and pressing Enter will
-   open the help window.<br>
-
-6. Refer to the [Features](#features) below for details of each command.
-
-### 3.2 UI Layout
-
-UI layout and description of what each section means
-
-### 3.3 Command Breakdown
-
-Breakdown the command and the different prefixes
-
-Talk about how capitalised names are used as example placeholders of values
-n/NAME, means the capitalised NAME is a placeholder value
-
-### 3.4 Command Execution Tutorial
-
-Walkthrough of how to run a command with visual guides
-
-## 4. Features
-
 ### Features Overview
 
-For UniCa$h, we have developed and implemented 4 main groups of features. These are: 
+UniCa$h comprises of four primary feature groups:
 
-The Transaction Management Commands:
-- Add Transaction
-- Delete Transaction
-- Edit Transaction
-- List Transactions
-- Get Transaction
-- Find Transactions
-- Filter Transactions
-- Clear All Transactions
-  
-The Budget Management Features
-- Set Budget
-- Clear Budget
-- Get Budget
+- Transaction Management
+    - Add Transaction (`add_transaction`)
+    - Delete Transaction (`delete_transaction`)
+    - Edit Transaction (`edit_transaction`)
+    - List Transactions (`list`)
+    - Get Transaction (`get`)
+    - Find Transaction(s) (`find`)
+    - Clear All Transactions (`clear_transactions`)
+- Budget Management
+    - Set Budget (`set_budget`)
+    - Clear Budget (`clear_budget`)
+    - Get Budget (`get_budget`)
+- Financial Statistics
+    - Get Total Expenditure (`get_total_expenditure`)
+    - Summary Statistics (`summary`)
+- General Utility
+    - Show Help (`help`)
+    - Reset UniCa$h (`reset_unicash`)
+    - Exit UniCa$h (`exit`)
 
-The Financial Statistics Features:
-- Get Total Expenditure
-- Summary Statistics
-- Rolling Balance Indicator
+The instructions for the usage of each command within each feature group are elaborated in the sections below.
 
-The General Utility Commands:
-- Show Help
-- Reset UniCa$h
-- Exit UniCa$h
+### Transaction Management
 
-The instructions for the usage of each command within each feature group are elaborated in this section below.
+Transaction management allows users to directly manage their personal finances by adding, editing, deleting, and
+finding transactions, among other management features.
 
-
-### 4.1 Transaction Commands
-
-The _Transaction Commands_ feature group pertains directly to the management of personal finances by the user,
-allowing the user to perform actions that directly involve transactions, such as - amongst other - adding, deleting and
-editing transactions.
-
-#### 4.1.1 AddTransactionCommand
+#### Add Transaction
 
 Adds a new `Transaction` to UniCa$h.
 
-Command: `add_transaction n/NAME type/TYPE amt/AMOUNT dt/DATETIME l/LOCATION c/CATEGORY`
+Command: `add_transaction n/NAME type/TYPE amt/AMOUNT [dt/DATETIME] [l/LOCATION] [c/CATEGORY]`
+
+Command Words Accepted: `add_transaction`, `add`, `at` (case-insensitive)
 
 Command Options:
 
@@ -887,8 +324,6 @@ Important notes:
 > Location: ntuc;
 > Categories: #household
 > ```
->
-> <img src="images/unicash/command-outputs/addTransactionSuccessOutput1.png" width="1000" />
 
 ###### Example 2
 
@@ -907,8 +342,6 @@ Important notes:
 > Location: -;
 > Categories:
 > ```
->
-> <img src="images/unicash/command-outputs/addTransactionSuccessOutput2.png" width="1000" />
 
 ##### Failed Execution
 
@@ -928,7 +361,6 @@ Important notes:
 >
 > Example: add_transaction n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/ntuc c/household
 > ```
-> <img src="images/unicash/command-outputs/addTransactionFailedOutput1.png" width="1000" />
 
 ###### Example 2
 
@@ -940,19 +372,18 @@ Important notes:
 > ```
 > All categories must be case-insensitively unique, duplicate categories are not allowed.
 > ```
-> <img src="images/unicash/command-outputs/addTransactionFailedOutput2.png" width="1000" />
 
 ###### Example 3
 
 > **Case**: More than 5 categories with valid compulsory fields.
 >
-> **Input**: `add_transaction n/Buying groceries type/expense amt/300 c/household c/entertainment c/education c/fun c/school c/test`
+> **Input
+**: `add_transaction n/Buying groceries type/expense amt/300 c/household c/entertainment c/education c/fun c/school c/test`
 >
 > **Output**:
 > ```
 > There should only be a maximum of 5 unique categories.
 > ```
-> > <img src="images/unicash/command-outputs/addTransactionFailedOutput3.png" width="1000" />
 
 ###### Example 4
 
@@ -964,12 +395,14 @@ Important notes:
 > ```
 > UniCa$h supports up to a maximum of 100,000 transactions.
 > ```
-> > <img src="images/unicash/command-outputs/addTransactionFailedOutput4.png" width="1000" />
 
-#### 4.1.2 EditTransactionCommand
+#### Edit Transaction
+
 Edits an existing transaction in UniCa$h.
 
 Command: `edit_transaction INDEX [n/NAME] [type/TYPE] [amt/AMOUNT] [dt/DATETIME] [l/LOCATION] [c/CATEGORY]`
+
+Command Words Accepted: `edit_transaction`, `edit`, `et` (case-insensitive)
 
 Command Options:
 
@@ -984,9 +417,19 @@ Command Options:
 | c/          | Yes       | Category tagged to that transaction.<br/>No categories tagged if not specified.               | There is a 15-character limit.<br/>`Category` entered will be converted and stored as all lowercase.<br/>Each transaction can have at most 5 categories.       |
 
 Important notes:
-1. While all options besides `INDEX` are optional, **you must specify at least one field** you wish to edit (i.e. `Name`, `Type`, `Amount`, `Datetime`, `Location`, or `Category`).
-2. You must provide a non-empty value for the `Name`, `Type`, and `Amount` fields if you wish to edit them; they cannot be left empty.
+
+1. While all options besides `INDEX` are optional, **you must specify at least one field** you wish to edit (
+   i.e. `Name`, `Type`, `Amount`, `Datetime`, `Location`, or `Category`).
+2. You must provide a non-empty value for the `Name`, `Type`, and `Amount` fields if you wish to edit them; they cannot
+   be left empty.
 3. The `INDEX` option must be specified first. The order in which you specify the other options does not matter.
+4. Modifying a transaction's category will result in the replacement of all existing categories. 
+   - For example, in the case of a `Transaction` with two existing categories (Entertainment and Hobbies), editing it with `edit INDEX c/Education` will replace all existing categories, leaving the transaction with a single category, Education."
+
+
+
+
+  
 
 ##### Successful Execution
 
@@ -1128,15 +571,15 @@ Important notes:
 >
 > <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput5.png" width="1000" />
 
-#### 4.1.3 DeleteTransactionCommand
+#### Delete Transaction
 
 Deletes a `Transaction` from UniCa$h.
 
-Command: `delete_transaction <INDEX>`
+Command: `delete_transaction INDEX`
 
-Command Word: `delete_transaction` (case-insensitive)
+Command Words Accepted: `delete_transaction`, `delete`, `del` (case-insensitive)
 
-Command Argument: `<INDEX>` is the displayed transaction index 
+Command Argument: `<INDEX>` is the displayed transaction index
 of the transaction to be deleted, as shown in the `Transactions List`.
 
 | Arguments | Optional? | Purpose                                            |
@@ -1144,8 +587,9 @@ of the transaction to be deleted, as shown in the `Transactions List`.
 | `<INDEX>` | No        | Transaction index of the transaction to be deleted |
 
 Important notes:
-1. The `delete_transaction` command word is case-insensitive, thus `DELETE_TRANSACTION` is 
-considered an equivalent command word. 
+
+1. The `delete_transaction` command word is case-insensitive, thus `DELETE_TRANSACTION` is
+   considered an equivalent command word.
 
 2. `<INDEX>` must be a positive integer, i.e. a number greater than 0.
 
@@ -1204,7 +648,6 @@ considered an equivalent command word.
 > Ouput:
 > <img src="images/unicash/command-outputs/deleteTransaction/deleteTransactionSuccess2FinalState.png" width="1000" />
 
-
 ##### Failed Execution
 
 ###### Example 1
@@ -1238,13 +681,13 @@ considered an equivalent command word.
 > ```
 > <img src="images/unicash/command-outputs/deleteTransaction/deleteFail2.png" width="1000" />
 
-#### 4.1.4 GetCommand
+#### Get Transaction
 
 Retrieves a `Transaction` from UniCa$h.
 
 Command: `get <INDEX>`
 
-Command Word: `get` (case-insensitive)
+Command Words Accepted: `get`, `g` (case-insensitive)
 
 Command Argument: `<INDEX>` is the displayed transaction index
 of the transaction to be retrieved, as shown in the `Transactions List`.
@@ -1254,6 +697,7 @@ of the transaction to be retrieved, as shown in the `Transactions List`.
 | `<INDEX>` | No        | Transaction index of the transaction to be retrieved |
 
 Important notes:
+
 1. The `get` command word is case-insensitive, thus `GET` is
    considered an equivalent command word.
 
@@ -1337,7 +781,7 @@ Important notes:
 ###### Example 2
 
 > **Case**: Invalid `<INDEX>` provided
-> 
+>
 > **Context**: `10` given as `<INDEX>` when only `5` transactions are presently displayed.
 >
 > **Input**: `get 10`
@@ -1348,47 +792,166 @@ Important notes:
 > ```
 > <img src="images/unicash/command-outputs/getTransaction/getFail2.png" width="1000" />
 
-#### 4.1.5 FindCommand
+#### Find Transaction(s)
 
+Finds a `Transaction` in UniCa$h.
 
-#### 4.1.6 FilterCommand
+Command: `find [n/NAME] [l/LOCATION] [c/CATEGORY]`
 
+Command Words Accepted: `find`, `search`, `f` (case-insensitive)
 
-#### 4.1.7 ListCommand
-
-#### 4.1.8 ClearTransactionsCommand
-
-### 4.2 Budget Commands
-
-The budget serves as a warning system to notify users when their expenses for the given interval exceeds their preset
-amount.
-
-> 💡 NOTE: For this team project, we have opted to simplify the budgeting feature by limiting the user to a single budget
-> at a time that can be configured for different intervals and amounts.
-
-#### 4.2.1 SetBudgetCommand
-
-Sets the user's budget on UniCa$h to be a given amount and within a given interval.
-
-Command: `set_budget amt/AMOUNT interval/INTERVAL`
+Command Argument: `<INDEX>` is the displayed transaction index
+of the transaction to be retrieved, as shown in the `Transactions List`.
 
 Command Options:
 
-| Option Name | Optional? | Purpose                                                         |
-|-------------|-----------|-----------------------------------------------------------------|
-| amt/        | No        | Monetary amount of budget. Has to be a positive value.          |
-| interval/   | No        | Interval of budget, can be of values "day", "week", or "month". |
+| Option Name      | Optional?       | Purpose                                                      |
+|------------------|-----------------|--------------------------------------------------------------|
+| n/               | Yes*            | Search keyword for the name of a transaction.                |
+| l/               | Yes*            | Search keyword for the location of a transaction.            |
+| c/               | Yes*            | Search keyword for a category tagged to a transaction        |
+| Any of the above | Min. one option | At least one option must be specified for the `find` command |
 
 Important notes:
+1. The `find` command word is case-insensitive, thus `FIND` is
+   considered an equivalent command word.
 
-1. `Amount` entered has to be positive for any `interval` value.
-2. `Amount` is automatically rounded to 2 decimal places.
-3. `Amount` must be less than or equal to `2,147,483,647`.
-4. `Interval` must be of values "day", "week", or "month".
+2. *While each option is considered Optional, at least one option must be specified in total
+
+3. All keywords specified must match in order for a transaction to be displayed.
+4. Only one instance of each option can be specified, i.e. `/n Friends n/Dinner` is invalid as the name 
+option is specified more than once.
+5. For each keyword, a full substring match is required, thus `find n/Lunch with friends` with search for transactions
+whose name contains the String `Lunch with friends` and not `Lunch`, `with`, and `friends` separately. However, an 
+exact match is not required as a transaction with the name `Lunch with friends outside` contains the above substring
+and therefore it will be flagged as a match.
 
 ##### Successful Execution
 
 ###### Example 1
+
+> **Case**: Retrieve a transaction with the correctly specified options.
+>
+> **Input**: `find n/friends`
+>
+> **Output**:
+> ```
+> 
+> 1 Transactions listed!
+> 
+> ```
+> Input:
+> <img src="images/unicash/command-outputs/find/FindCommandSuccessInitial1.png" width="1000" />
+> 
+> Output:
+> <img src="images/unicash/command-outputs/find/FindSuccess1.png" width="1000" />
+
+##### Failed Execution
+
+###### Example 1
+
+> **Case**: Command entered with no parameters
+>
+> **Input**: `find`
+>
+> **Output**:
+> ```
+> Invalid command format! 
+> 
+> find, search, f: Finds all transactions whose properties match all of thespecified keywords (case-insensitive) and displays them as a list with index numbers.
+> 
+> Only one keyword can be specified for each property and at least one keyword must be provided in total.
+> 
+> Parameters: [n/Name] [l/Location] [c/Category]
+> 
+> Example: find, search, f n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food
+> 
+> ```
+> Output:
+> <img src="images/unicash/command-outputs/find/FindFailure2.png" width="1000" />
+> 
+
+#### List Transactions
+Shows the list of all transactions in UniCa$h.
+
+Command: `list`
+
+Command Words Accepted: `list`, `ls` (case-insensitive)
+
+##### Successful Execution
+
+###### Example 1
+
+> **Case**: Calling the command when there are no existing transactions.
+>
+> **Input**: `list`
+>
+> **Output**:
+> ```
+> Listed all transactions.
+> ```
+> Output:
+> <img src="images/unicash/command-outputs/list/noTransactions.png" width="1000" />
+>
+> **Note:** There are no transactions to display, so the GUI will be empty. This is expected behaviour.
+###### Example 2
+
+> **Case**: Calling the command with existing transactions.
+>
+> **Input**: `list`
+>
+> **Output**:
+> ```
+> 
+> Listed all transactions.
+> 
+> ```
+> Output:
+> <img src="images/unicash/command-outputs/list/withTransactions.png" width="1000" />
+
+##### Failed Execution
+
+###### Example 1
+
+> **Case**: Command entered with parameters
+>
+> **Input**: `list 5`
+>
+> **Output**:
+> ```
+> Command not recognised. Try using the command list, list_transactions, ls without any parameters instead.
+> ```
+
+#### Clear Transactions
+Clears all transactions in UniCa$h.
+
+Command: `clear_transactions`
+
+Command Words Accepted: `clear_transactions` (case-insensitive)
+
+### Budget Management
+
+The budget serves as an observable metric used to allow users to understand when their expenses over a given interval. They can use this information to better understand if they should be controlling their spending or adjusting their budget.
+
+<div class="callout callout-info" markdown="span">
+For this team project, we have opted to simplify the budgeting feature by limiting the user to a single budget at a time that can be configured for different intervals and amounts.
+</div>
+
+#### Set Budget
+
+Sets the user's budget on UniCa$h to be a given amount and within a given interval.
+
+Command: `set_budget amt/Amount interval/Interval`
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+For more information about the prefix constraints, refer to the [command breakdown's prefix types section](#prefix-types)
+</div>
+
+Command Words Accepted: `set_budget`, `sb`, `budget`
+
+##### Successful Execution
+
+**Example 1**
 
 > **Case**: Set budget of $600 for every month.
 >
@@ -1401,12 +964,10 @@ Important notes:
 > Amount: $600.00;
 > Interval: month
 > ```
->
-> <img src="images/unicash/command-outputs/set-budget/setBudgetSuccessOutput.png" width="1000" />
 
 ##### Failed Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: Missing amount.
 >
@@ -1422,10 +983,8 @@ Important notes:
 >
 > Example: set_budget amt/300 interval/day
 > ```
->
-> <img src="images/unicash/command-outputs/set-budget/setBudgetFailureNoAmount.png" width="1000">
 
-###### Example 2
+**Example 2**
 
 > **Case**: Missing interval.
 >
@@ -1441,10 +1000,8 @@ Important notes:
 >
 > Example: set_budget amt/300 interval/day
 > ```
->
-> <img src="images/unicash/command-outputs/set-budget/setBudgetFailureNoInterval.png" width="1000">
 
-###### Example 3
+**Example 3**
 
 > **Case**: No fields.
 >
@@ -1460,10 +1017,8 @@ Important notes:
 >
 > Example: set_budget amt/300 interval/day
 > ```
->
-> <img src="images/unicash/command-outputs/set-budget/setBudgetFailureNoArguments.png" width="1000">
 
-###### Example 4
+**Example 4**
 
 > **Case**: Negative amount.
 >
@@ -1473,10 +1028,8 @@ Important notes:
 > ```
 > Amounts must be within range of [0, 2,147,483,647] and either start with $ or nothing at all
 > ```
->
-> <img src="images/unicash/command-outputs/set-budget/setBudgetFailureNegativeAmount.png" width="1000">
 
-###### Example 5
+**Example 5**
 
 > **Case**: Invalid interval value.
 >
@@ -1486,20 +1039,22 @@ Important notes:
 > ```
 > Interval value must be one of the following: day, week, month
 > ```
->
-> <img src="images/unicash/command-outputs/set-budget/setBudgetFailureInvalidInterval.png" width="1000">
 
-#### 4.2.2 ClearBudgetCommand
+#### Clear Budget
 
 Clears the user's budget set in UniCa$h. If no budget is set yet, the user is prompted to set one first instead.
 
 Command: `clear_budget`
 
-Command Options: This command does not take in any arguments and will not process any arguments.
+Command Words Accepted: `clear_budget`, `cb` (case-insensitive)
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+`clear_budget` will not parse any additional argument or parameters.
+</div>
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: Clear user set budget.
 >
@@ -1509,10 +1064,8 @@ Command Options: This command does not take in any arguments and will not proces
 > ```
 > Budget cleared.
 > ```
->
-> <img src="images/unicash/command-outputs/clear-budget/clearBudgetSuccess.png" width="1000" />
 
-###### Example 2
+**Example 2**
 
 > **Case**: Clear without set budget.
 >
@@ -1524,25 +1077,35 @@ Command Options: This command does not take in any arguments and will not proces
 >
 > Consider using set_budget amt/Amount interval/Interval first!
 > ```
->
-> <img src="images/unicash/command-outputs/clear-budget/clearBudgetNoBudgetSuccess.png" width="1000" />
 
-#### 4.2.3 GetBudgetCommand
+#### Get Budget
 
-Retrieves the set budget and the spending over the given interval. The usage is calculated from the list of filtered
-transactions so to view the budget remainder across expense transactions, use the `list` command first.
+Retrieves the set budget and the spending over the given interval. 
 
 If no budget has been set, the user will be prompted to set one first instead.
 
 The user's spending is calculated by: `budget - interval expenses`.
 
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+For more information about how intervals are handled, please refer to the [prefix types section.](#prefix-types)
+</div>
+
+[//]: # (TODO: Believe this should be resolved soon)
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The usage is calculated from the list of filtered transactions so to view the budget remainder across expense transactions, use the `list` command first.
+</div>
+
 Command: `get_budget`
 
-Command Options: This command does not take in any arguments and will not process any arguments.
+Command Words Accepted: `get_budget`, `gb` (case-insensitive)
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+`get_budget` will not parse any additional argument or parameters.
+</div>
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: Get user's set budget and spending remainder.
 >
@@ -1554,10 +1117,8 @@ Command Options: This command does not take in any arguments and will not proces
 >
 > Net amount of $585.00
 > ```
->
-> <img src="images/unicash/command-outputs/get-budget/getBudgetSuccess.png" width="1000" />
 
-###### Example 2
+**Example 2**
 
 > **Case**: Get budget without budget set.
 >
@@ -1567,114 +1128,96 @@ Command Options: This command does not take in any arguments and will not proces
 > ```
 > No budget set. Use set_budget amt/Amount interval/Interval
 > ```
->
-> <img src="images/unicash/command-outputs/get-budget/getBudgetNoBudgetSuccess.png" width="1000" />
 
-[//]: # (TODO: maybe add failed case if more arguments provided)
+### Financial Statistics
 
-### 4.3 Financial Statistics Features
+#### Get Total Expenditure
 
-#### 4.3.1 GetTotalExpenditureCommand
+Retrieves the total expenditure by month with optional filters for category and year. Also filters the transaction list by the given month, year, and category.
 
-Retrieves the total expenditure by month with optional filters for category and year. Also filters the transactions
-by the given month, year, and category.
-
-Use `list` to view all transactions again.
+[//]: # (TODO: Believe this should be resolved soon)
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The total expenditure is calculated from the list of filtered transactions so to view the total expenditure across expense transactions, use the `list` command first.
+</div>
 
 Command: `get_total_expenditure month/Month [c/Category] [year/Year]`
 
-Command Options:
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+For more information about the prefix constraints, refer to the [command breakdown's prefix types section](#prefix-types)
+</div>
 
-| Option Name | Optional? | Purpose                                                                               |
-|-------------|-----------|---------------------------------------------------------------------------------------|
-| month/      | No        | Month to calculate the total expenditure.                                             |
-| c/          | Yes       | Category of expenditure to retrieve.<br>Defaults to all categories if not provided.   |
-| year/       | Yes       | Year to calculate the total expenditure.<br>Defaults to current year if not provided. |
-
-Important notes:
-
-1. `Month` must be an integer between 1 and 12 (inclusive).
-2. `Year` must be an integer greater than or equal to 1920.
-3. `Category` cannot be blank, must be alphanumeric, and can only contain up to 15 characters.
-4. `Category` is case-insensitive.
+Command Words Accepted: `get_total_expenditure`, `get_total_exp`, `gte` (case-insensitive)
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
-> Case: Get total expenditure with month only.
+> **Case:** Get total expenditure with month only.
 >
-> Input: `get_total_expenditure month/10`
+> **Input:** `get_total_expenditure month/10`
 >
-> Output:
+> **Output:**
 > ```
 > Your total expenditure in October 2023 was $1028.00
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/getTotalExpenditureMonthOnlySuccess.png" width="1000" />
+> 
+> **Note:** The transaction list will be filtered
+> 
+> <img src="images/unicash/command-outputs/get-total-expenditure/getTotalExpenditureMonthOnlySuccess.png" width="400">
 
-###### Example 2
+**Example 2**
 
-> Case: Get total expenditure with month and year.
+> **Case:** Get total expenditure with month and year.
 >
-> Input: `get_total_expenditure month/10 year/2023`
+> **Input:** `get_total_expenditure month/10 year/2023`
 >
-> Output:
+> **Output:**
 > ```
 > Your total expenditure in October 2023 was $1028.00
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/getTotalExpenditureMonthOnlySuccess.png" width="1000" />
 
-###### Example 3
+**Example 3**
 
-> Case: Get total expenditure with month and category.
+> **Case:** Get total expenditure with month and category.
 >
-> Input: `get_total_expenditure month/9 c/social`
+> **Input:** `get_total_expenditure month/9 c/social`
 >
-> Output:
+> **Output:**
 > ```
 > Your total expenditure in September 2023 for "social" was $49.50
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/monthAndCategory.png" width="1000" />
 
-###### Example 4
+**Example 4**
 
-> Case: Get total expenditure with month, category, and year.
+> **Case:** Get total expenditure with month, category, and year.
 >
-> Input: `get_total_expenditure month/9 c/shopping year/2023`
-> 
-> Output:
+> **Input:** `get_total_expenditure month/9 c/shopping year/2023`
+>
+> **Output:**
 > ```
 > Your total expenditure in September 2023 for "shopping" was $109.00
 > ```
->
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/monthYearCategory.png" width="1000" />
 
-###### Example 5
+**Example 5**
 
-> Case: Get total expenditure but no matches.
+> **Case:** Get total expenditure but no matches.
 >
-> Input: `get_total_expenditure month/1`
+> **Input:** `get_total_expenditure month/1`
 >
-> Output:
+> **Output:**
 > ```
 > Your total expenditure in September 2023 for "shopping" was $109.00
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/noMatch.png" width="1000" />
 
 ##### Failed Execution
 
-###### Example 1
+**Example 1**
 
-> Case: No month provided.
+> **Case:** No month provided.
 >
-> Input: `get_total_expenditure`
+> **Input:** `get_total_expenditure`
 >
-> Output:
+> **Output:**
 > ```
 > Invalid command format! 
 >
@@ -1684,109 +1227,99 @@ Important notes:
 >
 > Example: get_total_expenditure month/10 c/Food year/2006
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/noMonth.png" width="1000" />
 
-###### Example 2
+**Example 2**
 
-> Case: Negative month.
+> **Case:** Negative month.
 >
-> Input: `get_total_expenditure month/-10`
+> **Input:** `get_total_expenditure month/-10`
 >
-> Output:
+> **Output:**
 > ```
 > Month must be between 1 and 12 (inclusive).
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/negativeMonth.png" width="1000" />
 
-###### Example 3
+**Example 3**
 
-> Case: Month greater than 12.
+> **Case:** Month greater than 12.
 >
-> Input: `get_total_expenditure month/14`
+> **Input:** `get_total_expenditure month/14`
 >
-> Output:
+> **Output:**
 > ```
 > Month must be between 1 and 12 (inclusive).
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/oobMonth.png" width="1000" />
 
-###### Example 4
+**Example 4**
 
-> Case: Month is not an integer.
+> **Case:** Month is not an integer.
 >
-> Input: `get_total_expenditure month/hi`
+> **Input:** `get_total_expenditure month/hi`
 >
-> Output:
+> **Output:**
 > ```
 > Invalid month value, must be an integer!
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/nonIntMonth.png" width="1000" />
 
-###### Example 5
+**Example 5**
 
-> Case: Year is less than 1920.
+> **Case:** Year is less than 1920.
 >
-> Input: `get_total_expenditure month/9 year/1800`
+> **Input:** `get_total_expenditure month/9 year/1800`
 >
-> Output:
+> **Output:**
 > ```
 > Year must be after 1920.
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/oobYear.png" width="1000" />
 
-###### Example 6
+**Example 6**
 
-> Case: Year is not an integer.
+> **Case:** Year is not an integer.
 >
-> Input: `get_total_expenditure month/9 year/hi`
+> **Input:** `get_total_expenditure month/9 year/hi`
 >
-> Output:
+> **Output:**
 > ```
 > Invalid year value, must be an integer!
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/nonIntYear.png" width="1000" />
 
-###### Example 7
+**Example 7**
 
-> Case: Category contains non-alphanumeric characters.
+> **Case:** Category contains non-alphanumeric characters.
 >
-> Input: `get_total_expenditure month/9 c/@123`
+> **Input:** `get_total_expenditure month/9 c/@123`
 >
-> Output:
+> **Output:**
 > ```
 > Category names should be alphanumeric and up to 15 characters long.
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/nonAlphanumericCategory.png" width="1000" />
 
-###### Example 8
+**Example 8**
 
-> Case: Category length is greater than 15.
+> **Case:** Category length is greater than 15.
 >
-> Input: `get_total_expenditure month/9 c/abcdefghijklmnopqrs`
+> **Input:** `get_total_expenditure month/9 c/abcdefghijklmnopqrs`
 >
-> Output:
+> **Output:**
 > ```
 > Category names should be alphanumeric and up to 15 characters long.
 > ```
->
-> <img src="images/unicash/command-outputs/get-total-expenditure/longCategory.png" width="1000" />
 
-#### 4.3.2 SummaryCommand
+#### Summary Statistics
 
 Displays a summary of the expenses saved in UniCa$h.
 
 Command: `summary`
 
+Command Words Accepted: `summary` (case-insensitive)
+
 Important notes:
-1. Expected Behaviour: The summary of expenses is a pop-up window. If there are no expenses saved in UniCa$h, the pop-up window will not appear. Do note that the summary window will remain open should you decide to remove all expenses after it is opened, until you manually close it.
-2. When making changes to your transactions in UniCa$h, the plots in the summary window will automatically update to reflect your modifications.
+
+1. Expected Behaviour: The summary of expenses is a pop-up window. If there are no expenses saved in UniCa$h, the pop-up
+   window will not appear. Do note that the summary window will remain open should you decide to remove all expenses
+   after it is opened, until you manually close it.
+2. When making changes to your transactions in UniCa$h, the plots in the summary window will automatically update to
+   reflect your modifications.
 3. The pie chart showcases the **top 10 expense categories** based on their respective amounts.
 4. The line chart exclusively showcases expenses **from the past one year**, according to the system's clock.
 
@@ -1804,11 +1337,11 @@ Important notes:
 > ```
 > Opened UniCa$h summary window.
 > ```
-> 
+>
 > <img src="images/unicash/command-outputs/summary/summarySuccessOutput1.png" width="1000" />
 >
 > Here is what the summary pop-up window looks like:
-> 
+>
 > <img src="images/unicash/command-outputs/summary/summarySuccessOutput2.png" width="1000" />
 
 ###### Example 2
@@ -1818,7 +1351,7 @@ Important notes:
 > **Input**: `clear_transactions`
 >
 > **Output**: Here is what the summary window will look like
-> 
+>
 > <img src="images/unicash/command-outputs/summary/summarySuccessOutput3.png" width="1000" />
 
 ###### Example 3
@@ -1834,18 +1367,18 @@ Important notes:
 > <img src="images/unicash/command-outputs/summary/summarySuccessOutput4.png" width="1000" />
 > Note: The summary pop-up window does not appear.
 
-#### 4.3.3 Rolling Balance Indicator
+### General Utility
 
-### 4.4 General Utility Commands
-
-#### 4.4.1 HelpCommand
+#### Help
 
 Get help for UniCa$h.
 
 Command: `help COMMAND_WORD`
 
-Command Argument: `COMMAND_WORD` is the command to get help for. If no 
-argument is specified, a general help message is shown as well as a pop up 
+Command Words Accepted: `help`, `h` (case-insensitive)
+
+Command Argument: `COMMAND_WORD` is the command to get help for. If no
+argument is specified, a general help message is shown as well as a pop up
 containing a link to our User Guide.
 
 > To get a list of `COMMAND_WORD`, do `help` with no arguments
@@ -1861,7 +1394,7 @@ containing a link to our User Guide.
 > **Output**:
 > ```
 > Welcome to UniCa$h!
-> 
+>
 > For more detailed help on a command: help COMMAND_WORD
 >
 > Available Commands:
@@ -1877,8 +1410,8 @@ containing a link to our User Guide.
 > get_budget
 >
 > clear_budget
-> clear
-> reset
+> clear_transactions
+> reset_unicash
 >
 > help
 > exit
@@ -1902,8 +1435,6 @@ containing a link to our User Guide.
 >
 > Example: add_transaction n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food
 > ```
->
-> <img src="images/unicash/HelpSuccess2.png" width="1000" />
 
 ##### Failed Execution
 
@@ -1923,19 +1454,64 @@ containing a link to our User Guide.
 >
 > Example: help add_transaction
 > ```
->
-> <img src="images/unicash/HelpFailed1.png" width="1000" />
 
-#### 4.4.2 ResetCommand
+#### Reset UniCa$h
+Resets UniCa$h to its default state.
 
-#### 4.4.3 ExitCommand
+Command: `reset_unicash`
 
-## 5. Troubleshoot
+Command Words Accepted: `reset_unicash` (case-insensitive)
 
-## 6. Known Issues
+#### Exit UniCa$h
+Exit UniCa$h.
 
-## 7. FAQ
+Command: `exit`
 
-## 8. Acknowledgements
+Command Words Accepted: `exit`, `quit`, `bye` (case-insensitive)
 
-## 9. Glossary
+### Summary
+
+| Action                      | Format, Examples                                                                                      |
+|-----------------------------|-------------------------------------------------------------------------------------------------------|
+| **Add Transaction**         | `add_transaction n/Name type/Type amt/Amount [dt/Datetime] [l/Location] [c/Category]...`              |
+| **Delete Transaction**      | `delete_transaction INDEX`                                                                            |                                                                                                                                                                                                                       |
+| **Delete All Transactions** | `clear_transactions`                                                                                  |
+| **Edit Transaction**        | `edit_transaction INDEX [n/Name] [type/Type] [amt/Amount] [dt/Datetime] [l/Location] [c/Category]...` |
+| **List All Transactions**   | `list`                                                                                                |
+| **Find Transaction(s)**     | `find [n/Name] [c/Category] [l/Location]`                                                             |
+| **Get Total Expenditure**   | `get_total_expenditure month/Month [c/Category] [year/Year]`                                          |
+| **Summary Statistics**      | `summary`                                                                                             |
+| **Set Budget**              | `set_budget amt/Amount interval/Interval`                                                             |
+| **Clear Budget**            | `clear_budget`                                                                                        |
+| **Get Budget**              | `get_budget`                                                                                          |
+
+[//]: # (## Troubleshoot)
+
+---
+
+## Known Issues
+
+1. Hard to see scrollbar
+
+---
+
+## FAQ
+
+**Q**: How do I transfer my data to another Computer?
+
+**A**: Install the app in the other computer and overwrite the empty data file it creates with the file that contains
+the data of your previous UniCa$h home folder.
+
+---
+
+## Acknowledgements
+
+This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
+
+---
+
+## Terminology
+
+| Term        | Meaning                                                                                            |
+|-------------|----------------------------------------------------------------------------------------------------|
+| Transaction | Represents both an expense or an income. Expenses cause a net loss while incomes cause a net gain. |

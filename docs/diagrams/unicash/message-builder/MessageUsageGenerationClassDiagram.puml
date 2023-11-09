@@ -1,0 +1,57 @@
+@startuml
+!include ../../style.puml
+show members
+
+skinparam arrowThickness 1.1
+skinparam arrowColor #00517d
+skinparam classBackgroundColor #00517d
+skinparam ClassAttributeIconSize 0
+skinparam ClassAttributeFontColor white
+skinparam ClassAttributeFontStyle bold
+
+Class CommandUsage {
+-commandWord: String
+-description: String
+-argument: String
+-example: String
+-CommandUsage(String, String, String, List<Parameter>, String)
++toString() : String
+}
+Class Builder {
+-commandWord: String
+-description: String
+-argument: String
+-example: String
++setCommandWord(String) : Builder
++setArgument(String) : Builder
++setDescription(String) : Builder
++setExample(String) : Builder
++addParameter(Prefix, String) : Builder
++addParameter(Prefix, String, boolean, boolean) : Builder
++build() : CommandUsage
+}
+Class Parameter {
+-prefix: String
+-name: String
+-isOptional: boolean
+-isVariadic: boolean
++Parameter(String, String, boolean, boolean)
++toString() : String
+}
+Class ExampleGenerator {
+{static} -PREFIX_VALUES: Map<Prefix, String>
+-ExampleGenerator()
+{static} generate(String, Prefix...) : String
+{static} generate(String, String, Prefix...) : String
+}
+Class Prefix {
+}
+
+CommandUsage +-- Builder
+CommandUsage +-- Parameter
+CommandUsage --> "parameters *" Parameter
+Builder --> "parameters *" Parameter
+CommandUsage ..> "*" Prefix
+ExampleGenerator ..> "*" Prefix
+
+@enduml

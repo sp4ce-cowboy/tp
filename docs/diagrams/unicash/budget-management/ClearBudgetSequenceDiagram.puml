@@ -1,0 +1,82 @@
+
+@startuml
+!include ../../style.puml
+
+skinparam noteTextAlignment left
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant "command:ClearBudgetCommand" as ClearBudgetCommand LOGIC_COLOR
+participant "commandResult:CommandResult" as CommandResult LOGIC_COLOR
+
+
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+note left LogicManager
+In this sequence diagram, we set
+""command"" = "clear_budget"
+""body"" is empty
+end note
+
+[-> LogicManager : execute(command)
+activate LogicManager
+
+LogicManager -> UniCashParser : parseCommand(command)
+activate UniCashParser
+
+create ClearBudgetCommand
+UniCashParser -> ClearBudgetCommand
+activate ClearBudgetCommand
+ClearBudgetCommand --> UniCashParser
+deactivate ClearBudgetCommand
+
+UniCashParser --> LogicManager
+deactivate UniCashParser
+
+LogicManager -> ClearBudgetCommand : execute(model)
+activate ClearBudgetCommand
+
+ClearBudgetCommand -> Model : getBudget()
+activate Model
+Model --> ClearBudgetCommand : budget
+deactivate Model
+
+alt budget is not null
+
+    ClearBudgetCommand -> Model : clearBudget(budget)
+    activate Model
+    Model --> ClearBudgetCommand
+    deactivate Model
+
+    create CommandResult
+    ClearBudgetCommand -> CommandResult
+    activate CommandResult
+
+    CommandResult --> ClearBudgetCommand : success
+    deactivate CommandResult
+
+    ClearBudgetCommand --> LogicManager
+    deactivate ClearBudgetCommand
+
+else else
+
+    create CommandResult
+    ClearBudgetCommand -> CommandResult
+    activate CommandResult
+
+    CommandResult --> ClearBudgetCommand : no budget message
+    deactivate CommandResult
+
+    ClearBudgetCommand --> LogicManager
+    deactivate ClearBudgetCommand
+
+end
+
+[<--LogicManager
+deactivate LogicManager
+@enduml

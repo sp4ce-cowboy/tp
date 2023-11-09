@@ -216,9 +216,6 @@ public enum CommandType {
                                     + "one keyword must be provided in total. "
                     )
                     .addParameter(PREFIX_NAME, "Name", true, false)
-                    .addParameter(PREFIX_TYPE, "Type", true, false)
-                    .addParameter(PREFIX_AMOUNT, "Amount", true, false)
-                    .addParameter(PREFIX_DATETIME, "DateTime", true, false)
                     .addParameter(PREFIX_LOCATION, "Location", true, false)
                     .addParameter(PREFIX_CATEGORY, "Category", true, false)
                     .setExample(

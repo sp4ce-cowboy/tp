@@ -1,0 +1,83 @@
+
+@startuml
+!include ../../style.puml
+
+skinparam noteTextAlignment left
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant ":SetBudgetCommandParser" as SetBudgetCommandParser LOGIC_COLOR
+participant "budget:Budget" as Budget LOGIC_COLOR
+participant "command:SetBudgetCommand" as SetBudgetCommand LOGIC_COLOR
+participant "commandResult:CommandResult" as CommandResult LOGIC_COLOR
+
+
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+note left LogicManager
+In this sequence diagram, we set
+""command"" = "set_budget amt/200 interval/week"
+""body"" = "amt/200 interval/week"
+end note
+
+[-> LogicManager : execute(command)
+activate LogicManager
+
+LogicManager -> UniCashParser : parseCommand(command)
+activate UniCashParser
+
+create SetBudgetCommandParser
+UniCashParser -> SetBudgetCommandParser
+activate SetBudgetCommandParser
+
+SetBudgetCommandParser --> UniCashParser
+deactivate SetBudgetCommandParser
+
+UniCashParser -> SetBudgetCommandParser : parse(body)
+activate SetBudgetCommandParser
+
+create Budget
+SetBudgetCommandParser -> Budget
+activate Budget
+Budget --> SetBudgetCommandParser
+deactivate Budget
+
+create SetBudgetCommand
+SetBudgetCommandParser -> SetBudgetCommand
+activate SetBudgetCommand
+SetBudgetCommand --> SetBudgetCommandParser
+deactivate SetBudgetCommand
+
+SetBudgetCommandParser --> UniCashParser
+deactivate SetBudgetCommandParser
+
+UniCashParser --> LogicManager
+deactivate UniCashParser
+destroy SetBudgetCommandParser
+
+LogicManager -> SetBudgetCommand : execute(model)
+activate SetBudgetCommand
+
+SetBudgetCommand -> Model : setBudget(budget)
+activate Model
+Model --> SetBudgetCommand
+deactivate Model
+
+create CommandResult
+SetBudgetCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> SetBudgetCommand
+deactivate CommandResult
+
+SetBudgetCommand --> LogicManager
+deactivate SetBudgetCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
