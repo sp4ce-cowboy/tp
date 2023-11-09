@@ -422,8 +422,8 @@ Important notes:
 
 1. The value of `INDEX` provided must be between 1 and the total number of available transactions (inclusive).
 2. While all options besides `INDEX` are optional, **you must specify at least one field** you wish to edit (i.e. `Name`, `Type`, `Amount`, `Datetime`, `Location`, or `Category`).
-3. If `Name`, `Type`, or `Amount` fields are present, the values provided for these fields cannot be empty. (See [Failed Execution (Example 3) below](#example-3-2))
-4. **Specially for the Edit feature:** Empty values are allowed for `Datetime`, `Location`, and `Category`. If these fields are left empty, the default values that these fields will take are stated in the table above. (See [Successful Execution (Example 3) below](#example-3-1))
+3. If the `Name`, `Type`, or `Amount` options are present in the edit command, the values provided for these options cannot be empty. (See [Failed Execution (Example 3) below](#example-3-2))
+4. **Specially for the Edit feature:** Empty values are allowed for `Datetime`, `Location`, and `Category`. If these options are provided in the edit command but left empty, the default values that these fields will take are stated in the table above. (See [Successful Execution (Example 3) below](#example-3-1))
 5. The `INDEX` option must be specified first. The order in which you specify the other options does not matter.
 6. Editing a transaction's category will result in the **replacement of all existing categories**. 
    - For example, in the case of a `Transaction` with two existing categories (Entertainment and Hobbies), editing it with `edit INDEX c/Education` will replace all existing categories, leaving the transaction with a single category, "Education".
@@ -1302,12 +1302,18 @@ Command Words Accepted: `summary` (case-insensitive)
 Important notes:
 
 1. Expected Behaviour: The summary of expenses is a pop-up window. If there are no expenses saved in UniCa$h, the pop-up
-   window will not appear. Do note that the summary window will remain open should you decide to remove all expenses
-   after it is opened, until you manually close it.
+   window will not appear.
+   - Please be aware that if you open the summary window and subsequently delete all expenses from UniCa$h without
+   closing the summary window, it is intended to stay open until you manually close it. In such a scenario, the summary
+   window will look like the following:
+<img src="images/unicash/command-outputs/summary/summarySuccessOutput3.png" width="1000" />
 2. When making changes to your transactions in UniCa$h, the plots in the summary window will automatically update to
    reflect your modifications.
-3. The pie chart showcases the **top 10 expense categories** based on their respective amounts.
-4. The line chart exclusively showcases expenses **from the past one year**, according to the system's clock.
+3. The **pie chart** showcases the **top 10 expense categories** based on their respective amounts, while the
+   **line chart** exclusively showcases expenses **from the past one year**, according to the system's clock.
+   - This indicates that it is possible for only one plot to have data, while the other does not. (E.g. If there are
+     only expenses recorded from over a year ago, then only the pie chart will display data, while the line chart will
+     not.)
 
 ##### Successful Execution
 
@@ -1332,17 +1338,7 @@ Important notes:
 
 ###### Example 2
 
-> **Case**: All expenses are removed from UniCa$h while the summary window was open
->
-> **Input**: `clear_transactions`
->
-> **Output**: Here is what the summary window will look like
->
-> <img src="images/unicash/command-outputs/summary/summarySuccessOutput3.png" width="1000" />
-
-###### Example 3
-
-> **Case**: There are no expenses saved in UniCa$h, and the summary window is closed.
+> **Case**: There are no expenses saved in UniCa$h, and the summary window was not originally opened.
 >
 > **Input**: `summary`
 >
