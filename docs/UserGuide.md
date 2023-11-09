@@ -406,30 +406,28 @@ Command Words Accepted: `edit_transaction`, `edit`, `et` (case-insensitive)
 
 Command Options:
 
-| Option Name | Optional? | Purpose                                                                                       | Remarks                                                                                                                                                        |
-|-------------|-----------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| INDEX       | No        | (One-based) index of the transaction to edit.                                                 | This ranges from 1 to the number of transactions saved                                                                                                         |
-| n/          | Yes       | Name of the transaction.                                                                      | There is a 500-character limit                                                                                                                                 |
-| type/       | Yes       | Transaction type of transaction.<br/>Valid types are `income` and `expense`.                  |                                                                                                                                                                |
-| amt/        | Yes       | Monetary amount of transaction. Has to be a positive value.                                   | Automatically rounded to 2 decimal places.                                                                                                                     |
-| dt/         | Yes       | Date and time where transaction was made.<br/>Defaults to current date time if not specified. | Can be in the `dd-MM-uuuu HH:mm` (e.g. 31-10-2023 12:00), `uuuu-MM-dd HH:mm` (e.g. 2023-10-31 22:59), or `dd MMM uuuu HH:mm` (e.g. 31 Oct 2023 22:59) formats. |
-| l/          | Yes       | Location where transaction was made.<br/>Defaults to `'-'` if not specified.                  | There is a 500-character limit                                                                                                                                 |
-| c/          | Yes       | Category tagged to that transaction.<br/>No categories tagged if not specified.               | There is a 15-character limit.<br/>`Category` entered will be converted and stored as all lowercase.<br/>Each transaction can have at most 5 categories.       |
+| Option Name | Optional? | Purpose                                                                                             |
+|-------------|-----------|-----------------------------------------------------------------------------------------------------|
+| INDEX       | No        | (One-based) Index of the transaction to edit.                                                       |
+| n/          | Yes       | Name of the transaction.                                                                            |
+| type/       | Yes       | Transaction type of transaction.<br/>Valid types are `income` and `expense`.                        |
+| amt/        | Yes       | Monetary amount of transaction. Has to be a positive value.                                         |
+| dt/         | Yes       | Date and time where transaction was made.<br/>Defaults to current date time if field is left empty. |
+| l/          | Yes       | Location where transaction was made.<br/>Defaults to `'-'` if field is left empty.                  |
+| c/          | Yes       | Category tagged to that transaction.<br/>Defaults to no categories if field is left empty.          |
+
+Please refer to the constraints for each prefix listed under the [Prefix Types](#prefix-types) section above.
 
 Important notes:
 
-1. While all options besides `INDEX` are optional, **you must specify at least one field** you wish to edit (
-   i.e. `Name`, `Type`, `Amount`, `Datetime`, `Location`, or `Category`).
-2. You must provide a non-empty value for the `Name`, `Type`, and `Amount` fields if you wish to edit them; they cannot
-   be left empty.
-3. The `INDEX` option must be specified first. The order in which you specify the other options does not matter.
-4. Modifying a transaction's category will result in the replacement of all existing categories. 
-   - For example, in the case of a `Transaction` with two existing categories (Entertainment and Hobbies), editing it with `edit INDEX c/Education` will replace all existing categories, leaving the transaction with a single category, Education."
+1. The value of `INDEX` provided must be between 1 and the total number of available transactions (inclusive).
+2. While all options besides `INDEX` are optional, **you must specify at least one field** you wish to edit (i.e. `Name`, `Type`, `Amount`, `Datetime`, `Location`, or `Category`).
+3. If `Name`, `Type`, or `Amount` fields are present, the values provided for these fields cannot be empty. (See [Failed Execution (Example 3) below](#example-3-2))
+4. **Specially for the Edit feature:** Empty values are allowed for `Datetime`, `Location`, and `Category`. If these fields are left empty, the default values that these fields will take are stated in the table above. (See [Successful Execution (Example 3) below](#example-3-1))
+5. The `INDEX` option must be specified first. The order in which you specify the other options does not matter.
+6. Editing a transaction's category will result in the **replacement of all existing categories**. 
+   - For example, in the case of a `Transaction` with two existing categories (Entertainment and Hobbies), editing it with `edit INDEX c/Education` will replace all existing categories, leaving the transaction with a single category, "Education".
 
-
-
-
-  
 
 ##### Successful Execution
 
@@ -470,8 +468,6 @@ Important notes:
 > Location: John home;
 > Categories: #tuition
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionSuccessOutput2.png" width="1000" />
 
 ###### Example 3
 
@@ -505,8 +501,6 @@ Important notes:
 > ```
 > At least one field to edit must be provided.
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput1.png" width="1000" />
 
 ###### Example 2
 
@@ -526,8 +520,6 @@ Important notes:
 > 
 > Example: edit_transaction 1 n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput2.png" width="1000" />
 
 ###### Example 3
 
@@ -539,8 +531,6 @@ Important notes:
 > ```
 > Names should only contain alphanumeric characters, spaces, (, ), _, @, -, #, &, ., and ',', up to 500 characters and it should not be blank
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput3.png" width="1000" />
 
 ###### Example 4
 
@@ -552,8 +542,6 @@ Important notes:
 > ```
 > The transaction index provided is invalid
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput4.png" width="1000" />
 
 ###### Example 5
 
@@ -568,8 +556,6 @@ Important notes:
 > 2. uuuu-MM-dd HH:mm
 > 3. dd MMM uuuu HH:mm
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput5.png" width="1000" />
 
 #### Delete Transaction
 
