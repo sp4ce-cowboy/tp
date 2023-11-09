@@ -5,7 +5,7 @@ title: User Guide
 
 UniCa$h **is a desktop application used for university students who want to be more financially conscious,
 optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface
-(GUI). If you can type fast, UniCa$h can get your contact management tasks done faster than traditional GUI apps.
+(GUI). If you can type fast, UniCa$h can get your finance management tasks done faster than traditional GUI apps.
 
 <div class="callout callout-important" markdown="span">
 Please read through sections [Installation](#installation) and [Command Breakdown](#command-breakdown) before approaching any command documentation
@@ -249,25 +249,25 @@ or negative (red) or zero (black)._
 
 UniCa$h comprises of four primary feature groups:
 
-- Transaction Management
-    - Add Transaction (`add_transaction`)
-    - Delete Transaction (`delete_transaction`)
-    - Edit Transaction (`edit_transaction`)
-    - List Transactions (`list`)
-    - Get Transaction (`get`)
-    - Find Transaction(s) (`find`)
-    - Clear All Transactions (`clear_transactions`)
-- Budget Management
-    - Set Budget (`set_budget`)
-    - Clear Budget (`clear_budget`)
-    - Get Budget (`get_budget`)
-- Financial Statistics
-    - Get Total Expenditure (`get_total_expenditure`)
-    - Summary Statistics (`summary`)
-- General Utility
-    - Show Help (`help`)
-    - Reset UniCa$h (`reset_unicash`)
-    - Exit UniCa$h (`exit`)
+- [Transaction Management](#transaction-management)
+    - [Add Transaction](#add-transaction) (`add_transaction`)
+    - [Delete Transaction](#delete-transaction) (`delete_transaction`)
+    - [Edit Transaction](#edit-transaction) (`edit_transaction`)
+    - [List Transactions](#list-transactions) (`list`)
+    - [Get Transaction](#get-transaction) (`get`)
+    - [Find Transaction(s)](#find-transactions) (`find`)
+    - [Clear All Transactions](#clear-transactions) (`clear_transactions`)
+- [Budget Management](#budget-management)
+    - [Set Budget](#set-budget) (`set_budget`)
+    - [Clear Budget](#clear-budget) (`clear_budget`)
+    - [Get Budget](#get-budget) (`get_budget`)
+- [Financial Statistics](#financial-statistics)
+    - [Get Total Expenditure](#get-total-expenditure) (`get_total_expenditure`)
+    - [Summary Statistics](#summary-statistics) (`summary`)
+- [General Utility](#general-utility)
+    - [Show Help](#help) (`help`)
+    - [Reset UniCa$h](#reset-unicah) (`reset_unicash`)
+    - [Exit UniCa$h](#exit-unicah) (`exit`)
 
 The instructions for the usage of each command within each feature group are elaborated in the sections below.
 
@@ -486,8 +486,6 @@ Important notes:
 > Location: -;
 > Categories:
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionSuccessOutput3.png" width="1000" />
 
 ##### Failed Execution
 
