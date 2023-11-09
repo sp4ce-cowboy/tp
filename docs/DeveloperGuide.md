@@ -151,7 +151,8 @@ For the following Use Cases (unless specified otherwise):
 - The System is `UniCa$h`
 - The Actor is `User`
 
-#### Use Case: UC01 - Adding a transaction
+**Use Case: UC01 - Adding a transaction**
+
 **MSS:**
 1. User enters the command to add a transaction with the correct format.
 2. User submits the request.
@@ -168,7 +169,8 @@ For the following Use Cases (unless specified otherwise):
   - 2b2. User confirms the request
   - Use case resumes at step 3.
 
-#### Use Case: UC02 - Finding a transaction
+**Use Case: UC02 - Finding a transaction**
+
 **MSS:**
 1. User enters the command to find a transaction with the correct format.
 2. User submits the request.
@@ -186,7 +188,8 @@ the filtered transaction with a success message.
   - 3a1. UniCa$h displays a message saying no results found.
   - Use Case resumes at step 1
 
-#### Use Case: UC03 - Delete a transaction
+**Use Case: UC03 - Delete a transaction**
+
 **MSS:**
 1. User enters the command to delete a transaction with the correct format.
 2. User submits the request.
@@ -206,7 +209,8 @@ the filtered transaction with a success message.
     - Use Case resumes at step 1
 
 
-#### Use Case: UC05 - Listing All Transactions
+**Use Case: UC04 - Listing All Transactions**
+
 **MSS:**
 1. User enters the command to list all transactions with the correct format (i.e. no parameters).
 2. User submits the request.
@@ -220,10 +224,11 @@ the filtered transaction with a success message.
     - Use case resumes from step 1.
 
 - 3a. There are no transactions for UniCa$h to retrieve.
-    - 3a1. UniCa$h displays a message informing the User that there are no expenses. 
+    - 3a1. UniCa$h displays no transactions, and informs the user that all transactions have been retrieved. 
     - Use Case ends.
 
-#### Use Case: UC06 - Finding a Transaction
+**Use Case: UC05 - Finding a Transaction**
+
 **MSS:**
 1. User enters the command to find transaction with the correct format.
 2. User submits the request.
@@ -243,7 +248,8 @@ the filtered transaction with a success message.
     - 3a1. UniCa$h displays a message informing the user that no results were found.
     - Use Case ends.
 
-#### Use Case: UC07 - Tabulate Total Expenditure
+**Use Case: UC06 - Tabulate Total Expenditure**
+
 **MSS:**
 1. User enters the command to tabulate total expenditure.
 2. User submits the request.
@@ -261,7 +267,8 @@ the filtered transaction with a success message.
 
   Use case resumes from Step 3.
 
-#### Use Case: UC08 - Clear all transactions
+**Use Case: UC07 - Clear all transactions**
+
 **MSS:**
 1. User enters the command to clear all transactions with the correct format. (i.e. no parameters)
 2. User submits the request.
@@ -279,7 +286,8 @@ the filtered transaction with a success message.
   - 3a1. UniCa$h displays a message saying that transactions list is empty.
   - Use Case resumes at step 1
 
-#### Use Case: UC09 - Show UniCa$h Help
+**Use Case: UC08 - Show UniCa$h Help**
+
 **MSS:**
 1. User enters the command to show help with the correct format. (i.e. no parameters)
 2. User submits the request.
@@ -292,7 +300,8 @@ the filtered transaction with a success message.
   - 2a1. UniCa$h displays an error message with the correct command format.
   - Use case resumes at step 1.
 
-#### Use Case: UC10 - Exit UniCa$h
+**Use Case: UC09 - Exit UniCa$h**
+
 **MSS:**
 1. User enters the command to exit UniCa$h with the correct format (i.e. no parameters)
 2. User submits the request. 
@@ -304,6 +313,57 @@ the filtered transaction with a success message.
 - 2a. User enters an incorrect format.
   - 2a1. UniCa$h displays an error message with the correct command format.
   - Use case resumes at step 1.
+
+**Use Case: UC11 - Set Budget**
+
+**MSS:**
+1. User enters the command to set the budget with the correct format (i.e. specifying the amount and interval).
+2. User submits the request.
+3. UniCa$h sets the global budget.
+4. UniCa$h displays the new budget.
+
+   Use Case ends.
+
+**Extensions:**
+
+- 1a. User enters the incorrect format (missing fields)
+  - 1a1. UniCa$h displays an error message with the correct command format
+  - Use case resumes at step 1.
+- 3a. UniCa$h contains existing budget.
+  - 3a1. UniCa$h replaces existing budget with new one.
+  - Use case resumes at step 4.
+
+**Use Case: UC12 - Clear Budget**
+
+**MSS:**
+1. User enters the command to clear the budget.
+2. User submits the request.
+3. UniCa$h clears the existing budget.
+4. UniCa$h displays a success message.
+
+   Use Case ends.
+
+**Extensions:**
+
+- 3a. UniCa$h does not contain an existing budget.
+    - 3a1. UniCa$h displays a prompt to create a budget first.
+    - Use case ends.
+
+**Use Case: UC13 - Get Budget**
+
+**MSS:**
+1. User enters the command to get the budget.
+2. User submits the request.
+3. UniCa$h tabulates the expenditure relative to the budget set for the given interval.
+4. UniCa$h displays the budget and the net amount of the budget.
+
+   Use Case ends.
+
+**Extensions:**
+
+- 3a. UniCa$h does not contain an existing budget.
+    - 3a1. UniCa$h displays a prompt to create a budget first.
+    - Use case ends.
 
 ---
 
@@ -364,42 +424,69 @@ The `UI` component is also responsible for:
 
 ### Storage Component
 
+<img src="images/StorageClassDiagram.png" width="500">
+
+UniCa$h stores any persistent data as local [JSON files](https://www.json.org/json-en.html), located in the same folder where the JAR file is run.
+
+The following are the files that are created:
+
+- `config.json`
+- `preferences.json`
+- `data/unicash.json`
+
+[Jackson](https://github.com/FasterXML/jackson) is used for JSON (de)serialization and it relies on adapted models similar to the [Data Transfer Object pattern.](https://www.baeldung.com/java-dto-pattern)
+
+
+#### Malformed JSONs
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+If a JSON file is malformed, the contents will not be loaded and a log message will be printed. 
+<br><br>
+However, no proactive measures are applied to rectify the issue such as automatically deleting the file or fixing the error to avoid prescribing a fixed approach to resolving malformed JSONs.
+</div>
+
+While we do not make assumptions about the intended action when encountering a malformed JSON file, most JSON files will be overwritten at some point, so the malformed JSON should eventually be overwritten with proper JSON.
+
+For `data/unicash.json`, this occurs when adding, editing, or deleting the transaction list or updating the budget.
+
+For `config.json` and `preferences.json`, this occurs in the `MainApp#initConfig` and `MainApp#initPrefs` methods.
+
 ### Continuous Integration (CI)
 
 Continuous integration consists of the following:
 
 1. General unit testing
 2. UI testing
-3. Automated testing on push & pull request on Github
+3. Automated testing on Github
 4. Code coverage reporting
 
-#### Github Actions Primer
-
-Before diving into the various CI components, it would be good to cover some fundamental concepts about [Github Actions.](https://docs.github.com/en/actions)
-
-Github Actions is used to execute a set of behavior on a repository.
-
+<div class="callout callout-info" markdown="span">
+**[Github Actions](https://docs.github.com/en/actions) Primer**
+<br><br>
+Github Actions is used to execute a set of behavior on a repository and is often used for Continuous Integration and Continuous Deployment.
+<br><br>
 Github Actions are created as YAML configuration files found in the `.github/workflows` folder.
-
-For UniCa$h, Github Actions are broken down into the following components:
-
+<br><br>
+GitHub Actions can be generally broken down into the following components:
+<br>
 1. Trigger: dictates when the action is run
+<br>
 2. Strategy & matrix: specifies the platform (OS) and any relevant versions to run the steps
+<br>
 3. Steps: consists of individual steps that can use other Github Actions to perform a set of actions in sequential order
+</div>
 
 #### General unit testing
 
 General unit tests cover any non-UI related aspect of UniCa$h such as models, commands, and utility.
 
-General unit testing is achieved using [JUnit 5](https://junit.org/junit5/) with a combination of several custom built
-assertion methods like `CommandTestUtil#assertCommandSuccess` to improve the quality of life when testing.
+[JUnit 5](https://junit.org/junit5/), along with custom-built assertion methods like `CommandTestUtil#assertCommandSuccess`, are used to perform general unit testing.
 
 #### UI testing
 
-UI testing provides a way for us to automate some manual tests by simulating button clicks and user inputs
-into the UI to assert that the UI responds appropriately.
+UI testing helps automate some manual testing by simulating user interaction with the UI, ensuring that the UI is responding as intended.
 
-UI testing is achieved using [JUnit 5](https://junit.org/junit5/) and [TestFX](https://github.com/TestFX/TestFX).
+[JUnit 5](https://junit.org/junit5/) and [TestFX](https://github.com/TestFX/TestFX) are used to setup and perform UI testing.
 
 To initialize a test class to work with TestFX, annotate it with the following:
 
@@ -409,26 +496,40 @@ public class HelpWindowUiTest {
 ```
 
 This leverages [JUnit 5's built-in extensions system](https://junit.org/junit5/docs/current/user-guide/#extensions) to
-inject an `FxRobot` argument in each unit test. This `FxRobot` instance is used as a driver to perform UI operations on
-the running UI, such as performing clicks, entering text, and performing keyboard inputs, along with searching for UI
-elements by `fx:id`.
+inject an `FxRobot` argument in each unit test. 
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+`FxRobot` is used as a driver to perform UI operations on the running UI, such as performing clicks, entering text, and performing keyboard inputs, along with searching for UI elements by `fx:id`.
+</div>
 
 ```java
 @Test
-public void userInput_help_showHelpWindowAsRoot(FxRobot robot)throws TimeoutException{
-    var beforeHelpContainer=robot.lookup("#helpMessageContainer").tryQuery();
+public void userInput_help_showHelpWindowAsRoot(FxRobot robot) throws TimeoutException {
+    // Search for elements in the UI
+    var beforeHelpContainer = robot.lookup("#helpMessageContainer").tryQuery();
+    
     assertTrue(beforeHelpContainer.isEmpty());
+    // Perform a mouse click
     robot.clickOn("#commandBoxPlaceholder");
+    
+    // Enter text input
     robot.write("help");
+    
+    // Perform a keyboard input
     robot.press(KeyCode.ENTER);
-    var afterHelp=robot.lookup("#helpMessageContainer").tryQuery();
+    
+    var afterHelp = robot.lookup("#helpMessageContainer").tryQuery();
     assertTrue(afterHelp.isPresent());
 }
 ```
 
-There are two methods of initializing UI tests with TestFX.
+Furthermore, there are two methods of initializing the UI for testing, the first using the `@Start` annotation and the other uses the `@BeforeEach` annotation.
 
 ##### Using `@Start`
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+Use `@Start` when testing individual UI components.
+</div>
 
 When defining a `@Start` method, a `Stage` is injected through
 the [test runner](https://junit.org/junit5/docs/current/user-guide/#writing-tests-dependency-injection) and this
@@ -440,21 +541,29 @@ provides a medium to render these elements without running the entire UI.
 ```java
 @Start
 public void start(Stage stage) {
-    helpWindow=new HelpWindow(stage);
+    // helpWindow is declared outside of the method to be accessed in all unit tests
+    helpWindow = new HelpWindow(stage);
     stage.show();
 }
 ```
 
+<div class="callout callout-info" markdown="span">
 The `@Start` method is run before each test case.
+</div>
 
 ##### Using `@BeforeEach`
 
-When performing a general set of integration tests across the entire UI (like simulating user input to execution to
-view the resulting UI changes), it is best to define a `@BeforeEach` method instead that uses `FxToolkit` to setup
-the application (in this case, `MainApp`) with any given setup parameters like default storage location.
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+Use `@BeforeEach` when testing the entire UI, i.e. integration testing.
+</div>
 
-It is important to note that if testing the entire application, a temporary storage file should be defined and
-provided for `MainApp` to avoid directly modifying the save data on your local machine.
+When performing a general set of integration tests across the entire UI (like simulating user input to execution to
+view the resulting UI changes), it is best to define a `@BeforeEach` method that uses `FxToolkit` to setup
+the application (in this case, `MainApp`) with any given setup parameters like a default storage location.
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+When testing the entire application, a temporary storage file should be defined and provided for `MainApp` to avoid directly modifying the save data on your local machine.
+</div>
 
 ```java
 @TempDir
@@ -463,15 +572,17 @@ Path tempDir;
 @BeforeEach
 public void runAppToTests() throws TimeoutException {
     FxToolkit.registerPrimaryStage();
-    FxToolkit.setupApplication(()->new MainApp(tempDir.resolve("ui_data.json")));
+    FxToolkit.setupApplication(() -> new MainApp(tempDir.resolve("ui_data.json")));
     FxToolkit.showStage();
     WaitForAsyncUtils.waitForFxEvents(20);
 }
 ```
 
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
 The `@BeforeEach` method is run before each test case.
+</div>
 
-It is also good convention to include a `@AfterEach` method to clean up the stages created during `@BeforeEach` so
+It is also good convention to include an `@AfterEach` method to clean up the stages created during `@BeforeEach` so
 that all resources are freed after every unit test:
 
 ```java
@@ -481,7 +592,7 @@ public void stopApp() throws TimeoutException{
 }
 ```
 
-#### Automated testing on push & pull request on Github
+#### Automated testing on Github
 
 Automated testing is achieved via the `.github/workflows/unit_test.yml` action.
 
@@ -489,7 +600,9 @@ Automated testing is triggered on every push and pull request and is run across 
 
 <img src="images/unicash/ci/AutomatedTestingActivityDiagram.png" width="368" />
 
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
 UI tests are only run on Windows as both Linux and MacOS requires headless UI testing which is not well supported with Github Actions.
+</div>
 
 #### Code coverage reporting
 
@@ -503,14 +616,14 @@ Similar to automated testing, code coverage reporting is triggered on every push
 
 To ensure that code coverage reporting includes both general unit tests and UI tests, the following changes have been made to `build.gradle`:
 
-1. A new Gradle task `uiTest` was created to only run UI tests that end with `UiTest`
+1. A new Gradle task `uiTest` was created to only run UI tests that are unit test files that end with `UiTest`
 2. The default `test` task is configured to exclude such files
-3. The `jacocoTestReport` task is modified to only depend on (i.e. run before) the `uiTest` task is the system's OS is not MacOS, Ubuntu or *nux (i.e. Windows only).
+3. The `jacocoTestReport` task is modified to only depend on (i.e. run before) the `uiTest` task is the system's OS is not MacOS, Ubuntu or *nux (i.e. Windows only)
 4. The `coverage` task includes every `*.exec` file generated from both `uiTest` and `test` so that both coverage reports are available to Codecov
 
-These changes aim to work around the limitation of needing a headless environment in Github Actions as only Windows is able to perform UI tests on Github Action's runners.
+The Github Action for reporting the code coverage only uploads the coverage reports to Codecov if the runner is Windows as only then will there be a complete code coverage report.
 
-The Github action for reporting the code coverage only uploads the coverage reports to Codecov if the runner is Windows as that is when there is a complete code coverage report.
+These changes work around the limitation of Linux and MacOS runners on Github Actions not supporting a headless environment.
 
 By introducing UI testing into the code coverage reporting, we have been able to achieve a code coverage of > 85%!
 
@@ -518,7 +631,30 @@ By introducing UI testing into the code coverage reporting, we have been able to
 
 #### StyleSheet
 
-#### MessageBuilder
+#### Command Usage Message Builder
+
+Uniformly generates `MESSAGE_USAGE` strings to be used per command. Works well with `ExampleGenerator` to create consistent examples for every command using each type of prefix. Reduces the overhead of ensuring that all example values are accurate or ensuring that formatting for command usage is uniform.
+
+Relies heavily on the [builder design pattern.](https://refactoring.guru/design-patterns/builder)
+
+Example usage of `CommandUsage` would be:
+
+```java
+private static final MESSAGE_USAGE = new CommandUsage.Builder()
+    .setCommandWord("set_budget")
+    .setDescription("Sets the user's budget on UniCa$h.")
+    .addParameter(PREFIX_AMOUNT, "Amount")
+    .addParameter(PREFIX_INTERVAL, "Interval") 
+    .setExample(
+        ExampleGenerator.generate(
+            "set_budget", 
+            PREFIX_AMOUNT, 
+            PREFIX_INTERVAL
+        )
+    ) 
+    .build()
+    .toString();
+```
 
 ---
 
@@ -699,24 +835,113 @@ out in the **Add Transaction** section above also remain.
 
 <img src="images/unicash/BudgetClassDiagram.png" width="250" />
 
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The budget is stored in `data/unicash.json`, much like the transactions. Refer to the [storage component](#storage-component) for more details.
+</div>
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+For this team project, we have opted to simplify the budgeting feature by limiting the user to a single budget at a time that can be configured for different intervals and amounts.
+</div>
+
 UniCa$h tracks a user's budget with the use of `Budget`.
 
 The `Budget` class is composed of the following fields
 
-1. `Amount`: The name of the transaction.
-2. `Interval`: The budget interval of the transaction. UniCash supports expense and income only.
-   1. `BudgetInterval`: An enum consisting of the values `daily`, `weekly` and `monthly`.
+1. `Amount`: The amount allocated to the budget.
+2. `Interval`: The budget interval of the transaction.
+   1. `BudgetInterval`: An enum consisting of the values `day`, `week` and `month`.
 
 The following are some noteworthy points regarding the attributes
 1. `Amount` here follows the same constraints as the one mentioned in the `Transaction`'s `Amount` class.
 
-Some features about the management of budgets
-
 #### Set Budget
+
+**Overview**
+
+The `set_budget` command sets a user defined budget globally across UniCa$h.
+
+The activity diagram of getting the total expenditure is as shown below
+
+<img src="images/unicash/budget-management/SetBudgetActivityDiagram.png" width="450" />
+
+The following sequence diagram shows how the different components of UniCash interact with each other
+
+<img src="images/unicash/budget-management/SetBudgetSequenceDiagram.png" width="1622" />
+
+The above sequence diagram omits details on the creation of the arguments of a `SetBudgetCommand` such as
+`Amount` and `Interval` as it would make the diagram cluttered and difficult to read without adding additional value. 
+
+It also omits the file saving aspect of this, where the updated budget is saved to the `data/unicash.json` file.
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The lifeline for `GetTotalExpenditureCommandParser` should end at the destroy marker (X) but due to a
+limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+**Details**
+
+1. The user specifies amount and interval that the budget will operate on
+2. The input will be parsed by `SetBudgetCommandParser`, and if it is invalid, `ParserException` is thrown,
+   prompting for the user to enter again
+3. If the input is valid, a `SetBudgetCommand` object is created to be executed by the `LogicManager`
+4. The `LogicManager` will then invoke the `execute` method of the command, setting the budget in the `ModelManager`
 
 #### Clear Budget
 
+**Overview**
+
+The `clear_budget` command removes the globally set UniCa$h budget.
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+`clear_budget` will not parse any additional argument or parameters.
+</div>
+
+The following sequence diagram shows how the different components of UniCash interact with each other
+
+<img src="images/unicash/budget-management/ClearBudgetSequenceDiagram.png" width="700" />
+
+It also omits the file saving aspect of this, where `data/unicash.json` is updated to now hold a `null` budget.
+
+**Details**
+
+1. The user runs the clear budget command
+2. The command will be parsed by `UniCashParser` and a `ClearBudgetCommand` object is created and executed by the `LogicManager`
+3. The `LogicManager` will then invoke the `execute` method of the command
+4. The command will check if UniCa$h currently contains an existing budget, if it does not, a "no budget" message is returned, otherwise, the existing budget is cleared and a success message is returned instead
+
 #### Get Budget
+
+**Overview**
+
+The `get_budget` command computes the total expenditure relative to the existing budget within the given interval.
+
+Intervals work by filtering by the specified time period:
+- For `day` intervals, only transactions of the same day are found
+- For `week` intervals, only transactions of the same [week of year](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/temporal/WeekFields.html#weekOfYear()) are found
+- For `month` intervals, only transactions of the same month are found
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+`get_budget` will not parse any additional argument or parameters.
+</div>
+
+The following sequence diagram shows how the different components of UniCash interact with each other
+
+<img src="images/unicash/budget-management/GetBudgetSequenceDiagram.png" width="700" />
+
+The above sequence diagram omits details such as internal method calls to `GetBudgetCommand#getIntervalFilter` and `GetBudgetCommand#getIntervalString` to reduce clutter.
+
+**Details**
+
+1. The user runs the get budget command
+2. The command will be parsed by `UniCashParser` and a `GetBudgetCommand` object is created and executed by the `LogicManager`
+3. The `LogicManager` will then invoke the `execute` method of the command
+4. The command will check if UniCa$h currently contains an existing budget, if it does not, a "no budget" message is returned, otherwise, the budget remainder will be calculated
+5. If the remainder amount is negative (`< 0.00`), then a negative amount message will be returned
+6. Otherwise, a non-negative message will be returned
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The only difference between the negative and non-negative messages is that the negative message places the `-` symbol before the `$` so `-$xx.xx` whereas the non-negative message does not contain the `-` symbol
+</div>
 
 ### General Utility
 

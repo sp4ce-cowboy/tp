@@ -6,7 +6,7 @@ skinparam classBackgroundColor STORAGE_COLOR
 
 package Storage as StoragePackage {
 
-package "UserPrefs Storage" #F4F6F6{
+package "UserPrefs" #F4F6F6{
 Class "<<interface>>\nUserPrefsStorage" as UserPrefsStorage
 Class JsonUserPrefsStorage
 }
@@ -14,12 +14,13 @@ Class JsonUserPrefsStorage
 Class "<<interface>>\nStorage" as Storage
 Class StorageManager
 
-package "AddressBook Storage" #F4F6F6{
-Class "<<interface>>\nAddressBookStorage" as AddressBookStorage
-Class JsonAddressBookStorage
-Class JsonSerializableAddressBook
-Class JsonAdaptedPerson
-Class JsonAdaptedTag
+package "UniCash" #F4F6F6{
+Class "<<interface>>\nUniCashStorage" as UniCashStorage
+Class JsonUniCashStorage
+Class JsonSerializableUniCash
+Class JsonAdaptedTransaction
+Class JsonAdaptedBudget
+Class JsonAdaptedCategory
 }
 
 }
@@ -29,15 +30,16 @@ HiddenOutside ..> Storage
 
 StorageManager .up.|> Storage
 StorageManager -up-> "1" UserPrefsStorage
-StorageManager -up-> "1" AddressBookStorage
+StorageManager -up-> "1" UniCashStorage
 
 Storage -left-|> UserPrefsStorage
-Storage -right-|> AddressBookStorage
+Storage -right-|> UniCashStorage
 
 JsonUserPrefsStorage .up.|> UserPrefsStorage
-JsonAddressBookStorage .up.|> AddressBookStorage
-JsonAddressBookStorage ..> JsonSerializableAddressBook
-JsonSerializableAddressBook --> "*" JsonAdaptedPerson
-JsonAdaptedPerson --> "*" JsonAdaptedTag
+JsonUniCashStorage .up.|> UniCashStorage
+JsonUniCashStorage ..> JsonSerializableUniCash
+JsonSerializableUniCash --> "*" JsonAdaptedTransaction
+JsonAdaptedTransaction --> "*" JsonAdaptedCategory
+JsonSerializableUniCash --> "0..1" JsonAdaptedBudget
 
 @enduml

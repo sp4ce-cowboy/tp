@@ -1,0 +1,19 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+:User enters set budget command;
+if () then ([else])
+  :Parse exception thrown;
+  stop
+else ([All compulsory fields are present and in the correct format])
+  if () then ([else])
+    :Create new budget;
+  else ([Has existing budget])
+    :Override existing budget;
+  endif
+endif
+stop
+
+@enduml
