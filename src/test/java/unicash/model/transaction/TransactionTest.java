@@ -4,6 +4,7 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
+import static unicash.testutil.Assert.assertThrows;
 import static unicash.testutil.TypicalTransactions.BUYING_GROCERIES;
 import static unicash.testutil.TypicalTransactions.DINING_WITH_FRIENDS;
 import static unicash.testutil.TypicalTransactions.WORK_AT_LIHO;
@@ -15,6 +16,12 @@ import unicash.model.commons.Amount;
 import unicash.testutil.TransactionBuilder;
 
 public class TransactionTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        // null parameters
+        assertThrows(NullPointerException.class, () -> new Transaction(null, null, null, null, null, null));
+    }
 
     @Test
     public void getAmountAsDouble() {
