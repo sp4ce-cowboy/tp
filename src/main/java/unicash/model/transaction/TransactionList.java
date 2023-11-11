@@ -28,7 +28,7 @@ public class TransactionList implements Iterable<Transaction> {
      */
     public boolean contains(Transaction toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::equals);
+        return internalList.stream().anyMatch(toCheck::equalsTransaction);
     }
 
     /**
@@ -109,19 +109,43 @@ public class TransactionList implements Iterable<Transaction> {
         return internalList.iterator();
     }
 
+    /**
+     * Returns true if the object in comparison is a {@code TransactionList} object
+     * with the same number of transaction, and in the same order of encounter within
+     * the internal list.
+     *
+     * @param other the input object to be compared against
+     * @return true if the input object is a {@code TransactionList} object with the
+     *     same number of transactions and encounter order
+     */
     @Override
     public boolean equals(Object other) {
-        if (other == this) {
+        if (this == other) {
             return true;
         }
 
-        // instanceof handles nulls
+        // instanceof handles null
         if (!(other instanceof TransactionList)) {
             return false;
         }
 
         TransactionList otherTransactionList = (TransactionList) other;
-        return internalList.equals(otherTransactionList.internalList);
+
+        if (this.internalList.size() != otherTransactionList.internalList.size()) {
+            return false;
+        }
+
+        // Iterate over both lists and use equalsTransaction method for comparison
+        for (int i = 0; i < this.internalList.size(); i++) {
+            Transaction thisTransaction = this.internalList.get(i);
+            Transaction otherTransaction = otherTransactionList.internalList.get(i);
+
+            if (!thisTransaction.equalsTransaction(otherTransaction)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

@@ -87,6 +87,33 @@ public class Transaction {
     /**
      * Returns true if both transactions have the same data fields.
      * This defines a stronger notion of equality between two transactions.
+     *
+     * @param other the input object to be compared against
+     * @return true if the input object is a {@code Transaction} with
+     *     the same data fields.
+     */
+    public boolean equalsTransaction(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Transaction)) {
+            return false;
+        }
+
+        Transaction otherTransaction = (Transaction) other;
+        return name.equals(otherTransaction.name)
+                && type.equals(otherTransaction.type)
+                && amount.equals(otherTransaction.amount)
+                && categories.equals(otherTransaction.categories)
+                && dateTime.equals(otherTransaction.dateTime)
+                && location.equals(otherTransaction.location);
+    }
+
+    /**
+     * Returns true if both transactions have the same data fields and the
+     * same hashcode. This allows for the distinction between multiple transactions
+     * that contain the exact same combination of data fields.
      */
     @Override
     public boolean equals(Object other) {
@@ -104,7 +131,8 @@ public class Transaction {
                 && amount.equals(otherTransaction.amount)
                 && categories.equals(otherTransaction.categories)
                 && dateTime.equals(otherTransaction.dateTime)
-                && location.equals(otherTransaction.location);
+                && location.equals(otherTransaction.location)
+                && this.hashCode() == otherTransaction.hashCode();
     }
 
     @Override
