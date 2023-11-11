@@ -13,6 +13,7 @@ import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import unicash.model.category.exceptions.CategoryNotFoundException;
@@ -22,7 +23,14 @@ import unicash.model.category.exceptions.MaxCategoryException;
 
 public class UniqueCategoryListTest {
 
-    private final UniqueCategoryList uniqueCategoryList = new UniqueCategoryList();
+    private UniqueCategoryList uniqueCategoryList;
+
+    @BeforeEach
+    public void init() {
+        // Initialize the global unit category list this way to avoid accidentally mutating it
+        // across unit tests
+        uniqueCategoryList = new UniqueCategoryList();
+    }
 
     @Test
     public void constructor_duplicate_throwsDuplicateCategoryException() {
@@ -42,6 +50,15 @@ public class UniqueCategoryListTest {
     }
 
     @Test
+    public void constructor_validList_success() {
+        var categories = List.of(EDUCATION, ENTERTAINMENT);
+        var list = new UniqueCategoryList(categories);
+        for (var category : categories) {
+            assertTrue(list.contains(category));
+        }
+    }
+
+    @Test
     public void contains_nullCategory_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> uniqueCategoryList.contains(null));
     }
@@ -54,6 +71,7 @@ public class UniqueCategoryListTest {
     @Test
     public void contains_categoryInList_returnsTrue() {
         uniqueCategoryList.add(ENTERTAINMENT);
+        uniqueCategoryList.add(EDUCATION);
         assertTrue(uniqueCategoryList.contains(ENTERTAINMENT));
     }
 
@@ -74,6 +92,14 @@ public class UniqueCategoryListTest {
             uniqueCategoryList.add(new Category("Test" + i));
         }
         assertThrows(MaxCategoryException.class, () -> uniqueCategoryList.add(new Category("test5")));
+    }
+
+    @Test
+    public void add_success_addsToCategoryList() {
+        assertTrue(uniqueCategoryList.isEmpty());
+        uniqueCategoryList.add(ENTERTAINMENT);
+        assertFalse(uniqueCategoryList.isEmpty());
+        assertTrue(uniqueCategoryList.contains(ENTERTAINMENT));
     }
 
     @Test
@@ -194,19 +220,68 @@ public class UniqueCategoryListTest {
     }
 
     @Test
-    public void getSize_test() {
+    public void getSize_emptyList_returnsSizeZero() {
         UniqueCategoryList categoryList = new UniqueCategoryList();
         assertEquals(categoryList.getSize(), 0);
     }
 
     @Test
-    public void emptyList_test() {
+    public void getSize_emptyList_returnsNonZeroSize() {
+        var categories = List.of(EDUCATION);
+        var list = new UniqueCategoryList(categories);
+        assertEquals(list.getSize(), 1);
+    }
+
+    @Test
+    public void isEmpty_withNoElements_returnsTrue() {
         UniqueCategoryList categoryList = new UniqueCategoryList();
         assertTrue(categoryList.isEmpty());
     }
 
     @Test
-    public void joinCategoriesAsStringTest() {
+    public void isEmpty_withElements_returnsFalse() {
+        var categories = List.of(EDUCATION);
+        var list = new UniqueCategoryList(categories);
+        assertFalse(list.isEmpty());
+    }
+
+    @Test
+    public void isMax_notMax_returnsFalse() {
+        uniqueCategoryList.add(new Category("a"));
+        uniqueCategoryList.add(new Category("b"));
+        uniqueCategoryList.add(new Category("c"));
+        uniqueCategoryList.add(new Category("d"));
+        assertFalse(uniqueCategoryList.isMax());
+
+    }
+
+    @Test
+    public void isMax_equalsMax_returnsTrue() {
+        uniqueCategoryList.add(new Category("a"));
+        uniqueCategoryList.add(new Category("b"));
+        uniqueCategoryList.add(new Category("c"));
+        uniqueCategoryList.add(new Category("d"));
+        uniqueCategoryList.add(new Category("e"));
+        assertTrue(uniqueCategoryList.isMax());
+    }
+
+    @Test
+    public void isMoreThanMax_less_returnsFalse() {
+        var list = List.of(EDUCATION);
+        assertFalse(UniqueCategoryList.isMoreThanMax(list));
+    }
+
+    @Test
+    public void isMoreThanMax_more_returnsTrue() {
+        var list = new ArrayList<Category>();
+        for (int i = 0; i < 10; i++) {
+            list.add(new Category("Test" + i));
+        }
+        assertTrue(UniqueCategoryList.isMoreThanMax(list));
+    }
+
+    @Test
+    public void joinCategoriesAsString_withElements_returnsJoinedString() {
         UniqueCategoryList categoryList = new UniqueCategoryList();
         categoryList.add(ENTERTAINMENT);
         categoryList.add(EDUCATION);
@@ -215,7 +290,12 @@ public class UniqueCategoryListTest {
     }
 
     @Test
-    public void joinCategoriesAsListTest() {
+    public void joinCategoriesAsString_noElements_returnsEmptyString() {
+        assertEquals("", uniqueCategoryList.joinCategoriesAsString());
+    }
+
+    @Test
+    public void joinCategoriesAsList_withElements_returnsNewList() {
         UniqueCategoryList categoryUniqueList = new UniqueCategoryList();
         categoryUniqueList.add(ENTERTAINMENT);
         categoryUniqueList.add(EDUCATION);
@@ -231,6 +311,11 @@ public class UniqueCategoryListTest {
         // List toString return test
         assertEquals("[" + ENTERTAINMENT + ", " + EDUCATION + "]",
                 categoryUniqueList.joinCategoriesAsList().toString());
+    }
+
+    @Test
+    public void joinCategoriesAsList_noElements_returnsEmptyList() {
+        assertEquals(0, uniqueCategoryList.joinCategoriesAsList().size());
     }
 
     @Test
@@ -253,7 +338,7 @@ public class UniqueCategoryListTest {
         // null -> returns false
         assertNotEquals(null, categoryList);
 
-        assertFalse(categoryList.equals(null));
+        assertFalse(categoryList.equals(5));
     }
 
     @Test

@@ -95,12 +95,15 @@ public class ParserUtilTest {
     @Test
     public void parseAmount_invalidValue_throwsParseException() {
         assertThrows(ParseException.class, () -> ParserUtil.parseAmount(INVALID_AMOUNT));
+        assertThrows(ParseException.class, () -> ParserUtil.parseAmount("$hi"));
+        assertThrows(ParseException.class, () -> ParserUtil.parseAmount("^55.13"));
     }
 
     @Test
     public void parseAmount_validValueWithoutWhitespace_returnsTransactionName() throws Exception {
         Amount expectedAmount = new Amount(3.0);
         assertEquals(expectedAmount, ParserUtil.parseAmount(VALID_AMOUNT));
+        assertEquals(expectedAmount, ParserUtil.parseAmount("$3.00"));
     }
 
     @Test
@@ -178,6 +181,12 @@ public class ParserUtilTest {
         String dateTimeWithWhiteSpace = WHITESPACE + VALID_DATETIME + WHITESPACE;
         DateTime expectedDateTime = new DateTime(VALID_DATETIME);
         assertEquals(expectedDateTime, ParserUtil.parseDateTime(dateTimeWithWhiteSpace));
+    }
+
+    @Test
+    public void parseDateTime_empty_returnsDefaultDateTime() throws Exception {
+        DateTime expected = new DateTime(WHITESPACE);
+        assertEquals(expected, ParserUtil.parseDateTime(WHITESPACE));
     }
 
     @Test

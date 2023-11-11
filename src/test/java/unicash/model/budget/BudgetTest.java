@@ -56,8 +56,6 @@ public class BudgetTest {
         assertNotEquals(null, DAILY);
 
         // different type -> returns false
-        assertNotEquals(5, DAILY);
-
         assertFalse(DAILY.equals(5));
 
         // different person -> returns false

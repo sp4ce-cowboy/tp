@@ -59,8 +59,6 @@ public class TransactionTest {
         assertNotEquals(null, BUYING_GROCERIES);
 
         // different type -> returns false
-        assertNotEquals(5, BUYING_GROCERIES);
-
         assertFalse(BUYING_GROCERIES.equals(5));
 
         // different person -> returns false

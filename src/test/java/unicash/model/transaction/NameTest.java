@@ -11,6 +11,24 @@ import org.junit.jupiter.api.Test;
 
 public class NameTest {
 
+    private static final String[] INVALID_NAMES = {
+        "", // empty string
+        " ", // whitespace
+        "^", // only non-supported characters
+        "peter*", // non-supported characters
+        "a".repeat(501) // too long
+    };
+
+    private static final String[] VALID_NAMES = {
+        "peter jack", // alphabets only
+        "12345", // numbers only
+        "peter the 2nd", // alphanumeric
+        "Capital Tan", // capital letters
+        "David Roger Jackson Ray Jr 2nd", // longer names
+        "hello (world) @ NUS School_of-Computing #1234 & Longer, longer.", // Symbols
+        "a".repeat(500) // exactly max length characters
+    };
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Name(null));
@@ -28,17 +46,14 @@ public class NameTest {
         assertThrows(NullPointerException.class, () -> Name.isValidName(null));
 
         // invalid name
-        assertFalse(Name.isValidName("")); // empty string
-        assertFalse(Name.isValidName(" ")); // spaces only
-        assertFalse(Name.isValidName("^")); // only non-alphanumeric characters
-        assertFalse(Name.isValidName("peter*")); // contains non-alphanumeric characters
+        for (var name : INVALID_NAMES) {
+            assertFalse(Name.isValidName(name));
+        }
 
         // valid name
-        assertTrue(Name.isValidName("peter jack")); // alphabets only
-        assertTrue(Name.isValidName("12345")); // numbers only
-        assertTrue(Name.isValidName("peter the 2nd")); // alphanumeric characters
-        assertTrue(Name.isValidName("Capital Tan")); // with capital letters
-        assertTrue(Name.isValidName("David Roger Jackson Ray Jr 2nd")); // long names
+        for (var name : VALID_NAMES) {
+            assertTrue(Name.isValidName(name));
+        }
     }
 
     @Test
@@ -55,11 +70,22 @@ public class NameTest {
         assertNotEquals(null, name);
 
         // different types -> returns false
-        assertNotEquals(5.0f, name);
-
         assertFalse(name.equals(5));
 
         // different values -> returns false
         assertNotEquals(name, new Name("Other Valid Name"));
+    }
+
+    @Test
+    public void hashCodeMethod() {
+        var name = new Name("Valid name");
+        var nameCopy = new Name(name.fullName);
+        assertEquals(name.hashCode(), nameCopy.hashCode());
+    }
+
+    @Test
+    public void toStringMethod() {
+        var name = new Name("Valid name");
+        assertEquals("Valid name", name.toString());
     }
 }

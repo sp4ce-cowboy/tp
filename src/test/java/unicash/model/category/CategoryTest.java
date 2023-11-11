@@ -1,8 +1,12 @@
 package unicash.model.category;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static unicash.testutil.Assert.assertThrows;
+import static unicash.testutil.TypicalCategories.EDUCATION;
+import static unicash.testutil.TypicalCategories.ENTERTAINMENT;
 
 import org.junit.jupiter.api.Test;
 
@@ -54,5 +58,23 @@ public class CategoryTest {
 
         // different values -> returns false
         assertFalse(category.equals(new Category("Another")));
+    }
+
+    @Test
+    public void hashCodeMethod() {
+        var entertainmentClone = new Category(ENTERTAINMENT.category);
+        assertEquals(ENTERTAINMENT.hashCode(), ENTERTAINMENT.hashCode());
+        assertEquals(ENTERTAINMENT.hashCode(), entertainmentClone.hashCode());
+        assertNotEquals(ENTERTAINMENT.hashCode(), EDUCATION.hashCode());
+    }
+
+    @Test
+    public void toStringMethod() {
+        assertEquals("entertainment", ENTERTAINMENT.toString());
+    }
+
+    @Test
+    public void categoryToStringWithPrefix() {
+        assertEquals("#entertainment", ENTERTAINMENT.categoryToStringWithPrefix());
     }
 }
