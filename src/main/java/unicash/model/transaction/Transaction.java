@@ -2,8 +2,6 @@ package unicash.model.transaction;
 
 import static unicash.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Objects;
-
 import unicash.commons.util.ToStringBuilder;
 import unicash.model.category.UniqueCategoryList;
 import unicash.model.commons.Amount;

@@ -17,10 +17,29 @@ import unicash.testutil.TransactionBuilder;
 
 public class TransactionTest {
 
+    private static void assertEqualTransactions(Object first, Object second) {
+
+        Transaction firstTransaction = (Transaction) first;
+        Transaction secondTransaction = (Transaction) second;
+
+        assert firstTransaction.equalsTransaction(secondTransaction);
+
+    }
+
+    private static void assertNotEqualTransactions(Object first, Object second) {
+
+        Transaction firstTransaction = (Transaction) first;
+        Transaction secondTransaction = (Transaction) second;
+
+        assert !firstTransaction.equalsTransaction(secondTransaction);
+
+    }
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         // null parameters
-        assertThrows(NullPointerException.class, () -> new Transaction(null, null, null, null, null, null));
+        assertThrows(NullPointerException.class, () -> new Transaction(null, null,
+                null, null, null, null));
     }
 
     @Test
@@ -59,7 +78,7 @@ public class TransactionTest {
         assertNotEquals(null, BUYING_GROCERIES);
 
         // different type -> returns false
-        assertFalse(BUYING_GROCERIES.equalsTransaction(5));
+        assertFalse(BUYING_GROCERIES.equals(5));
 
         // different person -> returns false
         assertNotEquals(BUYING_GROCERIES, DINING_WITH_FRIENDS);
@@ -88,6 +107,55 @@ public class TransactionTest {
 
         // different categories -> returns false
         editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withCategories("TEST").build();
+        assertFalse(BUYING_GROCERIES.equals(editedGroceries));
+
+        // different type -> returns false
+        editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withType("expense").build();
+        assertFalse(editedGroceries.getTypeString().equalsIgnoreCase("income"));
+    }
+
+    @Test
+    public void equalsTransaction() {
+
+        // same values -> returns true
+        Transaction groceriesCopy = new TransactionBuilder(BUYING_GROCERIES).build();
+        assertEqualTransactions(BUYING_GROCERIES, groceriesCopy);
+
+        // same object -> returns true
+        assertEqualTransactions(BUYING_GROCERIES, BUYING_GROCERIES);
+
+        // different type -> returns false
+        assertFalse(BUYING_GROCERIES.equalsTransaction(5));
+
+        // different person -> returns false
+        assertNotEqualTransactions(BUYING_GROCERIES, DINING_WITH_FRIENDS);
+
+        // different name -> returns false
+        Transaction editedGroceries = new TransactionBuilder(BUYING_GROCERIES)
+                .withName("Some thing else").build();
+
+        assertNotEqualTransactions(BUYING_GROCERIES, editedGroceries);
+
+        // different amount -> returns false
+        editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withAmount(10.20).build();
+        assertNotEqualTransactions(BUYING_GROCERIES, editedGroceries);
+
+        // different date -> returns false
+        editedGroceries = new TransactionBuilder(BUYING_GROCERIES)
+                .withDateTime("10-10-2000 19:00")
+                .build();
+        assertNotEqualTransactions(BUYING_GROCERIES, editedGroceries);
+
+        // different location -> returns false
+        editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withLocation("Bedok").build();
+        assertNotEqualTransactions(BUYING_GROCERIES, editedGroceries);
+
+        // different transaction type -> return false
+        editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withType("expense").build();
+        assertNotEqualTransactions(BUYING_GROCERIES, editedGroceries);
+
+        // different categories -> returns false
+        editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withCategories("testing").build();
         assertFalse(BUYING_GROCERIES.equalsTransaction(editedGroceries));
 
         // different type -> returns false

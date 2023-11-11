@@ -3,8 +3,10 @@ package unicash.model.transaction;
 import static java.util.Objects.requireNonNull;
 import static unicash.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -124,29 +126,39 @@ public class TransactionList implements Iterable<Transaction> {
             return true;
         }
 
-        // instanceof handles null
         if (!(other instanceof TransactionList)) {
             return false;
         }
 
         TransactionList otherTransactionList = (TransactionList) other;
 
-        if (this.internalList.size() != otherTransactionList.internalList.size()) {
+        // Convert both lists to sets for easier comparison
+        Set<Transaction> thisSet = new HashSet<>(internalList);
+        Set<Transaction> otherSet = new HashSet<>(otherTransactionList.internalList);
+
+        // Check if sets are equal using the custom equalsTransaction method
+        if (thisSet.size() != otherSet.size()) {
             return false;
         }
 
-        // Iterate over both lists and use equalsTransaction method for comparison
-        for (int i = 0; i < this.internalList.size(); i++) {
-            Transaction thisTransaction = this.internalList.get(i);
-            Transaction otherTransaction = otherTransactionList.internalList.get(i);
+        for (Transaction transaction : thisSet) {
 
-            if (!thisTransaction.equalsTransaction(otherTransaction)) {
+            // Check if each transaction in thisSet is contained in otherSet
+            boolean found = false;
+            for (Transaction otherTransaction : otherSet) {
+                if (transaction.equalsTransaction(otherTransaction)) {
+                    found = true;
+                    break;
+                }
+            }
+            if (!found) {
                 return false;
             }
         }
 
         return true;
     }
+
 
     /**
      * Returns true if a given list of transactions is less than the maximum allowed transactions.
