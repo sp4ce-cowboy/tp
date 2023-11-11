@@ -59,7 +59,9 @@ public class TransactionTest {
         assertNotEquals(null, BUYING_GROCERIES);
 
         // different type -> returns false
-        assertFalse(BUYING_GROCERIES.equals(5));
+        assertNotEquals(5, BUYING_GROCERIES);
+
+        assertFalse(BUYING_GROCERIES.equalsTransaction(5));
 
         // different person -> returns false
         assertNotEquals(BUYING_GROCERIES, DINING_WITH_FRIENDS);
@@ -88,7 +90,7 @@ public class TransactionTest {
 
         // different categories -> returns false
         editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withCategories("TEST").build();
-        assertFalse(BUYING_GROCERIES.equals(editedGroceries));
+        assertFalse(BUYING_GROCERIES.equalsTransaction(editedGroceries));
 
         // different type -> returns false
         editedGroceries = new TransactionBuilder(BUYING_GROCERIES).withType("expense").build();

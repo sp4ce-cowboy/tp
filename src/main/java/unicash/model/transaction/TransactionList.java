@@ -28,7 +28,7 @@ public class TransactionList implements Iterable<Transaction> {
      */
     public boolean contains(Transaction toCheck) {
         requireNonNull(toCheck);
-        return internalList.stream().anyMatch(toCheck::equals);
+        return internalList.stream().anyMatch(toCheck::equalsTransaction);
     }
 
     /**
@@ -121,7 +121,21 @@ public class TransactionList implements Iterable<Transaction> {
         }
 
         TransactionList otherTransactionList = (TransactionList) other;
-        return internalList.equals(otherTransactionList.internalList);
+
+        if (this.internalList.size() != otherTransactionList.internalList.size()) {
+            return false;
+        }
+
+        // Use equalsTransaction for comparison instead of original equals
+        for (int i = 0; i < this.internalList.size(); i++) {
+            Transaction thisTransaction = this.internalList.get(i);
+            Transaction otherTransaction = otherTransactionList.internalList.get(i);
+            if (!thisTransaction.equalsTransaction(otherTransaction)) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

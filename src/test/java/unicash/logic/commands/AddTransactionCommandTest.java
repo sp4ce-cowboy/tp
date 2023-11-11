@@ -224,7 +224,7 @@ public class AddTransactionCommandTest {
         @Override
         public boolean hasTransaction(Transaction transaction) {
             requireNonNull(transaction);
-            return this.transaction.equals(transaction);
+            return this.transaction.equalsTransaction(transaction);
         }
 
         @Override
@@ -246,7 +246,7 @@ public class AddTransactionCommandTest {
         @Override
         public boolean hasTransaction(Transaction transaction) {
             requireNonNull(transaction);
-            return this.transaction.equals(transaction);
+            return this.transaction.equalsTransaction(transaction);
         }
 
         @Override
@@ -268,7 +268,7 @@ public class AddTransactionCommandTest {
         @Override
         public boolean hasTransaction(Transaction transaction) {
             requireNonNull(transaction);
-            return transactionsAdded.stream().anyMatch(transaction::equals);
+            return transactionsAdded.stream().anyMatch(transaction::equalsTransaction);
         }
 
         @Override
