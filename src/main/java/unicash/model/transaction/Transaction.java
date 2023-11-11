@@ -79,10 +79,6 @@ public class Transaction {
         return categories;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, amount, dateTime, location, type, categories);
-    }
 
     /**
      * Returns true if both transactions have the same data fields.
