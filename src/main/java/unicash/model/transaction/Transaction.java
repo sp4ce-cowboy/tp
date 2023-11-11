@@ -2,11 +2,11 @@ package unicash.model.transaction;
 
 import static unicash.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.Objects;
-
 import unicash.commons.util.ToStringBuilder;
 import unicash.model.category.UniqueCategoryList;
 import unicash.model.commons.Amount;
+
+import java.util.Objects;
 
 /**
  * Represents a Transaction in UniCash.
@@ -79,15 +79,34 @@ public class Transaction {
         return categories;
     }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(name, amount, dateTime, location, type, categories);
-    }
+    //@Override
+    //public int hashCode() {
+    //    return Objects.hash(name, amount, dateTime, location, type, categories);
+    //}
 
     /**
      * Returns true if both transactions have the same data fields.
      * This defines a stronger notion of equality between two transactions.
      */
+    public boolean equalsTransaction(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof Transaction)) {
+            return false;
+        }
+
+        Transaction otherTransaction = (Transaction) other;
+        return name.equals(otherTransaction.name)
+                && type.equals(otherTransaction.type)
+                && amount.equals(otherTransaction.amount)
+                && categories.equals(otherTransaction.categories)
+                && dateTime.equals(otherTransaction.dateTime)
+                && location.equals(otherTransaction.location);
+
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -104,7 +123,9 @@ public class Transaction {
                 && amount.equals(otherTransaction.amount)
                 && categories.equals(otherTransaction.categories)
                 && dateTime.equals(otherTransaction.dateTime)
-                && location.equals(otherTransaction.location);
+                && location.equals(otherTransaction.location)
+                && this.hashCode() == otherTransaction.hashCode();
+
     }
 
     @Override
