@@ -3,13 +3,13 @@ package unicash.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static unicash.model.Model.PREDICATE_SHOW_ALL_TRANSACTIONS;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import unicash.commons.enums.CommandType;
 import unicash.commons.util.ToStringBuilder;
 import unicash.model.Model;
 import unicash.model.UniCash;
-
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Clears all transactions in UniCash.
