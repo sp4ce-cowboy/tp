@@ -662,6 +662,11 @@ By introducing UI testing into the code coverage reporting, we have been able to
 
 #### StyleSheet
 
+The StyleSheet class serves as a centralized information source for visual elements for all
+UI components requiring some form of graphical representation. 
+
+#### User Input Builder
+
 #### Command Usage Message Builder
 
 Uniformly generates `MESSAGE_USAGE` strings to be used per command. Works well with `ExampleGenerator` to create consistent examples for every command using each type of prefix. Reduces the overhead of ensuring that all example values are accurate or ensuring that formatting for command usage is uniform.
