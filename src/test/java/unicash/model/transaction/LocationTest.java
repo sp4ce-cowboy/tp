@@ -10,6 +10,30 @@ import org.junit.jupiter.api.Test;
 
 public class LocationTest {
 
+    private static final String[] INVALID_LOCATIONS = {
+        "", // empty string
+        " ", // whitespace
+        "^", // only non-supported characters
+        "peter*", // non-supported characters
+        "a".repeat(501) // too long
+    };
+
+    private static final String[] VALID_LOCATIONS = {
+        "fairprice", // alphabets only
+        "12345", // numbers only
+        "block 283", // alphanumeric characters
+        "Fairprice", // with capital letters
+        "Fairprice at NUS University Town", // long names
+        "Fairprice (NUS)", // ()
+        "Fairprice #02-160", // # and -
+        "Fairprice (NUS_UTown)", // _
+        "Ben & Jerry", // &
+        "First Avenue, Block 283", // ,
+        "First Avenue, Block 28.3", // ,
+        "-", // Blank location
+        "a".repeat(500)// exactly max length characters
+    };
+
     @Test
     public void constructor_null_throwsNullPointerException() {
         assertThrows(NullPointerException.class, () -> new Location(null));
@@ -23,28 +47,18 @@ public class LocationTest {
 
     @Test
     public void isValidLocation() {
-        // null name
+        // null location
         assertThrows(NullPointerException.class, () -> Location.isValidLocation(null));
 
-        // invalid name
-        assertFalse(Location.isValidLocation("")); // empty string
-        assertFalse(Location.isValidLocation(" ")); // spaces only
-        assertFalse(Location.isValidLocation("^")); // only non-allowed characters
-        assertFalse(Location.isValidLocation("peter*")); // contains non-allowed characters
+        // invalid location
+        for (var location : INVALID_LOCATIONS) {
+            assertFalse(Location.isValidLocation(location));
+        }
 
-        // valid name
-        assertTrue(Location.isValidLocation("fairprice")); // alphabets only
-        assertTrue(Location.isValidLocation("12345")); // numbers only
-        assertTrue(Location.isValidLocation("block 283")); // alphanumeric characters
-        assertTrue(Location.isValidLocation("Fairprice")); // with capital letters
-        assertTrue(Location.isValidLocation("Fairprice at NUS University Town")); // long names
-        assertTrue(Location.isValidLocation("Fairprice (NUS)")); // ()
-        assertTrue(Location.isValidLocation("Fairprice #02-160")); // # and -
-        assertTrue(Location.isValidLocation("Fairprice (NUS_UTown)")); // _
-        assertTrue(Location.isValidLocation("Ben & Jerry")); // &
-        assertTrue(Location.isValidLocation("First Avenue, Block 283")); // ,
-        assertTrue(Location.isValidLocation("First Avenue, Block 28.3")); // ,
-        assertTrue(Location.isValidLocation("-")); // Blank location
+        // valid location
+        for (var location : VALID_LOCATIONS) {
+            assertTrue(Location.isValidLocation(location));
+        }
     }
 
     @Test
@@ -61,11 +75,22 @@ public class LocationTest {
         assertNotEquals(null, name);
 
         // different types -> returns false
-        assertNotEquals(5.0f, name);
-
         assertFalse(name.equals(5));
 
         // different values -> returns false
         assertNotEquals(name, new Location("Other Valid Location"));
+    }
+
+    @Test
+    public void hashCodeMethod() {
+        var location = new Location("Valid location");
+        var locationCopy = new Location(location.location);
+        assertEquals(location.hashCode(), locationCopy.hashCode());
+    }
+
+    @Test
+    public void toStringMethod() {
+        assertEquals("Valid location", new Location("Valid location").toString());
+        assertEquals("-", new Location("").toString());
     }
 }

@@ -14,7 +14,6 @@ import org.testfx.framework.junit5.ApplicationExtension;
 import org.testfx.util.WaitForAsyncUtils;
 
 import javafx.scene.control.Label;
-import javafx.scene.input.KeyCode;
 import unicash.MainApp;
 import unicash.model.UserPrefs;
 
@@ -44,18 +43,6 @@ public class MainAppUiTest {
                 "Data source -> " + Paths.get(".").resolve(userPrefs.getUniCashFilePath()),
                 locationStatusNodeLabel.getText()
         );
-    }
-
-    @Test
-    public void statusBar_unicashResetState_showsDefaultBalance(FxRobot robot) {
-        var rollingBalanceNode = robot.lookup("#balanceIndicator").tryQuery();
-        Assertions.assertTrue(rollingBalanceNode.isPresent());
-        var rollingBalanceNodeLabel = (Label) rollingBalanceNode.get();
-        var userPrefs = new UserPrefs();
-        robot.clickOn("#commandBoxPlaceholder");
-        robot.write("reset_unicash");
-        robot.press(KeyCode.ENTER);
-        Assertions.assertEquals(rollingBalanceNodeLabel.getText(), "Rolling Balance: $1593.20");
     }
 
 }

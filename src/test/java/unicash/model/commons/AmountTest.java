@@ -10,6 +10,24 @@ import org.junit.jupiter.api.Test;
 
 public class AmountTest {
 
+    private static final double[] VALID_AMOUNTS = {
+        0.000,
+        0.001,
+        10,
+        12.13,
+        Integer.MAX_VALUE,
+        Integer.MAX_VALUE - 1,
+    };
+
+    private static final double[] INVALID_AMOUNTS = {
+        -1,
+        -0.000001,
+        Integer.MIN_VALUE,
+        (double) (Integer.MAX_VALUE) + 1,
+        (double) (Integer.MAX_VALUE) + 0.002,
+        (double) Long.MAX_VALUE,
+    };
+
     @Test
     public void constructor_invalidDoubleAmount_throwsIllegalArgumentException() {
         assertThrows(IllegalArgumentException.class, () -> new Amount(-10));
@@ -54,57 +72,44 @@ public class AmountTest {
 
     @Test
     public void isValidAmount_doubleAmountWithinRange_returnsTrue() {
-        assertTrue(Amount.isValidAmount(0.000));
-        assertTrue(Amount.isValidAmount(10));
-        assertTrue(Amount.isValidAmount(12.13));
-        assertTrue(Amount.isValidAmount(Integer.MAX_VALUE));
-        assertTrue(Amount.isValidAmount(Integer.MAX_VALUE - 1));
+        for (var amount : VALID_AMOUNTS) {
+            assertTrue(Amount.isValidAmount(amount));
+        }
     }
 
     @Test
     public void isValidAmount_doubleAmountOutOfRange_returnsFalse() {
-        assertFalse(Amount.isValidAmount(-1));
-        assertFalse(Amount.isValidAmount(-0.000001));
-        assertFalse(Amount.isValidAmount(Integer.MIN_VALUE));
-        assertFalse(Amount.isValidAmount((double) (Integer.MAX_VALUE + 1)));
-        assertFalse(Amount.isValidAmount((double) (Integer.MAX_VALUE + 0.002)));
-        assertFalse(Amount.isValidAmount((double) Long.MAX_VALUE));
+        for (var amount : INVALID_AMOUNTS) {
+            assertFalse(Amount.isValidAmount(amount));
+        }
     }
 
     @Test
     public void isValidAmount_stringAmountWithLeadingIndicatorWithinRange_returnsTrue() {
-        assertTrue(Amount.isValidAmount("$" + 0.000));
-        assertTrue(Amount.isValidAmount("$" + 10));
-        assertTrue(Amount.isValidAmount("$" + 12.13));
-        assertTrue(Amount.isValidAmount("$" + Integer.MAX_VALUE));
-        assertTrue(Amount.isValidAmount("$" + (Integer.MAX_VALUE - 1)));
+        for (var amount : VALID_AMOUNTS) {
+            assertTrue(Amount.isValidAmount("$" + amount));
+        }
     }
 
     @Test
     public void isValidAmount_stringAmountWithoutLeadingIndicatorWithinRange_returnsTrue() {
-        assertTrue(Amount.isValidAmount(String.valueOf(0.000)));
-        assertTrue(Amount.isValidAmount(String.valueOf(10)));
-        assertTrue(Amount.isValidAmount(String.valueOf(12.13)));
-        assertTrue(Amount.isValidAmount(String.valueOf(Integer.MAX_VALUE)));
-        assertTrue(Amount.isValidAmount(String.valueOf((Integer.MAX_VALUE - 1))));
+        for (var amount : VALID_AMOUNTS) {
+            assertTrue(Amount.isValidAmount(String.valueOf(amount)));
+        }
     }
 
     @Test
     public void isValidAmount_stringAmountWithLeadingIndicatorOutOfRange_returnsFalse() {
-        assertFalse(Amount.isValidAmount("$" + -1));
-        assertFalse(Amount.isValidAmount("$" + -0.000001));
-        assertFalse(Amount.isValidAmount("$" + Integer.MIN_VALUE));
-        assertFalse(Amount.isValidAmount("$" + (double) (Integer.MAX_VALUE + 1)));
-        assertFalse(Amount.isValidAmount("$" + (double) Long.MAX_VALUE));
+        for (var amount : INVALID_AMOUNTS) {
+            assertFalse(Amount.isValidAmount("$" + amount));
+        }
     }
 
     @Test
     public void isValidAmount_stringAmountWithoutLeadingIndicatorOutOfRange_returnsFalse() {
-        assertFalse(Amount.isValidAmount(String.valueOf(-1)));
-        assertFalse(Amount.isValidAmount(String.valueOf(-0.000001)));
-        assertFalse(Amount.isValidAmount(String.valueOf(Integer.MIN_VALUE)));
-        assertFalse(Amount.isValidAmount(String.valueOf((double) (Integer.MAX_VALUE + 1))));
-        assertFalse(Amount.isValidAmount(String.valueOf((double) Long.MAX_VALUE)));
+        for (var amount : INVALID_AMOUNTS) {
+            assertFalse(Amount.isValidAmount(String.valueOf(amount)));
+        }
     }
 
     @Test
@@ -124,11 +129,14 @@ public class AmountTest {
     @Test
     public void equals() {
         Amount amount = new Amount(12.13);
+        Amount roundedAmount = new Amount(12.1315);
         assertEquals(12.13, amount.amount);
         assertEquals(amount, amount);
         assertEquals(amount, new Amount(12.13));
+        assertEquals(amount, roundedAmount);
         assertNotEquals(amount, null);
         assertNotEquals(amount, new Amount(12.16));
+        assertFalse(amount.equals(5));
     }
 
     @Test
@@ -136,6 +144,12 @@ public class AmountTest {
         Amount amt = new Amount(45.678);
         String result = Amount.amountToDecimalString(amt);
         assertEquals("45.68", result);
+    }
+
+    @Test
+    public void amountToDecimalString_roundingNotRequired_returnsString() {
+        var amount = new Amount(45.57);
+        assertEquals("45.57", Amount.amountToDecimalString(amount));
     }
 
     @Test

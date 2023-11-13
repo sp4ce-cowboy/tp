@@ -1,12 +1,11 @@
 
 @startuml
-!include ../style.puml
+!include ../../style.puml
 
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":UniCashParser" as UniCashParser LOGIC_COLOR
 participant ":GetTotalExpenditureCommandParser" as GetTotalExpenditureCommandParser LOGIC_COLOR
-participant "transaction:Transaction" as Transaction LOGIC_COLOR
 participant "command:GetTotalExpenditureCommand" as GetTotalExpenditureCommand LOGIC_COLOR
 participant ":CommandResult" as CommandResult LOGIC_COLOR
 
@@ -17,10 +16,16 @@ box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("get_total_expenditure month/7 c/Food")
+note left LogicManager
+In this sequence diagram, we set
+""command"" = "get_total_expenditure month/7 c/Food"
+""body"" = "month/7 c/Food"
+end note
+
+[-> LogicManager : execute(command)
 activate LogicManager
 
-LogicManager -> UniCashParser : parseCommand("get_total_expenditure month/7 c/Food")
+LogicManager -> UniCashParser : parseCommand(command)
 activate UniCashParser
 
 create GetTotalExpenditureCommandParser
@@ -30,19 +35,19 @@ activate GetTotalExpenditureCommandParser
 GetTotalExpenditureCommandParser --> UniCashParser
 deactivate GetTotalExpenditureCommandParser
 
-UniCashParser -> GetTotalExpenditureCommandParser : parse("month/7 c/Food")
+UniCashParser -> GetTotalExpenditureCommandParser : parse(body)
 activate GetTotalExpenditureCommandParser
 
 create GetTotalExpenditureCommand
-GetTotalExpenditureCommandParser -> GetTotalExpenditureCommand : GetTotalExpenditureCommand(month, category)
+GetTotalExpenditureCommandParser -> GetTotalExpenditureCommand
 activate GetTotalExpenditureCommand
 GetTotalExpenditureCommand --> GetTotalExpenditureCommandParser
 deactivate GetTotalExpenditureCommand
 
-GetTotalExpenditureCommandParser --> UniCashParser : command
+GetTotalExpenditureCommandParser --> UniCashParser
 deactivate GetTotalExpenditureCommandParser
 
-UniCashParser --> LogicManager : command
+UniCashParser --> LogicManager
 deactivate UniCashParser
 destroy GetTotalExpenditureCommandParser
 
@@ -56,7 +61,7 @@ deactivate Model
 GetTotalExpenditureCommand -> Model : getFilteredTransactionList()
 activate Model
 
-Model --> GetTotalExpenditureCommand : filteredList
+Model --> GetTotalExpenditureCommand
 deactivate Model
 
 create CommandResult

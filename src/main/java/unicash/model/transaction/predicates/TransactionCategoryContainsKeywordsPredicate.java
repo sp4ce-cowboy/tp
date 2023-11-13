@@ -13,16 +13,29 @@ import unicash.model.transaction.Transaction;
  */
 public class TransactionCategoryContainsKeywordsPredicate
         implements Predicate<Transaction> {
+
     private final List<String> keywords;
 
+    /**
+     * Creates a new {@code TransactionCategoryContainsKeywordsPredicate} object
+     * with the given list of string keywords.
+     *
+     * @param keywords the input list of keywords to be matched
+     */
     public TransactionCategoryContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
-    /* A nested anyMatch compares each keyword for each category in the categoryList.
-     * This removes any String dependency entirely so the keyword "od,so" now will not
-     * match something like "food,social" compared to if the string representation
-     * of the categoryList was returned.
+    /**
+     * Returns true if any {@code Category} within the {@code UniqueCategoryList}
+     * of the Transaction contains any of the keywords in the keywords list
+     * as a substring.
+     *
+     * <p> A nested anyMatch compares each keyword for each category directly in the
+     * {@code UniqueCategoryList}. This removes any dependency on {@code UniqueCategoryList}'s
+     * representation of the Categories.
+     *
+     * @param transaction the input {@code Transaction} object to be tested
      */
     @Override
     public boolean test(Transaction transaction) {
@@ -58,6 +71,8 @@ public class TransactionCategoryContainsKeywordsPredicate
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("keywords", keywords).toString();
+        return new ToStringBuilder(this)
+                .add("keywords", keywords)
+                .toString();
     }
 }

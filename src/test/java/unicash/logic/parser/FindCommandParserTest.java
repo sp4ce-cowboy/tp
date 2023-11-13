@@ -1,6 +1,7 @@
 package unicash.logic.parser;
 
 
+import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
@@ -15,6 +16,7 @@ import static unicash.testutil.Assert.assertThrows;
 
 import org.junit.jupiter.api.Test;
 
+import unicash.commons.enums.CommandType;
 import unicash.commons.util.ToStringBuilder;
 import unicash.logic.UniCashMessages;
 import unicash.logic.parser.exceptions.ParseException;
@@ -28,7 +30,9 @@ import unicash.model.transaction.predicates.TransactionContainsAllKeywordsPredic
  */
 public class FindCommandParserTest {
 
+    private static final String WHITESPACE = " ";
     private final FindCommandParser parser = new FindCommandParser();
+    private final UniCashParser uniCashParser = new UniCashParser();
 
     @Test
     public void parse_emptyArg_throwsParseException() {
@@ -86,8 +90,111 @@ public class FindCommandParserTest {
                 new TransactionContainsAllKeywordsPredicate();
 
         String expected = new ToStringBuilder(new FindCommandParser())
-                .add("findPredicate", findPredicate).toString();
+                .add("findPredicate", findPredicate)
+                .toString();
+
         assertEquals(expected, findCommandParser.toString());
     }
+
+    @Test
+    public void parseMethod_inputContainsDateTimePrefix_throwsParseException() {
+        String dateTimePrefixedArgument = "dt/10-10-2023 10:10";
+        String findCommandArgumentWithDateTime =
+                CommandType.FIND.getMainCommandWord()
+                        + WHITESPACE + dateTimePrefixedArgument;
+
+        assertThrows(ParseException.class, () -> {
+            uniCashParser.parseCommand(findCommandArgumentWithDateTime);
+        });
+
+        assertThrows(ParseException.class, () -> {
+            parser.parse(WHITESPACE + findCommandArgumentWithDateTime);
+        });
+    }
+
+    @Test
+    public void parseMethod_inputContainsTypePrefix_throwsParseException() {
+        String typePrefixedArgument = "type/expense";
+        String findCommandArgumentWithType =
+                CommandType.FIND.getMainCommandWord()
+                        + WHITESPACE + typePrefixedArgument;
+
+        assertThrows(ParseException.class, () -> {
+            uniCashParser.parseCommand(findCommandArgumentWithType);
+        });
+
+        assertThrows(ParseException.class, () -> {
+            parser.parse(WHITESPACE + typePrefixedArgument);
+        });
+    }
+
+    @Test
+    public void parseMethod_inputContainsAmountPrefix_throwsParseException() {
+        String amountPrefixedArgument = "amt/30.00";
+        String findCommandArgumentWithAmount =
+                CommandType.FIND.getMainCommandWord()
+                        + WHITESPACE + amountPrefixedArgument;
+
+        assertThrows(ParseException.class, () -> {
+            uniCashParser.parseCommand(findCommandArgumentWithAmount);
+        });
+
+        assertThrows(ParseException.class, () -> {
+            parser.parse(WHITESPACE + amountPrefixedArgument);
+        });
+
+    }
+
+    @Test
+    public void parseMethod_inputContainsNamePrefix_doesNotThrowsParseException() {
+        String namePrefixedArgument = "n/buying eggs";
+        String findCommandArgumentWithName =
+                CommandType.FIND.getMainCommandWord()
+                        + WHITESPACE + namePrefixedArgument;
+
+        assertDoesNotThrow(() -> {
+            uniCashParser.parseCommand(findCommandArgumentWithName);
+        });
+
+        assertDoesNotThrow(() -> {
+            parser.parse(WHITESPACE + namePrefixedArgument);
+        });
+
+    }
+
+    @Test
+    public void parseMethod_inputContainsCategoryPrefix_doesNotThrowsParseException() {
+        String categoryPrefixedArgument = "c/food";
+        String findCommandArgumentWithCategory =
+                CommandType.FIND.getMainCommandWord()
+                        + WHITESPACE + categoryPrefixedArgument;
+
+        assertDoesNotThrow(() -> {
+            uniCashParser.parseCommand(findCommandArgumentWithCategory);
+        });
+
+        assertDoesNotThrow(() -> {
+            parser.parse(WHITESPACE + categoryPrefixedArgument);
+        });
+
+    }
+
+    @Test
+    public void parseMethod_inputContainsLocationPrefix_doesNotThrowsParseException() {
+        String locationPrefixedArgument = "l/mall";
+        String findCommandArgumentWithLocation =
+                CommandType.FIND.getMainCommandWord()
+                        + WHITESPACE + locationPrefixedArgument;
+
+        assertDoesNotThrow(() -> {
+            uniCashParser.parseCommand(findCommandArgumentWithLocation);
+        });
+
+        assertDoesNotThrow(() -> {
+            parser.parse(WHITESPACE + locationPrefixedArgument);
+        });
+
+    }
+
 
 }

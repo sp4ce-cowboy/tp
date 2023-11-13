@@ -222,9 +222,6 @@ public enum CommandType {
                             ExampleGenerator.generate(
                                     getCommandWords(),
                                     PREFIX_NAME,
-                                    PREFIX_TYPE,
-                                    PREFIX_AMOUNT,
-                                    PREFIX_DATETIME,
                                     PREFIX_LOCATION,
                                     PREFIX_CATEGORY
                             )
@@ -274,7 +271,7 @@ public enum CommandType {
 
         @Override
         public String getMessageSuccess() {
-            return "Your total expenditure in %1$s %2$d was %3$.2f";
+            return "Your total expenditure in %1$s %2$d was $%3$.2f";
         }
     },
     HELP("help", "h") {

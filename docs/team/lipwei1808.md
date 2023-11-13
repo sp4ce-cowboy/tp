@@ -30,7 +30,7 @@ Given below are my contributions to the project.
 * **Code contributed**: [RepoSense link](https://nus-cs2103-ay2324s1.github.io/tp-dashboard/?search=t16-3&sort=groupTitle&sortWithin=title&timeframe=commit&mergegroup=&groupSelect=groupByRepos&breakdown=true&checkedFileTypes=docs~functional-code~test-code&since=2023-09-22&tabOpen=true&tabType=authorship&tabAuthor=lipwei1808&tabRepo=AY2324S1-CS2103-T16-3%2Ftp%5Bmaster%5D&authorshipIsMergeGroup=false&authorshipFileTypes=docs~functional-code~test-code&authorshipIsBinaryFileTypeChecked=false&authorshipIsIgnoredFilesChecked=false)
 
 * **Project management**:
-    * Managed releases `v1.3b` (1 release) on GitHub
+    * Managed releases `v1.3a` (1 release) on GitHub
 
 * **Enhancements to existing features**:
   * **Help Command**: pull requests [\#128](https://github.com/AY2324S1-CS2103-T16-3/tp/pull/128), [\#135](https://github.com/AY2324S1-CS2103-T16-3/tp/pull/135)

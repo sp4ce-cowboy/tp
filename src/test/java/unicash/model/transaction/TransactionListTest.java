@@ -10,6 +10,7 @@ import static unicash.testutil.Assert.assertThrows;
 import static unicash.testutil.TypicalTransactions.BUYING_GROCERIES;
 import static unicash.testutil.TypicalTransactions.INTERN;
 import static unicash.testutil.TypicalTransactions.NUS;
+import static unicash.testutil.TypicalTransactions.SHOPPING;
 import static unicash.testutil.TypicalTransactions.getMaxTransactionList;
 import static unicash.testutil.TypicalTransactions.getTypicalTransactions;
 
@@ -18,6 +19,7 @@ import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import unicash.model.transaction.exceptions.MaxTransactionException;
@@ -26,7 +28,12 @@ import unicash.testutil.TransactionBuilder;
 
 public class TransactionListTest {
 
-    private final TransactionList transactionList = new TransactionList();
+    private TransactionList transactionList;
+
+    @BeforeEach
+    public void init() {
+        transactionList = new TransactionList();
+    }
 
     @Test
     public void contains_nullTransaction_throwsNullPointerException() {
@@ -41,13 +48,15 @@ public class TransactionListTest {
     @Test
     public void contains_transactionInList_returnsTrue() {
         transactionList.add(NUS);
+        transactionList.add(SHOPPING);
         assertTrue(transactionList.contains(NUS));
     }
 
     @Test
     public void contains_differentTransaction_returnsFalse() {
         transactionList.add(NUS);
-        Transaction editedNus = new TransactionBuilder(NUS).withAmount(VALID_AMOUNT_INTERN)
+        Transaction editedNus = new TransactionBuilder(NUS)
+                .withAmount(VALID_AMOUNT_INTERN)
                 .build();
         assertFalse(transactionList.contains(editedNus));
     }
@@ -84,6 +93,7 @@ public class TransactionListTest {
         assertThrows(TransactionNotFoundException.class, () -> transactionList.setTransaction(NUS, NUS));
     }
 
+    // TODO: Add explicit unit tests for the case of duplicate transactions and editing one of them
     @Test
     public void setTransaction_editedTransactionIsSameTransaction_success() {
         transactionList.add(NUS);
@@ -226,7 +236,7 @@ public class TransactionListTest {
         // null -> returns false
         assertNotEquals(null, transactionList);
 
-        assertFalse(transactionList.equals(null));
+        assertFalse(transactionList.equals(5));
     }
 
     @Test

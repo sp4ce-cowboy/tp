@@ -35,9 +35,9 @@ public class IntervalTest {
         assertFalse(Interval.isValidInterval("peter*")); // wrong interval
         assertFalse(Interval.isValidInterval("transfers")); // wrong interval
         assertFalse(Interval.isValidInterval("day&")); // wrong interval
-        assertFalse(Interval.isValidInterval(" day ")); // valid day with whitespace
-        assertFalse(Interval.isValidInterval(" week ")); // valid week with whitespace
-        assertFalse(Interval.isValidInterval(" month ")); // valid month with whitespace
+        assertFalse(Interval.isValidInterval(" day ")); // whitespaces included
+        assertFalse(Interval.isValidInterval(" week ")); // whitespaces included
+        assertFalse(Interval.isValidInterval(" month ")); // whitespaces included
 
         // valid name
         assertTrue(Interval.isValidInterval("day")); // day
@@ -58,9 +58,7 @@ public class IntervalTest {
         // null -> returns false
         assertNotEquals(null, interval);
 
-        // different intervals -> returns false
-        assertNotEquals(5.0f, interval);
-
+        // different type -> returns false
         assertFalse(interval.equals(5));
 
         // different values -> returns false
@@ -74,5 +72,12 @@ public class IntervalTest {
         Interval month = new Interval("month");
         assertEquals(week.hashCode(), week2.hashCode());
         assertNotEquals(week.hashCode(), month.hashCode());
+    }
+
+    @Test
+    public void toStringMethod() {
+        assertEquals("day", new Interval("day").toString());
+        assertEquals("week", new Interval("week").toString());
+        assertEquals("month", new Interval("month").toString());
     }
 }

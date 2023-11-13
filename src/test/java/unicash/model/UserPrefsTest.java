@@ -6,6 +6,7 @@ import static org.junit.jupiter.api.Assertions.assertNotEquals;
 import static unicash.testutil.Assert.assertThrows;
 
 import java.nio.file.Path;
+import java.nio.file.Paths;
 
 import org.junit.jupiter.api.Test;
 
@@ -49,6 +50,17 @@ public class UserPrefsTest {
         userPrefs3.setGuiSettings(new GuiSettings(0, 0, 0, 0));
         assertEquals(userPrefs1.hashCode(), userPrefs2.hashCode());
         assertNotEquals(userPrefs1.hashCode(), userPrefs3.hashCode());
+    }
+
+    @Test
+    public void toStringMethod() {
+        var guiSettings = new GuiSettings();
+        var uniCashFilePath = Paths.get("data", "unicash.json");
+        var userPrefs = new UserPrefs();
+        assertEquals(
+                String.format("Gui Settings : %s\nLocal data file location : %s", guiSettings, uniCashFilePath),
+                userPrefs.toString()
+        );
     }
 }
 

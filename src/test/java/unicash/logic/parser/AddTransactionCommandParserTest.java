@@ -173,4 +173,16 @@ public class AddTransactionCommandParserTest {
         assertParseFailure(parser, TRANSACTION_NAME_DESC_NUS + AMOUNT_DESC_NUS + DATETIME_DESC_NUS
                 + INVALID_TYPE_DESC, Type.MESSAGE_CONSTRAINTS);
     }
+
+    @Test
+    public void parse_nonEmptyPreamble_throwsParseException() {
+        assertParseFailure(
+                parser,
+                VALID_TRANSACTION_NAME_NUS
+                        + TRANSACTION_NAME_DESC_NUS
+                        + AMOUNT_DESC_NUS
+                        + TYPE_DESC_EXPENSE,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddTransactionCommand.MESSAGE_USAGE)
+        );
+    }
 }

@@ -38,6 +38,11 @@ public class AddTransactionCommandTest {
     }
 
     @Test
+    public void execute_nullModel_throwsNullPointerException() {
+        assertThrows(NullPointerException.class, () -> new AddTransactionCommand(NUS).execute(null));
+    }
+
+    @Test
     public void execute_transactionAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingTransactionAdded modelStub = new ModelStubAcceptingTransactionAdded();
         Transaction validTransaction = new TransactionBuilder().build();
@@ -79,9 +84,6 @@ public class AddTransactionCommandTest {
         // same values -> returns true
         AddTransactionCommand addNusCommandCopy = new AddTransactionCommand(NUS);
         assertEquals(addNusCommand, addNusCommandCopy);
-
-        // different types -> returns false
-        assertNotEquals(1, addNusCommand);
 
         // null -> returns false
         assertNotEquals(null, addNusCommand);

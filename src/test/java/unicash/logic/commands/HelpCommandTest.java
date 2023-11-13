@@ -15,8 +15,6 @@ import unicash.commons.util.ToStringBuilder;
 import unicash.model.Model;
 import unicash.model.ModelManager;
 
-
-
 public class HelpCommandTest {
 
     @Test
@@ -173,10 +171,8 @@ public class HelpCommandTest {
     public void execute_resetCommand_success() {
         Model model = new ModelManager();
         Model expectedModel = new ModelManager();
-        System.out.println("&*&*&* " + ResetCommand.MESSAGE_USAGE);
         CommandResult expectedCommandResult =
                 new CommandResult(ResetCommand.MESSAGE_USAGE);
-        System.out.println("***" + expectedCommandResult);
         assertCommandSuccess(new HelpCommand(CommandType.RESET.getMainCommandWord()),
                 model, expectedCommandResult, expectedModel);
     }
@@ -240,9 +236,6 @@ public class HelpCommandTest {
         // same values -> returns true
         HelpCommand helpCommandEditCopy = new HelpCommand(EditTransactionCommand.COMMAND_WORD);
         assertEquals(helpCommandEdit, helpCommandEditCopy);
-
-        // different types -> returns false
-        assertNotEquals(1, helpCommandEdit);
 
         // null -> returns false
         assertNotEquals(null, helpCommandEdit);

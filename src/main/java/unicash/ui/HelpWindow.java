@@ -15,7 +15,7 @@ import unicash.commons.core.LogsCenter;
  */
 public class HelpWindow extends UiPart<Stage> {
 
-    public static final String USER_GUIDE_URL = "https://ay2324s1-cs2103-t16-3.github.io/tp/";
+    public static final String USER_GUIDE_URL = "https://ay2324s1-cs2103-t16-3.github.io/tp/UserGuide.html";
     public static final String HELP_MESSAGE = "Refer to the user guide: " + USER_GUIDE_URL;
 
     private static final Logger logger = LogsCenter.getLogger(HelpWindow.class);

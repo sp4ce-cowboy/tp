@@ -3,12 +3,11 @@ package unicash.model.commons;
 import static unicash.commons.util.AppUtil.checkArgument;
 
 /**
- * Represents a Transaction's amount. Amounts are stored as a double with
- * a maximum precision of 2 decimal places as with most general financial
- * transactions in the real world. All amounts must be positive, and amounts
- * exceeding the above mandated precision will be rounded (not truncated) to
- * 2 decimal places. Amounts, if represented as a string, will be prefixed with
- * a currency indicator.
+ * Represents a transaction or budget's amount.
+ *
+ * <p>Amounts are stored as a double and are rounded to the nearest 2 decimal places.</p>
+ *
+ * <p>Amounts must be positive and cannot exceed the value of {@code Integer.MAX_VALUE}.</p>
  */
 public class Amount {
 
@@ -59,9 +58,9 @@ public class Amount {
     /**
      * Returns true if a given amount, when parsed, is a non-negative value.
      *
-     * <p>A valid amount either starts with $xx.xx or is xx.xx without the leading $.</p>
+     * <p>A valid string amount is either of format $xx.xx or xx.xx.</p>
      *
-     * <p>Values containing leading/trailing whitespace is trimmed first.</p>
+     * <p>Trailing/leading whitespace is trimmed first.</p>
      */
     public static boolean isValidAmount(String amount) {
         var trimmedAmount = amount.trim();

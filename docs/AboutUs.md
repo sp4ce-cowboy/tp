@@ -47,14 +47,14 @@ You can reach us at the email `seer[at]comp.nus.edu.sg`
 [[portfolio](team/elhy1999.md)]
 
 * Role: Developer
-* Responsibilities: Documentations
+* Responsibilities: Documentation, Testing
 
 ### Rubesh Suresh
 
 <img src="images/sp4ce-cowboy.png" width="200px">
 
 [[github](http://github.com/sp4ce-cowboy)]
-[[portfolio](team/sp4ce-cowboy.md))]
+[[portfolio](team/sp4ce-cowboy.md)]
 
 * Role: Developer
-* Responsibilities: Storage
+* Responsibilities: User Interface, Documentation and Testing

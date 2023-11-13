@@ -5,7 +5,7 @@ import unicash.model.budget.Budget;
 import unicash.model.transaction.Transaction;
 
 /**
- * Unmodifiable view of an address book
+ * Unmodifiable view of UniCash
  */
 public interface ReadOnlyUniCash {
 

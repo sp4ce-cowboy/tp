@@ -75,7 +75,7 @@ public class Category {
     /**
      * Returns category with a prefixed symbol as defined by {@code CATEGORY_PREFIX_SYMBOL}.
      *
-     * @returns the String representation of the category with a prefix, usually the "#" symbol
+     * @return the String representation of the category with a prefix, usually the "#" symbol
      */
     public String categoryToStringWithPrefix() {
         return CATEGORY_PREFIX_SYMBOL + category.toString();

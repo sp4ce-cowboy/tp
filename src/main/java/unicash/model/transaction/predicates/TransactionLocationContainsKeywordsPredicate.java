@@ -12,12 +12,25 @@ import unicash.model.transaction.Transaction;
  */
 public class TransactionLocationContainsKeywordsPredicate
         implements Predicate<Transaction> {
+
     private final List<String> keywords;
 
+    /**
+     * Creates a new {@code TransactionLocationContainsKeywordsPredicate} object
+     * with the given list of string keywords.
+     *
+     * @param keywords the input list of keywords to be matched
+     */
     public TransactionLocationContainsKeywordsPredicate(List<String> keywords) {
         this.keywords = keywords;
     }
 
+    /**
+     * Returns true if the {@code Location} of the Transaction contains any of
+     * the keywords in the keywords list as a substring.
+     *
+     * @param transaction the input {@code Transaction} object to be tested
+     */
     @Override
     public boolean test(Transaction transaction) {
         return keywords.stream()
@@ -43,6 +56,8 @@ public class TransactionLocationContainsKeywordsPredicate
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this).add("keywords", keywords).toString();
+        return new ToStringBuilder(this)
+                .add("keywords", keywords)
+                .toString();
     }
 }

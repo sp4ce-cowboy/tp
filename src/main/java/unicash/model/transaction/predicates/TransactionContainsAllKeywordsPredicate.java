@@ -10,31 +10,47 @@ import unicash.model.transaction.Transaction;
 
 
 /**
- * Tests that the {@code Transactions}'s properties matches all the keywords given.
+ * Tests that the {@code Transaction}'s properties matches all the keywords given.
  * Matching in this context either means a partial match of the keyword with the query, or
  * a full match of the keyword, repeated for each keyword present in the list of keywords.
  *
- * </p> The matching depends on the property of the Transaction being matched, and the
+ * </p> The matching depends on the property of the {@code Transaction} being matched, and the
  * most appropriate matching is specified within the associated property predicate. This class
  * simulates a composed predicate that represents a short-circuiting logical AND of all property
  * predicates.
  *
  * </p> Encapsulated within is a list of transaction predicates, and this list can be accessed
- * publicly, and modified. The test method returns true only if the input Transaction matches
- * all predicates in this list.
+ * publicly, and modified. The overriding test method returns true only if the input Transaction
+ * matches all predicates in this list.
  */
 public class TransactionContainsAllKeywordsPredicate implements Predicate<Transaction> {
 
     private List<Predicate<Transaction>> predicateList;
 
+    /**
+     * Creates a new {@code TransactionContainsAllKeywordsPredicate} object with a
+     * default empty list of transaction predicates.
+     */
     public TransactionContainsAllKeywordsPredicate() {
         this.predicateList = new ArrayList<>();
     }
 
+    /**
+     * Creates a new {@code TransactionContainsAllKeywordsPredicate} object with the
+     * given list of transaction predicates.
+     *
+     * @param predicateList
+     */
     public TransactionContainsAllKeywordsPredicate(List<Predicate<Transaction>> predicateList) {
         this.predicateList = predicateList;
     }
 
+    /**
+     * Returns true if the input {@code Transaction} object matches
+     * all transaction predicates within the encapsulated {@code predicateList}.
+     *
+     * @param transaction the input {@code Transaction} object to be tested
+     */
     @Override
     public boolean test(Transaction transaction) {
         if (predicateList.isEmpty()) {
@@ -95,7 +111,9 @@ public class TransactionContainsAllKeywordsPredicate implements Predicate<Transa
 
     /**
      * A helper method that returns the input string keyword as a list
-     * with a single item.
+     * with a single item. This allows for multiple words in an input
+     * argument to be treated as a single, unified string, whitespace
+     * notwithstanding.
      *
      * @param keyword the input keyword String
      * @return the keyword as a single List.

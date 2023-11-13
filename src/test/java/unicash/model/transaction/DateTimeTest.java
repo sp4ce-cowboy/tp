@@ -32,7 +32,7 @@ public class DateTimeTest {
     }
 
     @Test
-    public void isValidDate() {
+    public void isValidDate_invalidFormats() {
         assertFalse(DateTime.isValidDateTime("1-1-2001 18:18")); // wrong day and month format
         assertFalse(DateTime.isValidDateTime("01-1-2001 17:1")); // invalid time
         assertFalse(DateTime.isValidDateTime("01-01-2001")); // missing time
@@ -81,9 +81,6 @@ public class DateTimeTest {
         // null -> returns false
         assertNotEquals(null, datetime);
 
-        // different types -> returns false
-        assertNotEquals("hi", datetime);
-
         // different year -> returns false
         assertNotEquals(datetime, new DateTime("01-01-2000 01:01"));
 
@@ -97,6 +94,10 @@ public class DateTimeTest {
         assertNotEquals(datetime, new DateTime("01-01-2001 02:02"));
 
         assertFalse(datetime.equals(2));
+
+        // Same date + time, different input format
+        assertEquals(datetime, new DateTime("2001-01-01 01:01"));
+        assertEquals(datetime, new DateTime("01 Jan 2001 01:01"));
     }
 
     @Test

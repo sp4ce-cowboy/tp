@@ -33,7 +33,8 @@ Please read through sections [Installation](#installation) and [Command Breakdow
    run the application.
 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
-   ![Ui](images/Ui.png)
+ 
+   <img src="images/Ui.png" width="650">
 
 5. Type the command in the command box and press `Enter` to execute it. e.g. typing **`help`** and pressing `Enter` will
    open the help window.
@@ -1136,7 +1137,7 @@ Command Words Accepted: `get_total_expenditure`, `get_total_exp`, `gte` (case-in
 > 
 > **Note:** The transaction list will be filtered
 > 
-> <img src="images/unicash/command-outputs/get-total-expenditure/getTotalExpenditureMonthOnlySuccess.png" width="400">
+> <img src="images/unicash/command-outputs/get-total-expenditure/getTotalExpenditureMonthOnlySuccess.png" width="550">
 
 **Example 2**
 
@@ -1482,6 +1483,8 @@ This project is based on the AddressBook-Level3 project created by the [SE-EDU i
 
 ## Terminology
 
-| Term        | Meaning                                                                                            |
-|-------------|----------------------------------------------------------------------------------------------------|
-| Transaction | Represents both an expense or an income. Expenses cause a net loss while incomes cause a net gain. |
+| Term        | Meaning                                                                                                             |
+|-------------|---------------------------------------------------------------------------------------------------------------------|
+| Transaction | Represents both an expense or an income. Expenses cause a net loss while incomes cause a net gain                   |
+| Expenditure | Total amount for transactions labelled as "expense"                                                                 |
+| Budget      | Observable metric on expenditure, tracking daily/weekly/monthly (only one) expense relative to preset budget amount |

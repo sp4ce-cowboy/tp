@@ -85,6 +85,15 @@ public class Transaction {
     }
 
     /**
+     * Returns the original hashcode of this object.
+     *
+     * @return the original hashcode.
+     */
+    public int originalHashCode() {
+        return super.hashCode();
+    }
+
+    /**
      * Returns true if both transactions have the same data fields.
      * This defines a stronger notion of equality between two transactions.
      */
