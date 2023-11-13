@@ -932,6 +932,9 @@ The following sequence diagram shows how the different components of UniCa$h int
 
 <img src="images/unicash/EditTransactionSequenceDiagram.png" width="1200" />
 
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+**Note:** The lifeline for `EditTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
 
 ##### Details
 
@@ -1212,8 +1215,6 @@ information on that command and provide instructions on how to run that command.
 This command will exit UniCa$h.
 
 ### User Interface
-
-#### Summary Statistics
 
 [//]: # (#### etc)
 
