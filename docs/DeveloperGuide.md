@@ -875,7 +875,7 @@ By introducing UI testing into the code coverage reporting, we have been able to
 #### User Input Builder
 
 The `UserInputBuilder` class is a test utility class for the purposes of generating possible
-user inputs for a given `Transaction`. With a given `Transaction` object, it become possible 
+user inputs for a given `Transaction`. With a given `Transaction` object, it becomes possible 
 to generate a `String` that represents what a user might have input in order to have
 stored that `Transaction.` This allows for the conversion of a `Transaction` object
 into an equivalent user-input. Such a conversion would be beneficial for `FxRobot` which can use 
