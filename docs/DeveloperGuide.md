@@ -166,7 +166,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC01 - Adding a Transaction**
 
 **MSS:**
-1. User enters the command to add a transaction with the correct format.
+1. User enters the command to add a transaction.
 2. User submits the request.
 3. UniCa$h adds the transaction to the transactions list and displays success message.
     
@@ -185,7 +185,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC02 - Delete a transaction**
 
 **MSS:**
-1. User enters the command to delete a transaction with the correct format.
+1. User enters the command to delete a transaction.
 2. User submits the request.
 3. UniCa$h finds the transaction based on the passed in arguments.
 4. UniCa$h deletes the transaction.
@@ -225,7 +225,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC04 - Listing all Transactions**
 
 **MSS:**
-1. User enters the command to list all transactions with the correct format (i.e. no parameters).
+1. User enters the command to list all transactions.
 2. User submits the request.
 3. UniCa$h retrieves the list of all transactions and displays them for the User.
 
@@ -244,7 +244,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC05 - Finding a Transaction**
 
 **MSS:**
-1. User enters the command to find transaction with the correct format.
+1. User enters the command to find transactions.
 2. User submits the request.
 3. UniCa$h filters the transactions based on the specified filters and returns the filtered list of expenses with a success message.
 
@@ -278,7 +278,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC06 - Clear all transactions**
 
 **MSS:**
-1. User enters the command to clear all transactions with the correct format. (i.e. no parameters)
+1. User enters the command to clear all transactions.
 2. User submits the request.
 3. UniCa$h deletes all transactions in the transactions list.
 4. UniCa$h displays success message.
@@ -293,7 +293,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC07 - Reset UniCa$h**
 
 **MSS:**
-1. User enters the command to reset UniCa$h with the correct format. (i.e. no parameters)
+1. User enters the command to reset UniCa$h.
 2. User submits the request.
 3. UniCa$h restores all transactions in the transactions list to the default transactions
 4. UniCa$h displays success message.
@@ -325,7 +325,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC09 - Show UniCa$h Help**
 
 **MSS:**
-1. User enters the command to show help with the correct format. (i.e. no parameters)
+1. User enters the command to show help.
 2. User submits the request.
 3. UniCa$h opens help window with link to User Guide
 4. UniCa$h displays the default welcome message with overview of commands
@@ -340,7 +340,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC10 - Exit UniCa$h**
 
 **MSS:**
-1. User enters the command to exit UniCa$h with the correct format (i.e. no parameters)
+1. User enters the command to exit UniCa$h.
 2. User submits the request. 
 3. UniCa$h displays exit message and application closes
 
@@ -408,7 +408,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC14 - Retrieve a transaction**
 
 **MSS:**
-1. User enters the command to retrieve (i.e. `get`) a transaction with the correct format.
+1. User enters the command to retrieve (i.e. `get`) a transaction.
 2. User submits the request.
 3. UniCa$h retrieves the transaction based on the passed in arguments.
 4. UniCa$h displays expanded details of that transaction
