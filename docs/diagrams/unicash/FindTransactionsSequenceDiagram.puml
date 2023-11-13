@@ -1,0 +1,70 @@
+
+@startuml
+!include ../style.puml
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant ":FindCommandParser" as FindCommandParser LOGIC_COLOR
+participant "command:FindCommand" as FindCommand LOGIC_COLOR
+participant "commandResult:CommandResult" as CommandResult LOGIC_COLOR
+
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("find n/lunch")
+activate LogicManager
+
+LogicManager -> UniCashParser : parseCommand("find c/food")
+activate UniCashParser
+
+create FindCommandParser
+UniCashParser -> FindCommandParser
+activate FindCommandParser
+
+FindCommandParser --> UniCashParser
+deactivate FindCommandParser
+
+UniCashParser -> FindCommandParser : parse("c/food")
+activate FindCommandParser
+
+
+create FindCommand
+FindCommandParser -> FindCommand
+activate FindCommand
+
+FindCommand --> FindCommandParser
+deactivate FindCommand
+
+FindCommandParser --> UniCashParser : command
+deactivate FindCommandParser
+
+UniCashParser --> LogicManager : command
+deactivate UniCashParser
+
+LogicManager -> FindCommand : command.execute(model)
+activate FindCommand
+
+
+FindCommand -> Model : updateFilteredTransactionList(transactionPredicate)
+activate Model
+
+Model --> FindCommand
+deactivate Model
+
+create CommandResult
+FindCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> FindCommand
+deactivate CommandResult
+
+FindCommand --> LogicManager : commandResult
+deactivate FindCommand
+
+[<--LogicManager : commandResult
+deactivate LogicManager
+@enduml
