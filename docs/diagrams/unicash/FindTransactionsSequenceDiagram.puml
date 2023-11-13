@@ -15,7 +15,7 @@ box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("find n/lunch")
+[-> LogicManager : execute("find c/food")
 activate LogicManager
 
 LogicManager -> UniCashParser : parseCommand("find c/food")
@@ -41,6 +41,9 @@ deactivate FindCommand
 
 FindCommandParser --> UniCashParser : command
 deactivate FindCommandParser
+
+FindCommandParser -[hidden]-> UniCashParser
+destroy FindCommandParser
 
 UniCashParser --> LogicManager : command
 deactivate UniCashParser

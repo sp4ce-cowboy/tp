@@ -1365,7 +1365,7 @@ clearing any contained `budgets`
 
 **Overview**
 
-The `find` command searches UniCa$h for `Transactions` that match the input parameters.
+The `find` command searches UniCa$h for `Transactions` that match the input search parameters.
 
 The activity diagram of finding transactions in UniCa$h is as shown below
 
@@ -1376,6 +1376,11 @@ during the sequence of processing and execution of the `find` command
 
 <img src="images/unicash/diagrams/FindTransactionsSequenceDiagram.png" width="800" />
 
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+**Note:** The lifeline for `FindCommandParser` should end at the destroy marker (X) but due to a
+limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
 
 **Details**
 
@@ -1383,35 +1388,34 @@ during the sequence of processing and execution of the `find` command
 2. The input will be parsed by `FindCommandParser` and if the provided input is
    invalid, `ParseException` will be thrown, and the user is prompted to enter the 
 command again with the correct input. 
-   - _You can refer to the User Guide for the input constraints
-   for `find` [here](UserGuide.md#find-transactions)._
+   - _You can refer to the User Guide for the input constraints for the `find` command [here](UserGuide.md#find-transactions)._
 3. If the input is valid, a `FindCommand` object containing a `Predicate<Transaction>` 
 is created by `FindCommandParser` to be executed by `LogicManager`
 4. `LogicManager` will invoke the `execute` method of `FindCommand`
    which will invoke the `Model` property to update its filtered transactions list
-according to its contained predicate.
+according to the predicate contained inside `FindCommand`.
 
 **Notes**
-- Each transaction property that can be searched with `find` contains an associated property predicate.
+- Every transaction property that can be searched with the `find` command contains an associated property predicate._
 - For the `find` command, these predicates are "composed" by the `TransactionContainsAllKeywordsPredicate` class.
 - This class simulates a composed predicate that represents a short-circuiting logical `AND` of all property
 predicates. 
-     - Encapsulated within is a list of transaction predicates, and this list can be accessed 
-publicly, and modified.
-    - The overriding test method returns true only if the input Transaction 
-matches all predicates in this list.
-    - The method responsible for this is given as such:
+    - Encapsulated within the class is a list of transaction predicates.
+    - The overriding `test` method returns true only if the input `Transaction` 
+matches all predicates in this list, and a snippet of it is shown below.
+
   ```java
     public boolean test(Transaction transaction) {
-        if (predicateList.isEmpty()) {
-            return false;
-        }
+     if (predicateList.isEmpty()) {
+         return false;
+     }
 
-        return predicateList.stream()
-                .allMatch(predicate -> predicate.test(transaction));
+     return predicateList.stream()
+             .allMatch(predicate -> predicate.test(transaction));
     }
   ```
-- The `FindCommandParser` is responsible for parsing the user input and "converting" each input
+
+- In summary, the `FindCommandParser` is responsible for parsing the user input and "converting" each input
 into the associated property predicate, and then creating the `FindCommand` object itself with
 the above-mentioned composed predicate class.
 

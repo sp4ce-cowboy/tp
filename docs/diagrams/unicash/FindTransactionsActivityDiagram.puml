@@ -9,7 +9,7 @@ start
 
 if () then (
 
-[command followed by no parameters])
+[command not followed by any parameters])
   :Error: Invalid command format;
   stop
 
@@ -19,9 +19,9 @@ elseif () then (
 
 
 [command followed by multiple
-instances of the same parameters])
+instances of the same parameter])
 
-  :Error: Multiple values specified for single-valued field;
+  :Error: Multiple values specified for single-valued field ;
   stop
 
 elseif () then (
@@ -38,7 +38,7 @@ else (
 
  [else]
 )
-  :Transaction successfully retrieved;
+  :Transaction retrieved successfully;
 
 endif
 
