@@ -1115,7 +1115,7 @@ For more details on the constraints of each property of `Transaction`, refer to 
 
 #### Add Transaction
 
-##### Overview
+**Overview**
 
 The `add_transaction` command adds a new `Transaction` to the `TransactionList` in UniCash.
 
@@ -1147,7 +1147,7 @@ a specified value of 5 in the `UniqueCategoryList` class. Else, a `ParserExcepti
 
 #### Get Total Expenditure
 
-##### Overview
+**Overview**
 
 The `get_total_expenditure` command returns the total expenditure across a given month among all `expense` transactions in UniCa$h, with optional filters for a given category and year.
 
@@ -1230,7 +1230,7 @@ can change based on the current `Transactions List` configuration.
 
 #### Edit Transaction
 
-##### Overview
+**Overview**
 
 The `edit_transaction` command edits an existing `Transaction` from the `TransactionList` in UniCa$h.
 
@@ -1239,7 +1239,7 @@ The following sequence diagram shows how the different components of UniCa$h int
 <img src="images/unicash/EditTransactionSequenceDiagram.png" width="1200" />
 
 
-##### Details
+**Details**
 
 1. The user specifies the transaction to be edited by first stating the (one-based) index of the transaction they want to edit. This
    is followed by listing the fields and updated values that they would like to edit.
@@ -1628,14 +1628,14 @@ expenses available or not. Also, the `showSummary` parameter will be set to `fal
 
 #### Help 
 
-##### Overview
+**Overview**
 
 The `help` command can be used in 2 different ways.
 
 1. `help` with no arguments.
 2. `help COMMAND_WORD` with 1 argument containing a command word.
 
-##### Details
+**Details**
 
 1. `help`
 
