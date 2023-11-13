@@ -773,9 +773,7 @@ procedure is shown above.
 #### StyleSheet
 
 The StyleSheet class serves as a centralized information source for visual elements for all
-UI components requiring some form of graphical representation. 
-
-#### User Input Builder
+UI components requiring some form of graphical representation.
 
 #### Command Usage Message Builder
 
