@@ -658,6 +658,116 @@ These changes work around the limitation of Linux and MacOS runners on Github Ac
 
 By introducing UI testing into the code coverage reporting, we have been able to achieve a code coverage of > 85%!
 
+#### User Input Builder
+
+The `UserInputBuilder` class is a test utility class for the purposes of reverse-engineering
+and generating possible user inputs for a given `Transaction`. With this class it would be now
+possible, with a given `Transaction` object, to generate a String that represents what a user
+might have input in order to be able to store that `Transaction.` This allows for the conversion
+of a `Transaction` from an Object to an equivalent user-input, in a way reverse-parsing the
+`Transaction`. Such a conversion would be beneficial for `FxRobot` which can use 
+`Transaction` data directly to emulate user input and "manually" enter commands into the
+`Command Box`.
+
+Given below is a snippet of the class, including one of its constructors. As you can see,
+a `UserInputBuilder` object is created by taking in a `Transaction` as one of its parameters.
+
+```java
+public class UserInputBuilder {
+
+    private static final String WHITESPACE = " ";
+
+    private final Transaction transaction;
+    private String userInput;
+
+    
+    public UserInputBuilder(Transaction transaction) {
+        requireNonNull(transaction);
+        this.transaction = transaction;
+        userInput = "";
+
+    }
+```
+
+The code snippet below shows the `withAllProperties()` method in this class that uses the 
+encapsulated `Transaction` object to generate a concatenated string of possible user inputs.
+
+```java
+public UserInputBuilder withAllProperties() {
+        return new UserInputBuilder(transaction)
+                .addName()
+                .addAmount()
+                .addType()
+                .addLocation()
+                .addDateTime()
+                .addCategories();
+}
+```
+
+For each property `X`, the corresponding `addX()` method would append the appropriate `CliSyntax`
+`PREFIX` for that property, and the property itself in a manner similar to what a user would
+have to input.
+```java
+public UserInputBuilder addName() {
+    userInput = userInput + WHITESPACE + PREFIX_NAME + transaction.getName();
+
+    return this;
+}
+```
+Not all properties are relevant for every command, therefore each property's relevant `add()`
+method can be used individually to form a user input string instead of using the `withAllProperties`
+method.
+
+Optionally, a `COMMAND WORD` can also be prefixed to the
+userInput as shown below, taking the `CommandType` enum itself as the input parameter. 
+
+```java
+public UserInputBuilder addCommand(CommandType command) {
+    userInput = command.getMainCommandWord() + WHITESPACE + userInput;
+
+    return this;
+}
+```
+_Note: The term `addCommand` is used here instead of `addCommandWord` because the input parameter 
+`CommandType` enum consists of `Commands` themselves, which is not to be confused with the `Add Transactions Command`._
+
+The use for such a utility class is demonstrated below: 
+
+
+```java
+public static List<String> getTestTransactionsAsUserInputs() {
+    ArrayList<String> userInputList = new ArrayList<>();
+    
+    for (Transaction transaction : getTestTransactions()) {
+        String userInput = new UserInputBuilder(transaction)
+                .withAllProperties()
+                .addCommand(CommandType.ADD_TRANSACTION)
+                .toString();
+
+        userInputList.add(userInput);
+
+    }
+    return userInputList;
+}
+```
+_The above method belongs to a `TestDataUtil` class, in which the `getTestTransactions()` method
+returns a `Transaction[]` array consisting of a variety of test transactions._
+
+
+```java
+    ...
+        for (String userInput : getTestTransactionsAsUserInputs()) {
+            robot.clickOn("#commandBoxPlaceholder");
+            robot.write(userInput);
+            robot.type(KeyCode.ENTER);
+        }
+    ... 
+```
+The output of the `getTransactionsAsUserInputs()` method is a List of Strings with each of them
+corresponding to the user input required to add that particular `Transaction`. This List can then
+be passed to `FxRobot` to emulate user input for a variety of transactions. A snippet of such 
+procedure is shown above.
+
 ### General Classes and Components
 
 #### StyleSheet
