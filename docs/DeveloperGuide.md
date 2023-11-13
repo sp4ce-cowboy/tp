@@ -358,6 +358,136 @@ the filtered transaction with a success message.
 
 The architecture for UniCa$h leverages the existing architecture from AB3 and extends several components like supporting storage of transactions and the budget.
 
+### User Interface (UI) Layout
+
+UniCa$h is designed with users who prefer to use the keyboard in mind. Thus, almost all
+user input is designed for CLI-type usage, i.e. text-based keyboard input, and User Interface
+elements are intended to either supplement this main functionality, or provide graphical support
+for features.
+
+When UniCa$h is first opened, by default, the UniCa$h welcome message will be displayed in
+the `Results Display`. This message can also be invoked with the `help` command which will
+be explained later on in the [User Guide](UserGuide.md) Below are the main User Interface
+(UI) components and features we have implemented in UniCa$h.
+
+![img_2.png](images/unicash/UniCashUIAnnotated.png)
+
+
+These main UI components are explained below. For the purposes of demonstrating certain UI features, certain commands
+and inputs that are yet to be explained are mentioned here. However, at a later section of this User Guide,
+all of these commands and inputs will be explained, feel free to refer to them at your discretion. **Where applicable,
+consider those explanations as the single source of authority for those commands, as the representation here is merely
+for UI demonstration purposes only.**
+
+#### UniCa$h Main Window
+
+- The Main Window in UniCa$h is resizeable, but has a minimum size enforced.
+- The Menu bar contains the `File` and `Help` menus, of which `Help` can be opened with the
+  `F1` keyboard shortcut, which is also default to the original `AB-3`.
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+On macOS, using UniCa$h in fullscreen will sometimes cause the Summary Window and
+Help Window to also open in fullscreen, however this is an expected behaviour caused by
+macOS's window management style, and cannot be overridden, but does not cause any functional
+issues. Simply exit fullscreen mode to continue using UniCa$h as per normal. 
+</div>
+
+#### Command Box
+- The `Command Box` is the primary means by which the user interacts actively with the application.
+- The user types specific inputs into the `Command Box` and presses `ENTER` after typing to "communicate" with UniCa$h.
+- Given that our application is targeted for users who prefer CLI-type text input interaction, the `Command Box`
+  is configured such that it can remember up to `10` latest user inputs.
+    - When a user presses `ENTER` on any input, the input is stored regardless of its validity.
+    - These inputs can be traversed through with the `UP` and `DOWN` arrow keys on the keyboard.
+    - Only the `10` most recent inputs are stored by the `Command Box`
+- At any point in time, the user can press the `ESC` to empty the current text field in the `Command Box`
+
+<div class="callout callout-info" markdown="span">
+The mouse cursor being too close to the menu can occasionally trigger the JavaFX built-in
+cursor control functionality that allows arrows keys to be used for navigating the menu bar. 
+If it happens, simply move your mouse cursor away from the menu bar and click on the `Command Box`
+to continue.
+</div>
+
+
+#### Transactions List
+- Each transaction stored in UniCa$h is displayed in the `Transactions List`.
+- The entire `Transactions List` will be displayed by default upon start-up.
+- Certain commands like `find` might limit the `Transactions List` to a particular configuration
+  which can be reversed with the `list` command to show the full list.
+- Transactions added will immediately appear at the top of the `Transactions List`, and this is to
+  provide immediate response to the user as they will be able to see their most recently input
+  transaction right away.
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The most recent transactions appear at the top of the `Transactions List` as the
+`Transactions List` is ordered by the time at which the user inputs the transaction, not the
+actual date and time associated with that particular transaction.
+</div>
+
+#### Transaction Card
+- The `Transactions List` contains individual `Transaction Cards`, each corresponding to
+  a single `Transaction` and they look like this:
+
+<img src="images/unicash/TransactionCardAnnotated.png" width="450">
+
+- **Transaction Index (or ID/Number):** All terms used synonymously to refer to the number shown on the left partition of the blue box.
+    - Transactions are not inherently indexed, the Index values refer to the position of the
+      Transaction on the `Transactions List`
+    - Thus, Index values are not static - depending on the configuration of currently displayed
+      `Transactions List`, this number might change.
+- **Transaction Name:** The name of the given transaction, shown on the right partition of the blue box.
+- **Transaction Date & Time:** The date & time assigned to the transaction, shown inside the pink box.
+- **Transaction Location:** The location assigned to the transaction, shown inside the red box.
+- **Transaction Categories:** The category/categories assigned to the transaction, shown inside the yellow box.
+  This can be empty if the transaction has no categories assigned to it.
+- **Transaction Amount:** The expense or income assigned to the transaction, shown inside the black box.
+    - _Given that `0.00` is a valid amount, its display colour and magnitude sign will depend
+      on the type of transaction only._
+
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+
+Certain properties above (such as name, location, categories and amount)
+are allowed values that exceed the UI's capacity to display them fully.
+
+<br><br><img align="center" src="images/unicash/TransactionCardFull.png" width="450">
+
+<br><br> This effect is accounted for as we do not wish to limit the user to arbitrary
+lengths. Thus, the `get` command is available to retrieve the full, expanded details
+of these transactions and display them in the `Results Display` component.
+</div>
+
+
+#### Results Display
+
+- The `Results Display` is the primary means by which UniCa$h "responds" back
+  to the user via text output.
+- The `Results Display` can be scrolled if the text output displayed is too long.
+
+#### Data Source Indicator
+
+- The `Data Source Indicator` shows the location of the current UniCa$h storage file.
+
+
+#### Rolling Balance Indicator
+
+- The `Rolling Balance Indicator` shows the net sum (i.e. `total income - total expense`)
+  for the **currently displayed** `Transactions List`.
+- For example, if the input `find n/friends` was used to find transactions whose names
+  contain the keyword `friends`, the `Transactions List` would be updated to
+  only show matching transactions and likewise the `Rolling Balance Indicator`
+  would reflect the net sum for these group of transactions **only**.
+- As UniCa$h starts up with the full `Transactions List` by default, the
+  `Rolling Balance Indicator` would likewise show the net sum of all transactions in UniCa$h
+  at start-up.
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+Unlike the color of the amount of a transaction in the `Transactions List`, the color of
+the `Rolling Balance Indicator` will change based on whether the net sum is positive (green)
+or negative (red) or zero (black).
+</div>
+
 ### UI Component
 
 UniCa$h is a Graphical User Interface (GUI) application, built using JavaFX. The following section describes the
