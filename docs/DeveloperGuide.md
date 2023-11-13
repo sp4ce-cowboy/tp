@@ -1699,10 +1699,6 @@ We had to alter `ModelManager` and `UniCash` to contain the relevant `Transactio
 
 Additionally, removing all dependencies to the old AB3 architecture such as the `Person` model or `JsonAdaptedPerson` was a big challenge as we had to ensure that doing so did not cause any regression to the new models and classes. However, it was also a good exercise in revealing unintended dependencies between UniCa$h and the old AB3 models and classes.
 
-#### Improving the UI
-
-[//]: # (TODO: Rubesh)
-
 #### Providing Summary Statistics
 
 [//]: # (TODO: Ernest)
