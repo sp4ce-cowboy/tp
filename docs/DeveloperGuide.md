@@ -330,7 +330,7 @@ For the following Use Cases (unless specified otherwise):
 3. UniCa$h opens help window with link to User Guide
 4. UniCa$h displays the default welcome message with overview of commands
 
-   Use Case ends
+   Use Case ends.
 
 **Extensions**
 - 2a. User enters an incorrect format.
@@ -344,7 +344,7 @@ For the following Use Cases (unless specified otherwise):
 2. User submits the request. 
 3. UniCa$h displays exit message and application closes
 
-   Use Case ends
+   Use Case ends.
 
 **Extensions**
 - 2a. User enters an incorrect format.
@@ -413,7 +413,7 @@ For the following Use Cases (unless specified otherwise):
 3. UniCa$h retrieves the transaction based on the passed in arguments.
 4. UniCa$h displays expanded details of that transaction
 
-   Use Case ends
+   Use Case ends.
 
 **Extensions**
 - 2a. User enters an incorrect format.
