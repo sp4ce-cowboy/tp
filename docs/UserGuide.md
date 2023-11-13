@@ -1620,6 +1620,13 @@ Command Words Accepted: `exit`, `quit`, `bye` (case-insensitive)
 ## Known Issues
 
 1. Hard to see scrollbar
+2. Help pop-up window shifts to the bottom left corner of the screen before re-centering on `help` command. Steps to reproduce the issue:
+    1. Type help in the command box.
+    2. Shift the pop-up window to anywhere on the screen.
+    3. Close the pop-up window.
+    4. Type help in the command box again.
+    5. The pop-up window will shift to the bottom left corner before re-centering itself.
+
 
 ---
 
