@@ -161,12 +161,13 @@ explanations in the respective PRs.
 * Managed release [v1.3b](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3b)
 and [v1.3.1](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3.1) on GitHub,
 also made and released demo video for release v1.3b [here](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3b)
+* Opened discussion for final consolidation of deliverables by the team [here](https://github.com/AY2324S1-CS2103-T16-3/tp/discussions/209)
 
 **Community**
 * **Pull Requests Reviewed**: Refer [here](https://github.com/AY2324S1-CS2103-T16-3/tp/pulls?q=is%3Apr+reviewed-by%3Asp4ce-cowboy)
-[Reviewed 41 PRs, with 91 PR comments in total thus far.]
+[Reviewed 51 PRs, with more than 91 PR comments in total.]
 * **Pull Requests Opened**: Refer [here](https://github.com/AY2324S1-CS2103-T16-3/tp/pulls?q=is%3Apr+author%3Asp4ce-cowboy+)
-[Opened 33 PRs. Almost all major PRs have full details and/or screenshots.]
+[Opened 41 PRs. Almost all major PRs have full details and/or screenshots.]
 * **Issues Assigned & Completed**: Refer [here](https://github.com/AY2324S1-CS2103-T16-3/tp/issues?q=is%3Aissue+author%3Asp4ce-cowboy+is%3Aclosed+)
 
 
