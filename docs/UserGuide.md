@@ -746,7 +746,7 @@ thus, a transaction with the name `Lunch with friends outside` is still consider
 The find command, like get_total_expenditure, creates a filter on the `Transactions List`
 and this filter persists across commands.
 
-<br>Therefore, it is expected that any changes to the `Transactions List` after the `find` command
+<br><br>Therefore, it is expected that any changes to the `Transactions List` after the `find` command
 is used may result in transactions being hidden as they may no longer abide by the filter applied by `find`.
 
 <br>Use the `list` command when this occurs to reset the filter and view all transactions
@@ -1614,6 +1614,13 @@ Command Words Accepted: `exit`, `quit`, `bye` (case-insensitive)
 ## Known Issues
 
 1. Hard to see scrollbar
+2. Help pop-up window shifts to the bottom left corner of the screen before re-centering on `help` command. Steps to reproduce the issue:
+    1. Type help in the command box.
+    2. Shift the pop-up window to anywhere on the screen.
+    3. Close the pop-up window.
+    4. Type help in the command box again.
+    5. The pop-up window will shift to the bottom left corner before re-centering itself.
+
 
 ---
 
