@@ -7,7 +7,14 @@ start
 
 : User enters clear_transactions command;
 
-: All transactions have been cleared;
+if () then ([command followed with trailing characters])
+  :Parse exception thrown;
+  stop
+
+else ([else])
+  :Transaction successfully added ;
+
+endif
 
 stop
 
