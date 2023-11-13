@@ -122,7 +122,7 @@ explanations in the respective PRs.
   **Justification for Removal:** Unreliable to depend on the host machine to display the PDF and
   difficult to test. Furthermore, we were allowed to assume that all users have access to the UG.
 
-* **Fuzzy-Find Transactions**: [PRs: [#110](https://github.com/AY2324S1-CS2103-T16-3/tp/pull/110)]
+* **Fuzzy-Find Transactions**: [PRs: [#101](https://github.com/AY2324S1-CS2103-T16-3/tp/pull/101)]
   * **What it was:** The initial implementation of the existing Find Command. It searched all properties including
   DateTime, Type, and Amount. Matches were a logical `OR` of all keywords.
   **Motivation for Implementation:** A user can search for any keyword across any property freely,
