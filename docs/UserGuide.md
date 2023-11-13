@@ -616,8 +616,8 @@ of the transaction to be retrieved, as shown in the currently displayed `Transac
 <div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
 There are some important `INDEX` constraints for which you can refer to the
 [command breakdown's Argument Types section](#argument-types). You can also refer to the
-[UI Layout's Transaction Card section](#transaction-card) to learn about the transaction index values that
-can change based on the current `Transactions List` configuration.
+[UI Layout's Transaction Card section](DeveloperGuide.md#transaction-card) in the Developer Guide
+to learn about the transaction index values that can change based on the current `Transactions List` configuration.
 </div>
 
 ##### Successful Execution
