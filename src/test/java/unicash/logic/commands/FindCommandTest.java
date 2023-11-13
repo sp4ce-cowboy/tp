@@ -4,7 +4,6 @@ import static org.junit.jupiter.api.Assertions.assertDoesNotThrow;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertNotEquals;
-import static unicash.logic.UniCashMessages.MESSAGE_TRANSACTIONS_LISTED_OVERVIEW;
 import static unicash.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static unicash.testutil.Assert.assertThrows;
 import static unicash.testutil.TypicalTransactions.INTERN;
@@ -19,6 +18,7 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
+import unicash.commons.enums.CommandType;
 import unicash.model.Model;
 import unicash.model.ModelManager;
 import unicash.model.UniCash;
@@ -66,7 +66,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_zeroKeywords_noTransactionsFound() {
-        String expectedMessage = String.format(MESSAGE_TRANSACTIONS_LISTED_OVERVIEW, 0);
+        String expectedMessage = String.format(CommandType.FIND.getMessageSuccess(), 0);
         TransactionContainsAllKeywordsPredicate predicate = preparePredicate(" ");
         FindCommand command = new FindCommand(predicate);
         expectedModel.updateFilteredTransactionList(predicate);
@@ -76,7 +76,7 @@ public class FindCommandTest {
 
     @Test
     public void execute_oneKeyword_multipleTransactionsFound() {
-        String expectedMessage = String.format(MESSAGE_TRANSACTIONS_LISTED_OVERVIEW, 3);
+        String expectedMessage = String.format(CommandType.FIND.getMessageSuccess(), 3);
         TransactionContainsAllKeywordsPredicate predicate = preparePredicate("work");
         FindCommand command = new FindCommand(predicate);
 

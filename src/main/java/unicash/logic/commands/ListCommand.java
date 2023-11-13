@@ -19,10 +19,9 @@ public class ListCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = CommandType.LIST.getMessageSuccess();
 
-    private static final Logger logger = Logger.getLogger("ListCommandLogger");
+    public static final String MESSAGE_FAILURE = CommandType.LIST.getMessageFailure();
 
-    public static final String MESSAGE_FAILURE = "Command not recognised. Try using the command " + COMMAND_WORD
-            + " without any parameters instead.";
+    private static final Logger logger = Logger.getLogger("ListCommandLogger");
 
     @Override
     public CommandResult execute(Model model) {

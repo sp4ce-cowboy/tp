@@ -25,7 +25,7 @@ Please read through sections [Installation](#installation) and [Command Breakdow
 
 1. Ensure you have Java `11` or above installed in your Computer.
 
-2. Download the latest `unicash.jar` from [GitHub](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3.1).
+2. Download the latest `unicash.jar` from [GitHub](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/latest).
 
 3. Copy the file to the folder you want to use as the _home folder_ for your UniCa$h.
 
@@ -36,10 +36,10 @@ Please read through sections [Installation](#installation) and [Command Breakdow
  
    <img src="images/Ui.png" width="650">
 
-5. Type the command in the command box and press `Enter` to execute it. e.g. typing **`help`** and pressing `Enter` will
-   open the help window.
+5. Type a command in the command box and press `Enter` to execute it. e.g. typing `help` and pressing `Enter` will
+   execute the `help` command and open the help window.
 
-   To get started with UniCa$h, you can run the `add_transactions` command!
+   To get started with UniCa$h, you can run the [`add_transactions` command](#add-transaction)!
 
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -91,7 +91,7 @@ Prefixes have several variations with different notations:
 
 **Notes:**
 
-1. Optional fields imply that the _omission_, not the absence of value when used, is supported. This means that `l/` is **_NOT_** an optional parameter, but rather a blank one.
+1. Optional fields imply that the _omission_ of the field, not the absence of value when used, is supported. This means that `l/` is **_NOT_** an optional parameter, but rather a blank one.
 
 #### Prefix Types
 
@@ -287,6 +287,12 @@ Command: `add_transaction n/NAME type/TYPE amt/AMOUNT [dt/DATETIME] [l/LOCATION]
 For more information about the prefix constraints, refer to the [command breakdown's prefix types section](#prefix-types)
 </div>
 
+Take note the following prefixes definition overrides the one in the [prefix types section](#prefix-types)
+
+| Prefix                                                                 | Constraints                                                                                                                                           | Remarks                                                                                                                                                      | Valid                                                                             | Invalid                                               |
+|------------------------------------------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------------------------------------|-------------------------------------------------------|
+| `l/`<br><br>(Location of transaction)                                  | At least 1 character but no more than 500 characters.<br><br>Only supports alphanumeric characters, spaces, (, ), _, @, -, #, &, ., and , characters. | If no value is provided, i.e. `l/`, then it defaults to `-`.                                                                                                 | `l/`<br>`l/NTUC @ UTown`                                                                  | `l/Two ^`                                     |
+
 Command Words Accepted: `add_transaction`, `add`, `at` (case-insensitive)
 
 <div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
@@ -333,6 +339,8 @@ There is a limit of 100,000 transactions you can add to UniCa$h.
 > Location: -;
 > Categories:
 > ```
+> 
+> **Remarks**: The value of the `Date` output as shown above could be different from the one displayed in your application. Refer to [prefix types section](#prefix-types) for further elaboration on the omission of the `dt/` prefix.
 
 ##### Failed Execution
 
@@ -346,7 +354,7 @@ There is a limit of 100,000 transactions you can add to UniCa$h.
 > ```
 > Invalid command format! 
 >
-> add_transaction: Adds a transaction to UniCa$h.
+> add, add_transaction, at: Adds a transaction to UniCa$h.
 >
 > Parameters: n/NAME type/TYPE amt/AMOUNT dt/DATETIME l/LOCATION [c/CATEGORY]...
 >
@@ -378,6 +386,8 @@ There is a limit of 100,000 transactions you can add to UniCa$h.
 **Example 4**
 
 > **Case**: More than 100,000 transactions added.
+> 
+> **Precondition**: UniCa$h already has `100,000` transactions stored.
 >
 > **Input**: `add n/test amt/300 type/expense`
 >
@@ -951,10 +961,10 @@ Command Words Accepted: `set_budget`, `sb`, `budget`
 > ```
 > Invalid command format! 
 >
-> set_budget: Sets the user's budget on UniCa$h.
->
+> set_budget, sb, budget: Sets the user's budget on UniCa$h.
+> 
 > Parameters: amt/Amount interval/Interval
->
+> 
 > Example: set_budget amt/300 interval/day
 > ```
 
@@ -968,10 +978,10 @@ Command Words Accepted: `set_budget`, `sb`, `budget`
 > ```
 > Invalid command format! 
 >
-> set_budget: Sets the user's budget on UniCa$h.
->
+> set_budget, sb, budget: Sets the user's budget on UniCa$h.
+> 
 > Parameters: amt/Amount interval/Interval
->
+> 
 > Example: set_budget amt/300 interval/day
 > ```
 
@@ -983,9 +993,9 @@ Command Words Accepted: `set_budget`, `sb`, `budget`
 >
 > **Output**:
 > ```
-> Invalid command format! 
+> Invalid command format!
 >
-> set_budget: Sets the user's budget on UniCa$h.
+> set_budget, sb, budget: Sets the user's budget on UniCa$h.
 >
 > Parameters: amt/Amount interval/Interval
 >
@@ -1000,7 +1010,7 @@ Command Words Accepted: `set_budget`, `sb`, `budget`
 >
 > **Output**:
 > ```
-> Amounts must be within range of [0, 2,147,483,647] and either start with $ or nothing at all
+> Amounts must be within range of [0, 2147483647] and either start with $ or nothing at all
 > ```
 
 **Example 5**
@@ -1023,7 +1033,7 @@ Command: `clear_budget`
 Command Words Accepted: `clear_budget`, `cb` (case-insensitive)
 
 <div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
-`clear_budget` will not parse any additional argument or parameters.
+`clear_budget` will not parse any additional argument or parameters. Even if additional argument or parameters are given, any existing budget will be cleared regardless, without any additional effects.
 </div>
 
 ##### Successful Execution
@@ -1054,19 +1064,24 @@ Command Words Accepted: `clear_budget`, `cb` (case-insensitive)
 
 #### Get Budget
 
-Retrieves the set budget and the spending over the given interval. 
-
-If no budget has been set, the user will be prompted to set one first instead.
+Retrieves the set budget and the spending over the given interval. If no budget has been set, the user will be prompted to set one first instead.
 
 The user's spending is calculated by: `budget - interval expenses`.
 
 <div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
-For more information about how intervals are handled, please refer to the [prefix types section.](#prefix-types)
+The [prefix types section](#prefix-types) contains a brief about how intervals are handled.
+<br><br>
+Expenses that fall within the interval are included and the total expense is computed relative to the budget.
+<br>
+1. Daily: expenses that occur within the same **day of year** (i.e. the expenses that occur on day `x` are included if today is day `x`, expenses on day `x +/- 1` are not includued)
+<br>
+2. Weekly: expenses that occur within the same **week of year**. This is dependent on the current year, for more information refer to the [documentation here.](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/temporal/WeekFields.html#weekOfYear())
+<br>
+3. Monthly: expenses that occur within the same **month** (i.e. the expenses that occur in September are included if today falls under September)
 </div>
 
-[//]: # (TODO: Believe this should be resolved soon)
 <div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
-The usage is calculated from the list of filtered transactions so to view the budget remainder across expense transactions, use the `list` command first.
+The usage is calculated from the list of filtered transactions so to view the budget remainder across all available transactions, use the `list` command first.
 </div>
 
 Command: `get_budget`
@@ -1074,7 +1089,7 @@ Command: `get_budget`
 Command Words Accepted: `get_budget`, `gb` (case-insensitive)
 
 <div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
-`get_budget` will not parse any additional argument or parameters.
+`get_budget` will not parse any additional argument or parameters. Even if additional argument or parameters are given, no additional effects will be triggered.
 </div>
 
 ##### Successful Execution
@@ -1109,7 +1124,6 @@ Command Words Accepted: `get_budget`, `gb` (case-insensitive)
 
 Retrieves the total expenditure by month with optional filters for category and year. Also filters the transaction list by the given month, year, and category.
 
-[//]: # (TODO: Believe this should be resolved soon)
 <div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
 The total expenditure is calculated from the list of filtered transactions so to view the total expenditure across expense transactions, use the `list` command first.
 </div>
@@ -1121,6 +1135,16 @@ For more information about the prefix constraints, refer to the [command breakdo
 </div>
 
 Command Words Accepted: `get_total_expenditure`, `get_total_exp`, `gte` (case-insensitive)
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+The `get_total_expenditure` command, like `find`, creates a filter on the transactions list and this filter persists across commands.
+<br><br>
+Therefore, it is expected that any changes to the transaction list after `get_total_expenditure` may result in transactions being hidden as they may no longer abide by the filter applied by `get_total_expenditure`.
+<br><br>
+Use the `list` command when this occurs to view all transactions and clear any filters.
+<br><br>
+For more information on how `get_total_expenditure` is computed, refer to the [developer guide's section for it.](DeveloperGuide.html#get-total-expenditure)
+</div>
 
 ##### Successful Execution
 
@@ -1180,7 +1204,7 @@ Command Words Accepted: `get_total_expenditure`, `get_total_exp`, `gte` (case-in
 >
 > **Output:**
 > ```
-> Your total expenditure in September 2023 for "shopping" was $109.00
+> Your total expenditure in January 2023 was $0.00
 > ```
 
 ##### Failed Execution
@@ -1195,8 +1219,8 @@ Command Words Accepted: `get_total_expenditure`, `get_total_exp`, `gte` (case-in
 > ```
 > Invalid command format! 
 >
-> get_total_expenditure: Retrieves the total expenditure by month with optional filters for category and year.
->
+> get_total_expenditure, get_total_exp, gte: Retrieves the total expenditure by month with optional filters for category and year.
+> 
 > Parameters: month/Month [c/Category] [year/Year]
 >
 > Example: get_total_expenditure month/10 c/Food year/2006
@@ -1269,6 +1293,17 @@ Command Words Accepted: `get_total_expenditure`, `get_total_exp`, `gte` (case-in
 > ```
 
 **Example 8**
+
+> **Case:** Category is blank.
+>
+> **Input:** `get_total_expenditure month/9 c/`
+>
+> **Output:**
+> ```
+> Category names should be alphanumeric and up to 15 characters long.
+> ```
+
+**Example 9**
 
 > **Case:** Category length is greater than 15.
 >
@@ -1400,11 +1435,11 @@ To get a list of `COMMAND_WORD`, do `help` with no arguments
 >
 > **Output**:
 > ```
-> add_transaction: Adds a transaction to UniCa$h.
+> add, add_transaction, at: Adds a transaction to UniCa$h.
 >
 > Parameters: n/Name type/Type amt/Amount [dt/DateTime] [l/Location] [c/Category]...
 >
-> Example: add_transaction n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food
+> Example: add n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food
 > ```
 
 ##### Failed Execution
@@ -1419,11 +1454,11 @@ To get a list of `COMMAND_WORD`, do `help` with no arguments
 > ```
 > Unknown command
 >
-> help: Shows UniCa$h general usage instructions and specific command usage by specifying the command word.
+> help, h: Shows UniCa$h general usage instructions and specific command usage by specifying the command word.
 >
-> Argument: Command word specified must be a valid command word present in the help command
+> Argument: COMMAND_WORD (must be a valid command word present in the help command)
 >
-> Example: help add_transaction
+> Example: help add
 > ```
 
 #### Reset UniCa$h
@@ -1442,19 +1477,23 @@ Command Words Accepted: `exit`, `quit`, `bye` (case-insensitive)
 
 ### Summary
 
-| Action                      | Format, Examples                                                                                      |
-|-----------------------------|-------------------------------------------------------------------------------------------------------|
-| **Add Transaction**         | `add_transaction n/Name type/Type amt/Amount [dt/Datetime] [l/Location] [c/Category]...`              |
-| **Delete Transaction**      | `delete_transaction INDEX`                                                                            |                                                                                                                                                                                                                       |
-| **Delete All Transactions** | `clear_transactions`                                                                                  |
-| **Edit Transaction**        | `edit_transaction INDEX [n/Name] [type/Type] [amt/Amount] [dt/Datetime] [l/Location] [c/Category]...` |
-| **List All Transactions**   | `list`                                                                                                |
-| **Find Transaction(s)**     | `find [n/Name] [c/Category] [l/Location]`                                                             |
-| **Get Total Expenditure**   | `get_total_expenditure month/Month [c/Category] [year/Year]`                                          |
-| **Summary Statistics**      | `summary`                                                                                             |
-| **Set Budget**              | `set_budget amt/Amount interval/Interval`                                                             |
-| **Clear Budget**            | `clear_budget`                                                                                        |
-| **Get Budget**              | `get_budget`                                                                                          |
+| Action                                | Command                                                                                               |
+|---------------------------------------|-------------------------------------------------------------------------------------------------------|
+| **Add Transaction**                   | `add_transaction n/Name type/Type amt/Amount [dt/Datetime] [l/Location] [c/Category]...`              |
+| **Delete Transaction**                | `delete_transaction INDEX`                                                                            |                                                                                                                                                                                                                       |
+| **Delete All Transactions**           | `clear_transactions`                                                                                  |
+| **Edit Transaction**                  | `edit_transaction INDEX [n/Name] [type/Type] [amt/Amount] [dt/Datetime] [l/Location] [c/Category]...` |
+| **List All Transactions**             | `list`                                                                                                |
+| **Find Transaction(s)**               | `find [n/Name] [c/Category] [l/Location]`                                                             |
+| **Get Total Expenditure**             | `get_total_expenditure month/Month [c/Category] [year/Year]`                                          |
+| **Summary Statistics**                | `summary`                                                                                             |
+| **Set Budget**                        | `set_budget amt/Amount interval/Interval`                                                             |
+| **Clear Budget**                      | `clear_budget`                                                                                        |
+| **Get Budget**                        | `get_budget`                                                                                          |
+| **Reset UniCa$h to default**          | `reset_unicash`                                                                                       |
+| **Show Help Window**                  | `help`                                                                                                |
+| **Show Welcome Message with Summary** | `help`                                                                                                |
+| **Show Command Specific Help**        | `help [COMMAND_WORD]`                                                                                 |
 
 [//]: # (## Troubleshoot)
 

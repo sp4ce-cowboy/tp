@@ -7,7 +7,6 @@ import java.util.logging.Logger;
 
 import unicash.commons.enums.CommandType;
 import unicash.commons.util.ToStringBuilder;
-import unicash.logic.UniCashMessages;
 import unicash.model.Model;
 import unicash.model.transaction.predicates.TransactionContainsAllKeywordsPredicate;
 
@@ -21,6 +20,7 @@ public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = CommandType.FIND.getCommandWords();
     public static final String MESSAGE_USAGE = CommandType.FIND.getMessageUsage();
+    public static final String MESSAGE_SUCCESS = CommandType.FIND.getMessageSuccess();
 
     private static final Logger logger = Logger.getLogger("FindCommandLogger");
 
@@ -51,8 +51,7 @@ public class FindCommand extends Command {
         logger.log(Level.INFO, "Find command executed successfully");
 
         return new CommandResult(
-                String.format(UniCashMessages.MESSAGE_TRANSACTIONS_LISTED_OVERVIEW,
-                        model.getFilteredTransactionList().size()));
+                String.format(MESSAGE_SUCCESS, model.getFilteredTransactionList().size()));
     }
 
     @Override

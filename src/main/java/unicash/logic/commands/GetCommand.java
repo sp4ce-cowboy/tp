@@ -25,8 +25,7 @@ public class GetCommand extends Command {
 
     public static final String MESSAGE_USAGE = CommandType.GET.getMessageUsage();
 
-    public static final String MESSAGE_GET_TRANSACTION_SUCCESS = "Transaction %1$d retrieved:"
-            + "\n\n%2$s";
+    public static final String MESSAGE_GET_TRANSACTION_SUCCESS = CommandType.GET.getMessageSuccess();
 
     private static final Logger logger = Logger.getLogger("GetCommandLogger");
 
