@@ -1213,8 +1213,6 @@ This command will exit UniCa$h.
 
 ### User Interface
 
-#### Summary Statistics
-
 [//]: # (#### etc)
 
 ### Minor Features
