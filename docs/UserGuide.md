@@ -34,12 +34,13 @@ Please read through sections [Installation](#installation) and [Command Breakdow
 
    A GUI similar to the below should appear in a few seconds. Note how the app contains some sample data.<br>
  
-   <img src="images/Ui.png" width="650">
+   ![UniCashWelcomeWindow](images/Ui.png)
+
 
 5. Type a command in the command box and press `Enter` to execute it. e.g. typing `help` and pressing `Enter` will
    execute the `help` command and open the help window.
 
-   To get started with UniCa$h, you can run the [`add_transactions` command](#add-transaction)!
+   To get started with UniCa$h, you can run the [`add_transaction` command](#add-transaction)!
 
 6. Refer to the [Features](#features) below for details of each command.
 
@@ -55,9 +56,9 @@ Commands in UniCa$h have the following structure:
 `command_word (ARGUMENT) (PREFIXES)`
 </p>
 
-| command_word                                                                                                    | ARGUMENT                                                                                                      | PREFIXES                                                                                                               |
-|-----------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
-| Represents the command to run. May be referenced by alternative shorthands as described in each command section | Comes before all prefixes and often used to reference an index within the transactions list<br>Often optional | Often referred to as "Parameters"<br>Commonly used to specify various attributes/properties for a given `command_word` |
+| command_word                                                                                                                                                                      | ARGUMENT                                                                                                      | PREFIXES                                                                                                               |
+|-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------------------------|------------------------------------------------------------------------------------------------------------------------|
+| Represents the command to run. May be referenced by alternative shorthands as described in each command section. All commands and their alternatives are always case-insensitive. | Comes before all prefixes and often used to reference an index within the transactions list<br>Often optional | Often referred to as "Parameters"<br>Commonly used to specify various attributes/properties for a given `command_word` |
 
 #### Argument Types
 
@@ -68,7 +69,8 @@ Commands in UniCa$h have the following structure:
 **Notes:**
 
 1. `INDEX` uses positive integers which we define as integers that are strictly greater than `0`. 
-2. UniCa$h divides the error handling for `INDEX` into two cases, non-positive integers, i.e. `<= 0` values, are treated as invalid command formats while values that exceed the transaction list will be treated as being an invalid index as the supported values are `[1, transaction list size]`.
+2. UniCa$h divides the error handling for `INDEX` into two cases, invalid numbers (non-positive integers, i.e. `<= 0` values,
+values larger than `Integer.MAX_VALUE` or non-integer values e.g. `10.2`) are treated as invalid command formats while values that exceed the transaction list will be treated as being an invalid index as the supported values are `[1, transaction list size]`. 
 
 <div class="callout callout-info" markdown="span">
 For more clarity about how commands are parsed and why `INDEX` is parsed this way, please refer to our [developer guide](DeveloperGuide.html#delete-transaction) on how some commands like `delete_transaction` handles `INDEX`.
@@ -116,130 +118,24 @@ Note that each command might use the prefixes slightly differently so refer to e
 **Notes:**
 
 1. Amounts can be exactly `$0.00` as users may want to simply track that a transaction is present but not specify the amount.
+User might also want to track financial events not involving currency exchange, such as barter trading, free gifts, etc. 
 2. Intervals work by filtering by the specified time period. 
    1. For `day` intervals, only transactions of the same day are found. 
    2. For `week` intervals, only transactions of the same [week of year](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/temporal/WeekFields.html#weekOfYear()) are found. 
    3. For `month` intervals, only transactions of the same month are found.
 
-### UI Layout
 
-UniCa$h is designed with users who prefer to use the keyboard in mind. Thus, almost all
-user input is designed for CLI-type usage, i.e. text-based keyboard input, and UI elements are intended 
-to supplement this main functionality.
+### User Interface (UI) Overview
 
-When UniCa$h is first opened, it would look something like this:
+When UniCa$h is first opened, it would look something like the image shown earlier 
+near the top of the user guide. 
 
-![img_1.png](images/unicash/UniCashWelcome.png)
+The UI components and features are elaborated explicitly in our Developer Guide
+which can be found [here](#DeveloperGuide.md). However, for ease of reference of some key UI
+terms used in this User Guide, the annotated image of the UniCa$h window is duplicated below. 
 
-By default, the Welcome Message will be displayed in the `Results Display`.
-This message can also be invoked with the `help` command which will be explained
-later on in this User Guide. Below are the main User Interface (UI) component features
-we have implemented in UniCa$h.
 
 ![img_2.png](images/unicash/UniCashUIAnnotated.png)
-
-Explained below are the main UI components. For the purposes of demonstrating certain UI features, certain commands
-and inputs that are yet to be explained are mentioned here. However, at a later section of this User Guide,
-all of these commands and inputs will be explained, feel free to refer to them at your discretion. _Where applicable,
-consider those explanations as the single source of authority for those commands as the representation here is merely
-for UI demonstration purposes only._
-
-
-#### UniCa$h Main Window Components
-
-- The Main Window in UniCa$h is resizeable, but has a minimum size enforced.
-- The Menu bar contains the `File` and `Help` menus, of which `Help` can be opened with the
-`F1` keyboard shortcut, which is also default to the original `AB-3`.
-
-
-- _Note: On macOS, using UniCa$h in fullscreen will cause the Summary Window and Help Window to also
-open in fullscreen, however this is an expected behaviour caused by macOS's window management style, and does not
-cause any functional issues._ 
-
-#### Command Box
-- The `Command Box` is the primary means by which the user interacts actively with the application.
-- The user types specific inputs into the `Command Box` and presses `ENTER` after typing to "communicate" with UniCa$h.
-- The responses from UniCa$h for each input will be as defined in the subsection for each command in the later part of this User Guide
-- Given that our application is targeted for users who prefer CLI-type text input interaction, the `Command Box`
-is configured such that it can remember up to `10` latest user inputs. 
-  - When a user presses `ENTER` on any input, the input is stored regardless of its validity.
-  - These inputs can be traversed through with the `UP` and `DOWN` arrow keys on the keyboard.
-  - Only the `10` most recent inputs are stored by the `Command Box`
-
-  - _Note that due to a JavaFX built-in cursor control functionality (i.e. arrows keys can be used to navigate the menu bar),
-  the mouse cursor being too close to the menu can occasionally trigger this functionality instead, simply move your
-  mouse cursor away from the menu bar if this happens to alleviate the issue._
-- At any point in time, the user can press the `ESC` to empty the current text field in the `Command Box` 
-
-#### Transactions List
-- Each transaction input by the user is displayed in the `Transactions List`. 
-- The entire `Transactions List` will be displayed initially, however certain commands might limit this
-listing, which can be reversed with the `list` command to show the entire list again.
-- The `Transactions List` is ordered by the time at which the user inputs the transaction,
-not the actual date and time associated with that particular transactions.
-- Transactions added will immediately appear at the top of the `Transactions List`, and this is to
-provide immediate response to the user as they will be able to see their most recently input 
-transaction right away.
-- The most recent transactions appear at the top of the `Transactions List`.
-
-#### Transaction
-- The `Transactions List` contains individual `Transactions` that look like this:
-
-![img_1.png](images/unicash/TransactionCardAnnotated.png)
-
-- **Transaction ID/Index/Number:** All terms used synonymously to refer to the number shown on the left partition of the blue box. Based
-on the configuration of `Transactions List`, this number might change, and that is the intended effect, the use for which 
-will be explained in the applicable commands, including `delete`, `edit` and `get` commands.
-- **Transaction Name:** The name of the given transaction, shown on the right partition of the blue box.
-- **Transaction Date:** The date assigned to the transaction, shown inside the pink box.
-- **Transaction Location:** The location assigned to the transaction, shown inside the red box.
-- **Transaction Categories:** The category/categories assigned to the transaction, shown inside the yellow box.
-- **Transaction Amount:** The expense or income assigned to the transaction, shown inside the black box.
-  - Expenses will be preceded with a `negative` sign and in red color, whereas incomes will not be preceded with any
-  sign and displayed in green color. 
-  - _This applies to the amount `0.00` as well, thus display color
-is based only on transaction type`._
-
-
-Note: Certain properties above (such as name, location, categories and amount)
-are allowed values that exceed the UI's capacity to display them fully. For 
-example, a transaction name that is too long will be shortened by the application,
-
-![img_1.png](images/unicash/TransactionCardFull.png)
-
-This effect is accounted for as we do not wish to limit the user to arbitrary
-lengths. Thus, the `get` command is available to retrieve the full, expanded details
-of these transactions and display them in the `Results Display` component.
-
-#### Results Display
-
-- The `Results Display` is the primary means by which UniCa$h "responds" back
-to the user via text output.
-- The `Results Display` can be scrolled if the text output displayed is too long.
-
-#### Data Source Indicator
-
-- The `Data Source Indicator` shows the location of the current UniCa$h storage file.
-
-
-#### Rolling Balance Indicator
-
-- The `Rolling Balance Indicator` shows the net sum (i.e. `total income - total expense`) 
-for the **currently displayed `Transactions List`**.
-- For example, if the input `find n/friends` was used to find transactions whose names 
-contain the keyword `friends`, the `Transactions List` would be updated to
-only show matching transactions and likewise the `Rolling Balance Indicator` 
-would reflect the net sum for these transactions.
-- If the currently displayed `Transactions List` is the entire list (i.e. after using 
-the `list` command), then the `Rolling Balance Indicator` would show the net sum of all 
-transactions in UniCa$h. 
-- _Note: Unlike the color of an amount of a transaction in `Transactions List`, the color of
-the `Rolling Balance Indicator` will change based on whether the net sum is positive (green)
-or negative (red) or zero (black)._
-
-[//]: # ()
-
-[//]: # (UI layout and description of what each section means)
 
 
 ---
@@ -248,7 +144,7 @@ or negative (red) or zero (black)._
 
 ### Features Overview
 
-UniCa$h comprises of four primary feature groups:
+UniCa$h comprises four primary feature groups:
 
 - [Transaction Management](#transaction-management)
     - [Add Transaction](#add-transaction) (`add_transaction`)
@@ -256,7 +152,7 @@ UniCa$h comprises of four primary feature groups:
     - [Edit Transaction](#edit-transaction) (`edit_transaction`)
     - [List Transactions](#list-transactions) (`list`)
     - [Get Transaction](#get-transaction) (`get`)
-    - [Find Transaction(s)](#find-transactions) (`find`)
+    - [Find Transaction](#find-transactions) (`find`)
     - [Clear All Transactions](#clear-transactions) (`clear_transactions`)
 - [Budget Management](#budget-management)
     - [Set Budget](#set-budget) (`set_budget`)
@@ -271,6 +167,8 @@ UniCa$h comprises of four primary feature groups:
     - [Exit UniCa$h](#exit-unicah) (`exit`)
 
 The instructions for the usage of each command within each feature group are elaborated in the sections below.
+For the command examples mentioned herein, you can assume that `Output` refers to the text
+shown in the `Results Display`, unless stated otherwise.
 
 ### Transaction Management
 
@@ -568,36 +466,30 @@ Deletes a `Transaction` from UniCa$h.
 
 Command: `delete_transaction INDEX`
 
-Command Words Accepted: `delete_transaction`, `delete`, `del` (case-insensitive)
+Command Words Accepted: `delete_transaction`, `delete`, `del` (all case-insensitive)
 
-Command Argument: `<INDEX>` is the displayed transaction index
-of the transaction to be deleted, as shown in the `Transactions List`.
+Command Argument: `INDEX` is the displayed transaction index
+of the transaction to be deleted, as shown in the currently displayed `Transactions List`.
 
 | Arguments | Optional? | Purpose                                            |
-|-----------|-----------|----------------------------------------------------|
-| `<INDEX>` | No        | Transaction index of the transaction to be deleted |
+|---------|-----------|----------------------------------------------------|
+| `INDEX` | No        | Transaction index of the transaction to be deleted |
 
-Important notes:
 
-1. The `delete_transaction` command word is case-insensitive, thus `DELETE_TRANSACTION` is
-   considered an equivalent command word.
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+There are some important `INDEX` constraints for which you can refer to the
+[command breakdown's Argument Types section](#argument-types). You can also refer to the
+[UI Layout's Transaction Card section](#transaction-card) to learn about the transaction index values that
+can change based on the current `Transactions List` configuration.
+</div>
 
-2. `<INDEX>` must be a positive integer, i.e. a number greater than 0.
 
-3. `<INDEX>` must be equal to or smaller than 2,147,483,647 which is the `Integer.MAX_VALUE` provided by Java 11.
-
-4. `<INDEX>` must be equal to or smaller than the largest displayed transaction index
-   of all transactions as shown in the `Transactions List`. Thus, even if there are `100` total transactions but only
-   `20` of those transactions are displayed in the current `Transactions List`, the maximum `INDEX` allowed
-   would be `20`
-
-5. Given `3.` and `4.`, the maximum allowed `<INDEX>` is the smaller value of the two.
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
-> **Case**: Delete a transaction with the correctly specified `<INDEX>`.
+> **Case**: Delete a transaction with the correctly specified `INDEX`.
 >
 > **Input**: `delete_transaction 1`
 >
@@ -612,38 +504,19 @@ Important notes:
 > Location: Clarke Quay;
 > Categories: #social
 > ```
-> Input:
-> <img src="images/unicash/command-outputs/deleteTransaction/deleteTransactionInitialState.png" width="1000" />
-> Output:
-> <img src="images/unicash/command-outputs/deleteTransaction/deleteTransactionSuccess1FinalState.png" width="1000" />
 
-###### Example 2
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The `delete` command can be triggered even if a transaction is out of the visible window
+as long as that particular transactions exists in the current `Transactions List`
+configuration.
+</div>
 
-> **Case**: Delete a transaction with the currently not visible but correctly specified `<INDEX>`.
->
-> **Input**: `delete_transaction 1`
->
-> **Output**:
-> ```
-> Deleted Transaction:
-> 
-> Name: Lunch at McDonalds;
-> Type: expense;
-> Amount: $17.40;
-> Date: 15 Sep 2023 11:00;
-> Location: Clementi Mall;
-> Categories: #food
-> ```
-> Input:
-> <img src="images/unicash/command-outputs/deleteTransaction/deleteTransactionInitialState2.png" width="1000" />
-> Ouput:
-> <img src="images/unicash/command-outputs/deleteTransaction/deleteTransactionSuccess2FinalState.png" width="1000" />
 
 ##### Failed Execution
 
-###### Example 1
+**Example 1**
 
-> **Case**: Missing compulsory fields.
+> **Case**: Missing compulsory fields i.e. `INDEX`
 >
 > **Input**: `delete_transaction`
 >
@@ -651,18 +524,20 @@ Important notes:
 > ```
 > Invalid command format! 
 >
-> delete_transaction: Deletes the transaction identified by the index number used in the displayed transaction list.
+> delete, delete_transaction, del: Deletes the transaction identified by the index number
+> used in the displayed transaction list.
 >
 > Argument: Index (must be a positive integer)
 >
 > Example: delete_transaction 1
 > ```
-> <img src="images/unicash/command-outputs/deleteTransaction/deleteFail1.png" width="1000" />
 
-###### Example 2
+**Example 2**
 
-> **Case**: Invalid `<INDEX>` provided
-> (`<INDEX>` given as `10` given when only `5` transactions are presently displayed)
+> **Case**: Invalid `INDEX` provided
+> 
+> **Context**:`INDEX` given as `10` when only `5` transactions are present
+> in the current `Transaction List` configuration.
 >
 > **Input**: `delete_transaction 10`
 >
@@ -670,44 +545,77 @@ Important notes:
 > ```
 > The transaction index provided is invalid
 > ```
-> <img src="images/unicash/command-outputs/deleteTransaction/deleteFail2.png" width="1000" />
+
+**Example 3**
+
+> **Case**: Invalid `INDEX` provided
+> 
+> **Context**: `INDEX` given as a negative number
+>
+> **Inputs**: `delete_transaction -1`
+>
+> **Output**:
+> ```
+> Invalid command format! 
+>
+> delete, delete_transaction, del: Deletes the transaction identified by the index number
+> used in the displayed transaction list.
+>
+> Argument: Index (must be a positive integer)
+>
+> Example: delete_transaction 1
+> ```
+
+**Example 4**
+
+> **Case**: Invalid `INDEX` provided
+>
+> **Context**: `INDEX` given as a number larger than `Integer.MAX_VALUE`
+>
+> **Inputs**: `delete_transaction 10000000000000000`
+>
+> **Output**:
+> ```
+> Invalid command format! 
+>
+> delete, delete_transaction, del: Deletes the transaction identified by the index number
+> used in the displayed transaction list.
+>
+> Argument: Index (must be a positive integer)
+>
+> Example: delete_transaction 1
+> ```
+
+
 
 #### Get Transaction
 
 Retrieves a `Transaction` from UniCa$h.
 
-Command: `get <INDEX>`
+Command: `get INDEX`
 
-Command Words Accepted: `get`, `g` (case-insensitive)
+Command Words Accepted: `get`, `g` (all case-insensitive)
 
-Command Argument: `<INDEX>` is the displayed transaction index
-of the transaction to be retrieved, as shown in the `Transactions List`.
+Command Argument: `INDEX` is the displayed transaction index
+of the transaction to be retrieved, as shown in the currently displayed `Transactions List`.
 
 | Arguments | Optional? | Purpose                                              |
 |-----------|-----------|------------------------------------------------------|
-| `<INDEX>` | No        | Transaction index of the transaction to be retrieved |
+| `INDEX`   | No        | Transaction index of the transaction to be retrieved |
 
-Important notes:
 
-1. The `get` command word is case-insensitive, thus `GET` is
-   considered an equivalent command word.
-
-2. `<INDEX>` must be a positive integer, i.e. a number greater than 0.
-
-3. `<INDEX>` must be equal to or smaller than 2,147,483,647 which is the `Integer.MAX_VALUE` provided by Java 11.
-
-4. `<INDEX>` must be equal to or smaller than the largest displayed transaction index
-   of all transactions as shown in the `Transactions List`. Thus, even if there are `100` total transactions but only
-   `20` of those transactions are displayed in the current `Transactions List`, the maximum `INDEX` allowed
-   would be `20`
-
-5. Given `3.` and `4.`, the maximum allowed `<INDEX>` is the smaller value of the two.
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+There are some important `INDEX` constraints for which you can refer to the
+[command breakdown's Argument Types section](#argument-types). You can also refer to the
+[UI Layout's Transaction Card section](#transaction-card) to learn about the transaction index values that
+can change based on the current `Transactions List` configuration.
+</div>
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
-> **Case**: Retrieve a transaction with the correctly specified `<INDEX>`.
+> **Case**: Retrieve a transaction with the correctly specified `INDEX`.
 >
 > **Input**: `get 5`
 >
@@ -722,38 +630,18 @@ Important notes:
 > Location: Bugis;
 > Categories: #transport
 > ```
-> Input:
-> <img src="images/unicash/command-outputs/getTransaction/getInitial1.png" width="1000" />
-> Ouput:
-> <img src="images/unicash/command-outputs/getTransaction/getSuccessFinal1.png" width="1000" />
 
-###### Example 2
-
-> **Case**: Retrieve a transaction with the currently not visible but correctly specified `<INDEX>`.
->
-> **Input**: `get 1`
->
-> **Output**:
-> ```
-> Transaction 1 retrieved:
->
-> Name: Buy clothes;
-> Type: expense;
-> Amount: $109.00;
-> Date: 17 Sep 2023 18:30;
-> Location: Uniqlo Bugis;
-> Categories: #shopping
-> ```
-> Input:
-> <img src="images/unicash/command-outputs/getTransaction/getInitial2.png" width="1000" />
-> Ouput:
-> <img src="images/unicash/command-outputs/getTransaction/getSuccessFinal2.png" width="1000" />
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The `get` command can be triggered even if a transaction is out of the visible window
+as long as that particular transactions exists in the current `Transactions List`
+configuration.
+</div>
 
 ##### Failed Execution
 
-###### Example 1
+**Example 1**
 
-> **Case**: Missing compulsory fields.
+> **Case**: Missing compulsory fields i.e. `INDEX`
 >
 > **Input**: `get`
 >
@@ -761,19 +649,19 @@ Important notes:
 > ```
 > Invalid command format! 
 >
-> get: Displays expanded details of a specific transaction.
+> get, g: Displays expanded details of a specific transaction.
 >
 > Argument: Index (must be a positive integer)
 >
 > Example: get 2
 > ```
-> <img src="images/unicash/command-outputs/getTransaction/getFail1.png" width="1000" />
 
-###### Example 2
+**Example 2**
 
-> **Case**: Invalid `<INDEX>` provided
+> **Case**: Invalid `INDEX` provided
 >
-> **Context**: `10` given as `<INDEX>` when only `5` transactions are presently displayed.
+> **Context**:`INDEX` given as `10` when only `5` transactions are present
+> in the current `Transaction List` configuration
 >
 > **Input**: `get 10`
 >
@@ -781,65 +669,143 @@ Important notes:
 > ```
 > The transaction index provided is invalid
 > ```
-> <img src="images/unicash/command-outputs/getTransaction/getFail2.png" width="1000" />
 
-#### Find Transaction(s)
+**Example 3**
+
+> **Case**: Invalid `INDEX` provided
+>
+> **Context**: `INDEX` given as a negative number
+>
+> **Inputs**: `get -1`
+>
+> **Output**:
+> ```
+> Invalid command format! 
+>
+> get, g: Displays expanded details of a specific transaction.
+>
+> Argument: Index (must be a positive integer)
+>
+> Example: get 2
+> ```
+
+**Example 4**
+
+> **Case**: Invalid `INDEX` provided
+>
+> **Context**: `INDEX` given as a number larger than `Integer.MAX_VALUE`
+>
+> **Inputs**: `get 10000000000000000`
+>
+> **Output**:
+> ```
+> Invalid command format! 
+>
+> get, g: Displays expanded details of a specific transaction.
+>
+> Argument: Index (must be a positive integer)
+>
+> Example: get 2
+> ```
+
+
+#### Find Transactions
 
 Finds a `Transaction` in UniCa$h.
 
 Command: `find [n/NAME] [l/LOCATION] [c/CATEGORY]`
 
-Command Words Accepted: `find`, `search`, `f` (case-insensitive)
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+For more information about the prefix constraints, refer to the
+[command breakdown's prefix types section](#prefix-types)
+</div>
 
-Command Argument: `<INDEX>` is the displayed transaction index
-of the transaction to be retrieved, as shown in the `Transactions List`.
+Command Words Accepted: `find`, `search`, `f` (all case-insensitive)
 
-Command Options:
+Command Parameters:
 
-| Option Name      | Optional?       | Purpose                                                      |
+| Parameter        | Optional?       | Purpose                                                      |
 |------------------|-----------------|--------------------------------------------------------------|
 | n/               | Yes*            | Search keyword for the name of a transaction.                |
 | l/               | Yes*            | Search keyword for the location of a transaction.            |
 | c/               | Yes*            | Search keyword for a category tagged to a transaction        |
 | Any of the above | Min. one option | At least one option must be specified for the `find` command |
 
+
 Important notes:
-1. The `find` command word is case-insensitive, thus `FIND` is
-   considered an equivalent command word.
 
-2. *While each option is considered Optional, at least one option must be specified in total
-
+1. While all options are optional, at least one option must be specified in total.
+2. Only one instance of each option can be specified, i.e. `n/Friends n/Dinner` is invalid as the name
+      option is specified more than once.
 3. All keywords specified must match in order for a transaction to be displayed.
-4. Only one instance of each option can be specified, i.e. `/n Friends n/Dinner` is invalid as the name 
-option is specified more than once.
-5. For each keyword, a full substring match is required, thus `find n/Lunch with friends` with search for transactions
-whose name contains the String `Lunch with friends` and not `Lunch`, `with`, and `friends` separately. However, an 
-exact match is not required as a transaction with the name `Lunch with friends outside` contains the above substring
-and therefore it will be flagged as a match.
+4. For each keyword, a substring match is required, thus `find n/with friends` will search for transactions
+whose name contains the string "with friends". However, an exact full name match is not required
+thus, a transaction with the name `Lunch with friends outside` is still considered a match.
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+The find command, like get_total_expenditure, creates a filter on the `Transactions List`
+and this filter persists across commands.
+
+<br>Therefore, it is expected that any changes to the `Transactions List` after the `find` command
+is used may result in transactions being hidden as they may no longer abide by the filter applied by `find`.
+
+<br>Use the `list` command when this occurs to reset the filter and view all transactions
+</div>
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
-> **Case**: Retrieve a transaction with the correctly specified options.
+> **Case**: Find a transaction with the correctly specified name option.
 >
-> **Input**: `find n/friends`
+> **Input**: `find n/with friends`
 >
 > **Output**:
 > ```
 > 
-> 1 Transactions listed!
+> 2 transactions listed!
 > 
 > ```
-> Input:
-> <img src="images/unicash/command-outputs/find/FindCommandSuccessInitial1.png" width="1000" />
+>
+> <img src="images/unicash/command-outputs/find/FindFriends.png" width="1000" />
+
+**Example 2**
+
+> **Case**: Find a transaction with the correctly specified category option.
+>
+> **Input**: `find c/food
+> `
+>
+> **Output**:
+> ```
 > 
-> Output:
-> <img src="images/unicash/command-outputs/find/FindSuccess1.png" width="1000" />
+> 3 transactions listed!
+> 
+> ```
+>
+> <img src="images/unicash/command-outputs/find/Find2.png" width="1000" />
+
+**Example 3**
+
+> **Case**: Find a transaction with multiple correctly specified options.
+>
+> **Input**: `find n/lunch c/food
+> `
+>
+> **Output**:
+> ```
+> 
+> 2 transactions listed!
+> 
+> ```
+>
+> <img src="images/unicash/command-outputs/find/Find3.png" width="1000" />
+>
+> Note that only transactions that match all the given keywords are matched!
 
 ##### Failed Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: Command entered with no parameters
 >
@@ -847,20 +813,50 @@ and therefore it will be flagged as a match.
 >
 > **Output**:
 > ```
-> Invalid command format! 
+> Invalid command format!
 > 
-> find, search, f: Finds all transactions whose properties match all of thespecified keywords (case-insensitive) and displays them as a list with index numbers.
+> find, search, f: Finds all transactions whose properties match all of the specified keywords
+> (case-insensitive) and displays them as a list with index numbers.
 > 
-> Only one keyword can be specified for each property and at least one keyword must be provided in total.
+> Only one keyword can be specified for each property and at least one keyword must be
+> provided in total.
 > 
 > Parameters: [n/Name] [l/Location] [c/Category]
 > 
-> Example: find, search, f n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food
-> 
+> Example: find, search, f n/Buying groceries l/NTUC c/Food
 > ```
-> Output:
-> <img src="images/unicash/command-outputs/find/FindFailure2.png" width="1000" />
+
+**Example 2**
+
+> **Case**: Command entered with multiple instances of the same option 
+>
+> **Input**: `find n/with n/friends` 
+>
+> **Output**:
+> ```
+> Multiple values specified for the following single-valued field(s): n/
+> ```
+
+**Example 3**
+
+> **Case**: Command entered with UniCa$h prefixes that are unsupported by `find` command 
+>
+> **Input**: `find type/expense`
+>
+> **Output**:
+> ```
+> Invalid command format!
 > 
+> find, search, f: Finds all transactions whose properties match all of the specified keywords
+> (case-insensitive) and displays them as a list with index numbers.
+> 
+> Only one keyword can be specified for each property and at least one keyword must be
+> provided in total.
+> 
+> Parameters: [n/Name] [l/Location] [c/Category]
+> 
+> Example: find, search, f n/Buying groceries l/NTUC c/Food
+> ```
 
 #### List Transactions
 Shows the list of all transactions in UniCa$h.
@@ -885,6 +881,7 @@ Command Words Accepted: `list`, `ls` (case-insensitive)
 > <img src="images/unicash/command-outputs/list/noTransactions.png" width="1000" />
 >
 > **Note:** There are no transactions to display, so the GUI will be empty. This is expected behaviour.
+
 ###### Example 2
 
 > **Case**: Calling the command with existing transactions.
@@ -914,11 +911,61 @@ Command Words Accepted: `list`, `ls` (case-insensitive)
 > ```
 
 #### Clear Transactions
+
 Clears all transactions in UniCa$h.
 
 Command: `clear_transactions`
 
-Command Words Accepted: `clear_transactions` (case-insensitive)
+Command Words Accepted: `clear_transactions` only (case-insensitive)
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+This command irreversibly deletes all transactions in UniCa$h. Thus, as an added layer
+of safety, the command has no short form alternatives and is intentionally lengthy. Additionally,
+it cannot be followed with any arguments, options, or non-whitespace text.
+</div>
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+While this command will erase all transactions in UniCa$h, the current `Transactions List`
+configuration is still subject to any filters applied by `find` or `get_total_expenditure`,
+which you can read about under the `find` command section [here](#find-transaction)
+or under the `get_total_expenditure` command section [here](#get-total-expenditure).
+</div>
+
+##### Successful Execution
+
+**Example 1**
+
+> **Case**: Command entered with correct format
+>
+> **Input**: `clear_transactions`
+>
+> **Output**:
+> ```
+> All transactions have been cleared!
+> ```
+>
+> <img src="images/unicash/command-outputs/clearTransactions/clear.png" width="1000" />
+
+
+##### Failed Execution
+
+**Example 1**
+
+> **Case**: Command entered with any trailing text 
+>
+> **Input**: `clear_transactions   asdfg` [OR] `clear_transactions today`
+>
+> **Output**:
+> ```
+> Clear transactions command cannot have trailing arguments. Use the command clear_transactions
+> without any trailing arguments.
+> ```
+<div class="callout callout-info" markdown="span">
+In the above example, it is made explicit that the `clear_transactions` command is not
+meant for batch deletion of specific groups of transaction nor for mass deletion of
+transactions present in a particular `Transaction List` configuration, and that this
+command will always delete all transactions in UniCa$h.
+</div>
 
 ### Budget Management
 
@@ -1434,7 +1481,7 @@ To get a list of `COMMAND_WORD`, do `help` with no arguments
 > ```
 >
 > The following output is shown as well as the popup.
-> <img src="images/unicash/HelpPopup.png" width="1000" />
+> <img src="images/unicash/HelpPopUpNew.png" width="1000" />
 
 **Example 2**
 
@@ -1470,21 +1517,72 @@ To get a list of `COMMAND_WORD`, do `help` with no arguments
 > Example: help add
 > ```
 
-#### Reset UniCa$h
-Resets UniCa$h to its default state.
+#### Reset UniCash
+
+Resets UniCa$h to its default state with the default transactions
 
 Command: `reset_unicash`
 
-Command Words Accepted: `reset_unicash` (case-insensitive)
+Command Words Accepted: `reset_unicash` only (case-insensitive)
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+Similar to `Clear Transactions`, this command overwrites all existing transactions in UniCa$h.
+Thus, as an added layer of safety, the command has no short form alternatives.
+It also cannot be followed with any arguments, options, or non-whitespace text.
+</div>
+
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+This command is subject to the filter applied by `find` or `get_total_expenditure`
+commands, which you can read about under the `find` command section [here](#find-transaction)
+or under the `get_total_expenditure` command section [here](#get-total-expenditure).
+</div>
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+While this command will restore the default UniCa$h transactions, the current `Transactions List`
+configuration is still subject to any filters applied by `find` or `get_total_expenditure`,
+which you can read about under the `find` command section [here](#find-transaction)
+or under the `get_total_expenditure` command section [here](#get-total-expenditure).
+</div>
+
+##### Successful Execution
+
+**Example 1**
+
+> **Case**: Command entered with correct format
+>
+> **Input**: `reset_unicash`
+>
+> **Output**:
+> ```
+> UniCa$h has been successfully restored to its original state!
+> ```
+
+##### Failed Execution
+
+**Example 1**
+
+> **Case**: Command entered with random trailing text.
+>
+> **Input**: `reset_unicash   asdf`
+>
+> **Output**:
+> ```
+> Reset command cannot have trailing arguments. Use the command reset_unicash without any
+> trailing arguments.
+> ```
+
 
 #### Exit UniCa$h
-Exit UniCa$h.
+
+Exit the UniCa$h application.
 
 Command: `exit`
 
 Command Words Accepted: `exit`, `quit`, `bye` (case-insensitive)
 
 ### Summary
+
 
 | Action                                | Command                                                                                               |
 |---------------------------------------|-------------------------------------------------------------------------------------------------------|
@@ -1493,7 +1591,7 @@ Command Words Accepted: `exit`, `quit`, `bye` (case-insensitive)
 | **Delete All Transactions**           | `clear_transactions`                                                                                  |
 | **Edit Transaction**                  | `edit_transaction INDEX [n/Name] [type/Type] [amt/Amount] [dt/Datetime] [l/Location] [c/Category]...` |
 | **List All Transactions**             | `list`                                                                                                |
-| **Find Transaction(s)**               | `find [n/Name] [c/Category] [l/Location]`                                                             |
+| **Find Transactions**                 | `find [n/Name] [c/Category] [l/Location]`                                                             |
 | **Get Total Expenditure**             | `get_total_expenditure month/Month [c/Category] [year/Year]`                                          |
 | **Summary Statistics**                | `summary`                                                                                             |
 | **Set Budget**                        | `set_budget amt/Amount interval/Interval`                                                             |
@@ -1504,7 +1602,8 @@ Command Words Accepted: `exit`, `quit`, `bye` (case-insensitive)
 | **Show Welcome Message with Summary** | `help`                                                                                                |
 | **Show Command Specific Help**        | `help [COMMAND_WORD]`                                                                                 |
 
-[//]: # (## Troubleshoot)
+
+
 
 ---
 
@@ -1526,6 +1625,12 @@ the data of your previous UniCa$h home folder.
 ## Acknowledgements
 
 This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
+
+The UniCa$h App icon is an open source icon named "wallet", available for
+personal and commercial uses, sourced from [here](https://iconduck.com/icons/228311/wallet).
+
+UniCa$h uses the Inter font throughout, licensed under the Open Font License
+and available for personal and commercial uses, sourced from [here](https://fonts.google.com/specimen/Inter/about).
 
 ---
 
