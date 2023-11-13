@@ -152,7 +152,7 @@ UniCa$h comprises four primary feature groups:
     - [Edit Transaction](#edit-transaction) (`edit_transaction`)
     - [List Transactions](#list-transactions) (`list`)
     - [Get Transaction](#get-transaction) (`get`)
-    - [Find Transaction](#find-transactions) (`find`)
+    - [Find Transactions](#find-transactions) (`find`)
     - [Clear All Transactions](#clear-transactions) (`clear_transactions`)
 - [Budget Management](#budget-management)
     - [Set Budget](#set-budget) (`set_budget`)
