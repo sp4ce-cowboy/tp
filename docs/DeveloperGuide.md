@@ -1815,6 +1815,7 @@ Expected: UniCa$h closes.
 
 ---
 
+## Appendix
 ### Appendix: Planned Enhancements
 
 - The current `get_budget` command does not alter the transaction list when processing the expenses within the interval. This can lead to confusion as users may not be aware of the specific transactions that are being included in the calculation of the budget remainder, and as a result, mistaking the budget calculation as not working. 
