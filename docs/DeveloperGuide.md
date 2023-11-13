@@ -453,7 +453,10 @@ the user with the ability to type their commands into the application.
 
 For the transaction list pane, we have a custom `TransactionListPanel` class that is a `ListView` to
 provide the user with a scrollable list of transactions. This view is updated whenever the user executes
-commands that modify the transaction list. (i.e. `add`, `delete`, `edit`, `clear`)
+commands that modify the transaction list. (i.e. `add`, `delete`, `edit`, `clear`). This `ListView` is displayed
+in a reverse scrolling manner so that the  user's most recent transactions will be added to the top of the
+`TransactionListPanel`, right below the `CommandBox`, so that the user will have immediate feedback after adding
+a transaction via text input into the `CommandBox`.
 
 For the command results pane, we have a custom `ResultDisplay` class. This pane displays the results of the
 user's command execution. This view is updated whenever the user executes commands that modify the transaction.
