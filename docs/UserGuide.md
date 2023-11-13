@@ -867,7 +867,7 @@ Command Words Accepted: `list`, `ls` (case-insensitive)
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: Calling the command when there are no existing transactions.
 >
@@ -882,7 +882,7 @@ Command Words Accepted: `list`, `ls` (case-insensitive)
 >
 > **Note:** There are no transactions to display, so the GUI will be empty. This is expected behaviour.
 
-###### Example 2
+**Example 2**
 
 > **Case**: Calling the command with existing transactions.
 >
@@ -899,7 +899,7 @@ Command Words Accepted: `list`, `ls` (case-insensitive)
 
 ##### Failed Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: Command entered with parameters
 >
