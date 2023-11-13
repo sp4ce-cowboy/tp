@@ -47,6 +47,10 @@ Ensure that the project is set up locally:
     ./gradlew run
     ```
 
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The Gradle instructions provided are for MacOS and Linux users. If you are using Windows, please refer to the [official documentation](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:using_wrapper) on using the Gradle Wrapper (i.e. `./gradlew`) on Windows.
+</div>
+
 Then, to contribute to the project, we recommend the following flow:
 
 1. Setup the original repository as the `upstream` remote
@@ -59,10 +63,10 @@ Then, to contribute to the project, we recommend the following flow:
     ```bash
     git fetch upstream master
     git merge upstream/master
-    git checkout -b <feat/fix/docs/etc.>/<branch name>
+    git checkout -b <branch name>
     ```
 3. Make the necessary changes
-4. Create a Pull Request to the original repository
+4. Create a [Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) to the original repository
 
 ### Acknowledgements
 

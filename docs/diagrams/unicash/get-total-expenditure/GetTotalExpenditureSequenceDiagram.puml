@@ -18,14 +18,14 @@ end box
 
 note left LogicManager
 In this sequence diagram, we set
-""command"" = "get_total_expenditure month/7 c/Food"
+""cmd"" = "get_total_expenditure month/7 c/Food"
 ""body"" = "month/7 c/Food"
 end note
 
-[-> LogicManager : execute(command)
+[-> LogicManager : execute(cmd)
 activate LogicManager
 
-LogicManager -> UniCashParser : parseCommand(command)
+LogicManager -> UniCashParser : parseCommand(cmd)
 activate UniCashParser
 
 create GetTotalExpenditureCommandParser

@@ -21,14 +21,14 @@ end box
 
 note left LogicManager
 In this sequence diagram, we set
-""command"" = "set_budget amt/200 interval/week"
+""cmd"" = "set_budget amt/200 interval/week"
 ""body"" = "amt/200 interval/week"
 end note
 
-[-> LogicManager : execute(command)
+[-> LogicManager : execute(cmd)
 activate LogicManager
 
-LogicManager -> UniCashParser : parseCommand(command)
+LogicManager -> UniCashParser : parseCommand(cmd)
 activate UniCashParser
 
 create SetBudgetCommandParser
