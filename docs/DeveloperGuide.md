@@ -873,13 +873,12 @@ By introducing UI testing into the code coverage reporting, we have been able to
 
 #### User Input Builder
 
-The `UserInputBuilder` class is a test utility class for the purposes of reverse-engineering
-and generating possible user inputs for a given `Transaction`. With this class it would be now
-possible, with a given `Transaction` object, to generate a String that represents what a user
-might have input in order to be able to store that `Transaction.` This allows for the conversion
-of a `Transaction` from an Object to an equivalent user-input, in a way reverse-parsing the
-`Transaction`. Such a conversion would be beneficial for `FxRobot` which can use 
-`Transaction` data directly to emulate user input and "manually" enter commands into the
+The `UserInputBuilder` class is a test utility class for the purposes of generating possible
+user inputs for a given `Transaction`. With a given `Transaction` object, it become possible 
+to generate a `String` that represents what a user might have input in order to have
+stored that `Transaction.` This allows for the conversion of a `Transaction` object
+into an equivalent user-input. Such a conversion would be beneficial for `FxRobot` which can use 
+`Transaction` objects' data directly to emulate user input and enter commands into the
 `Command Box`.
 
 Given below is a snippet of the class, including one of its constructors. As you can see,
@@ -887,8 +886,8 @@ a `UserInputBuilder` object is created by taking in a `Transaction` as one of it
 
 ```java
 public class UserInputBuilder {
-
-    private static final String WHITESPACE = " ";
+    
+    ...
 
     private final Transaction transaction;
     private String userInput;
@@ -917,7 +916,7 @@ public UserInputBuilder withAllProperties() {
 }
 ```
 
-For each property `X`, the corresponding `addX()` method would append the appropriate `CliSyntax`
+For each property `X`, the corresponding `addX()` method would append the appropriate CLI 
 `PREFIX` for that property, and the property itself in a manner similar to what a user would
 have to input.
 ```java
@@ -941,8 +940,6 @@ public UserInputBuilder addCommand(CommandType command) {
     return this;
 }
 ```
-_Note: The term `addCommand` is used here instead of `addCommandWord` because the input parameter 
-`CommandType` enum consists of `Commands` themselves, which is not to be confused with the `Add Transactions Command`._
 
 The use for such a utility class is demonstrated below: 
 
@@ -963,8 +960,8 @@ public static List<String> getTestTransactionsAsUserInputs() {
     return userInputList;
 }
 ```
-_The above method belongs to a `TestDataUtil` class, in which the `getTestTransactions()` method
-returns a `Transaction[]` array consisting of a variety of test transactions._
+The above method belongs to another utility class, in which the `getTestTransactions()` method
+returns a `Transaction[]` array consisting of a variety of test transactions.
 
 
 ```java
@@ -976,8 +973,8 @@ returns a `Transaction[]` array consisting of a variety of test transactions._
         }
     ... 
 ```
-The output of the `getTransactionsAsUserInputs()` method is a List of Strings with each of them
-corresponding to the user input required to add that particular `Transaction`. This List can then
+The output of the `getTransactionsAsUserInputs()` method is a `List` of `Strings` with each of them
+corresponding to the user input required to add that particular `Transaction` into UniCa$h. This list can then
 be passed to `FxRobot` to emulate user input for a variety of transactions. A snippet of such 
 procedure is shown above.
 
@@ -988,11 +985,11 @@ procedure is shown above.
 The `StyleSheet` class serves as a centralized information source for visual elements for all
 UI components requiring some form of graphical representation. Within this class, preset colors are
 defined as constants, which can then be used by UI elements across UniCa$h. Thus, when these
-preset colors are modified, all UI elements will have a consistent change.
+preset colors are modified, all UI elements will have a consistent change across UniCa$h.
 
 In the future, given the extensibility and universality of the `StyleSheet` class, it is
 possible to allow the user to be able to choose their own themes for the app. Below is a snippet
-of constants from the `StyleSheet` class, used for text coloring and font styling.
+of constants from the `StyleSheet` class, used for text colour filling and font styling.
 
 ```java
 /* Text colour filling */
@@ -1007,12 +1004,12 @@ public static final String FONT_STYLE_REGULAR = "-fx-font-weight: normal";
 public static final String FONT_STYLE_ITALIC = "-fx-font-style: italic";
 ```
 
-**Hash-Based Category Coloring:** UniCa$h doesn't place a restriction on the maximum number of
-categories available in total, across the app. Thus, color coding each category was not possible,
+**Hash-Based Category Colouring:** UniCa$h doesn't place a restriction on the maximum number of
+categories available in total, across the app. Thus, colour coding each category was not possible,
 and a means for ensuring that unique categories (i.e. same case-insensitive name) have unique 
-colors needed to be devised. We found that using a category's hash code was the most optimal
+colours needed to be devised. We found that using a category's hash code was the most optimal
 solution and so a method that converts a category's hash code into a 6-digit hexademical RGB
-color code was created. To offset outlier values that resulted in dark colors with poor 
+colour code was created. To offset outlier values that resulted in dark colours with poor 
 legibility, a brightness offset function was also written, a modified snippet of that function
 is shown below.
 
@@ -1031,12 +1028,12 @@ is shown below.
         
 ```
 _The above function determines the average brightness based on the average values of the
-red, green, and blue colors, and an adjustment is made if this average falls below a certain
-threshold, and the threshold itself can be adjusted to achieve certain color complexities._
+red, green, and blue colours, and an adjustment is made if this average falls below a certain
+threshold, and the threshold itself can be adjusted to achieve certain colour complexities._
 
-The focus on color consistency and user experience across UniCa$h is motivated
+The focus on colour consistency and user experience across UniCa$h is motivated
 by certain scientific [studies](https://www.sciencedirect.com/science/article/abs/pii/S0167811623000599])
-that show a positive correlation between color complexity and user engagement.
+that show a positive correlation between colour complexity and user engagement.
 [This](https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1788177&dswid=-2283) study found certain
 design elements contribute to increased user engagement especially by young adults.
 The UI components are intended to increase user engagement with UniCa$h amongst our target users, who are
@@ -1646,15 +1643,7 @@ information on that command and provide instructions on how to run that command.
 
 This command will exit UniCa$h.
 
-### User Interface
-
-#### Summary Statistics
-
 [//]: # (#### etc)
-
-### Minor Features
-
-#### Hash-based coloring
 
 ---
 
