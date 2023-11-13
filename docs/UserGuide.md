@@ -746,7 +746,7 @@ thus, a transaction with the name `Lunch with friends outside` is still consider
 The find command, like get_total_expenditure, creates a filter on the `Transactions List`
 and this filter persists across commands.
 
-<br>Therefore, it is expected that any changes to the `Transactions List` after the `find` command
+<br><br>Therefore, it is expected that any changes to the `Transactions List` after the `find` command
 is used may result in transactions being hidden as they may no longer abide by the filter applied by `find`.
 
 <br>Use the `list` command when this occurs to reset the filter and view all transactions
