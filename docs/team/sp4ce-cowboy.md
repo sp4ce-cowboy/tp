@@ -65,7 +65,7 @@ explanations in the respective PRs.
   can be expanded to include the other properties in the future.
   _Note: The initial Find Command was implemented by [Jamie](https://github.com/jamz903)
   as mentioned [here](jamz903.md)_
-* **User Input Builder:** A utility class to facilitate emulation of user input during Ui Testing.
+
 
 **User Interface Features**
 
@@ -110,6 +110,7 @@ explanations in the respective PRs.
   ([1](https://www.sciencedirect.com/science/article/abs/pii/S0167811623000599),
   [2](https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1788177&dswid=-2283)) studies that show positive correlation between
   color complexity and target user engagement, which is also elaborated in the DG._
+* **User Input Builder:** A utility class to facilitate the emulation of user input by `FxRobot` during Ui Testing.
 
 
 **Decommissioned Features** (Some features that I had implemented prior but removed due to various constraints)
