@@ -65,6 +65,7 @@ explanations in the respective PRs.
   can be expanded to include the other properties in the future.
   _Note: The initial Find Command was implemented by [Jamie](https://github.com/jamz903)
   as mentioned [here](jamz903.md)_
+* **User Input Builder:** A utility class to facilitate emulation of user input during Ui Testing.
 
 **User Interface Features**
 
@@ -145,14 +146,14 @@ explanations in the respective PRs.
 * Developer Guide:
   * Migrated details of the DG from an external source (G Docs) and consolidated them in GitHub.
   * Set up DG skeleton for structured and convenient documentation by the team.
-  * Added documentation for own features (Delete, Clear, Reset, Find, Get, Help)
-  * Added documentation for UI and features (Command Box, Rolling Balance Indicator, Transactions Panel)
+  * Added documentation for own features (Delete, Clear, Reset, Find, Get) including UML diagrams.
+  * Added documentation for UI and UI features (Command Box, Rolling Balance Indicator, Transactions Panel)
 
 **Project Management & Team Tasks**
 * Created and initialized the CS2103-T16-3 organization on GitHub
 * Created a centralized meeting minutes repository for the team
 [here](https://docs.google.com/document/d/1EI2YeRjxt59N0oc0bauGXI06uFQLI_O54JJci_-JKGc/edit)
-* Created a testing branch for in UniCa$h
+* Created a test branch for convenient testing of UniCa$h by the team
 [PR: [#126](https://github.com/AY2324S1-CS2103-T16-3/tp/pull/126)]
 * Added a TestCommand for the above branch, intended for internal testing of UniCa$h.
 [PRs: [#126](https://github.com/AY2324S1-CS2103-T16-3/tp/pull/126)]
