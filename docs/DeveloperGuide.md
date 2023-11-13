@@ -72,6 +72,12 @@ Then, to contribute to the project, we recommend the following flow:
 
 This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 
+The UniCa$h App icon is an open source icon named "wallet", available for
+personal and commercial uses, sourced from [here](https://iconduck.com/icons/228311/wallet).
+
+UniCa$h uses the Inter font throughout, licensed under the Open Font License
+and available for personal and commercial uses, sourced from [here](https://fonts.google.com/specimen/Inter/about).
+
 ### Terminology
 
 | Term        | Meaning                                                                                                             |
