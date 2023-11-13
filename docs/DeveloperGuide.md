@@ -487,7 +487,7 @@ for features.
 
 When UniCa$h is first opened, by default, the UniCa$h welcome message will be displayed in
 the `Results Display`. This message can also be invoked with the `help` command which will
-be explained later on in the [User Guide](UserGuide.md). Below are the main User Interface
+be explained in the [User Guide](UserGuide.md#help). Below are the main User Interface
 (UI) components and features we have implemented in UniCa$h.
 
 ![img_2.png](images/unicash/UniCashUIAnnotated.png)
@@ -516,6 +516,7 @@ issues. Simply exit fullscreen mode to continue using UniCa$h as per normal.
 - The Help Window can be opened with the `F1` keyboard shortcut, which is also default to the original `AB-3`.
 - It can also be invoked with the `help` command, and doing so will populate
   the `Results Display` with the default UniCa$h Welcome Message.
+- Clicking on the `Copy URL` button will copy the URL to the clipboard.
 
 
 ![img_1.png](images/unicash/UniCashHelpWindow.png)
