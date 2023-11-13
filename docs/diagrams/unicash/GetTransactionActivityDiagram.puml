@@ -5,13 +5,13 @@ skinparam ActivityFontSize 15
 skinparam ArrowFontSize 12
 start
 
-: User enters delete_transaction command;
+: User enters get command;
 
 if () then ([else])
   :Parse exception thrown;
   stop
 else ([command argument is a valid number])
-  :Transaction successfully deleted ;
+  :Transaction successfully retrieved ;
 endif
 
 

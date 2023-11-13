@@ -4,7 +4,9 @@ skinparam ArrowFontStyle plain
 
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
-participant ":ClearTransactionsCommand" as ClearTransactionsCommand LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant ":ClearTransactionsCommandParser" as ClearTransactionsCommandParser LOGIC_COLOR
+participant "d:ClearTransactionsCommand" as ClearTransactionsCommand LOGIC_COLOR
 participant ":CommandResult" as CommandResult LOGIC_COLOR
 end box
 
@@ -15,14 +17,36 @@ end box
 [-> LogicManager : execute("clear_transactions")
 activate LogicManager
 
+LogicManager -> UniCashParser : parseCommand("clear_transactions")
+activate UniCashParser
+
+create ClearTransactionsCommandParser
+UniCashParser -> ClearTransactionsCommandParser
+activate ClearTransactionsCommandParser
+
+ClearTransactionsCommandParser --> UniCashParser
+deactivate ClearTransactionsCommandParser
+
+UniCashParser -> ClearTransactionsCommandParser : parse("")
+activate ClearTransactionsCommandParser
+
 create ClearTransactionsCommand
-LogicManager -> ClearTransactionsCommand
+ClearTransactionsCommandParser -> ClearTransactionsCommand
 activate ClearTransactionsCommand
 
-ClearTransactionsCommand --> LogicManager
+ClearTransactionsCommand --> ClearTransactionsCommandParser :
 deactivate ClearTransactionsCommand
 
-LogicManager -> ClearTransactionsCommand : execute()
+ClearTransactionsCommandParser --> UniCashParser :
+deactivate ClearTransactionsCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+ClearTransactionsCommandParser -[hidden]-> UniCashParser
+destroy ClearTransactionsCommandParser
+
+UniCashParser --> LogicManager :
+deactivate UniCashParser
+
+LogicManager -> ClearTransactionsCommand : execute(model)
 activate ClearTransactionsCommand
 
 ClearTransactionsCommand -> Model : setUniCash(new UniCash())
@@ -38,7 +62,7 @@ activate CommandResult
 CommandResult --> ClearTransactionsCommand
 deactivate CommandResult
 
-ClearTransactionsCommand --> LogicManager
+ClearTransactionsCommand --> LogicManager : command result
 deactivate ClearTransactionsCommand
 
 [<--LogicManager

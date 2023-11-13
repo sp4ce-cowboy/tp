@@ -1,0 +1,47 @@
+@startuml
+!pragma useVerticalIf on
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+start
+
+: User enters find command;
+
+if () then (
+
+[command not followed by any parameters])
+  :Error: Invalid command format;
+  stop
+
+
+elseif () then (
+
+
+
+[command followed by multiple
+instances of the same parameter])
+
+  :Error: Multiple values specified for single-valued field ;
+  stop
+
+elseif () then (
+
+
+[command followed by
+invalid parameters])
+
+  :Error: Invalid command format;
+  stop
+
+
+else (
+
+ [else]
+)
+  :Transaction retrieved successfully;
+
+endif
+
+stop
+
+@enduml

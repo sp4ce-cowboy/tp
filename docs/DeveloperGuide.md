@@ -170,7 +170,7 @@ For the following Use Cases (unless specified otherwise):
 **Use Case: UC01 - Adding a Transaction**
 
 **MSS:**
-1. User enters the command to add a transaction with the correct format.
+1. User enters the command to add a transaction.
 2. User submits the request.
 3. UniCa$h adds the transaction to the transactions list and displays success message.
     
@@ -185,29 +185,11 @@ For the following Use Cases (unless specified otherwise):
   - 2b2. User confirms the request
   - Use case resumes at step 3.
 
-**Use Case: UC02 - Finding a Transaction**
+
+**Use Case: UC02 - Delete a transaction**
 
 **MSS:**
-1. User enters the command to find a transaction with the correct format.
-2. User submits the request.
-3. UniCa$h filters all the transactions based on the specified filters and returns
-the filtered transaction with a success message.
-
-   Use Case ends
-
-**Extensions**
-- 2a. User enters an incorrect format.
-  - 1a1. UniCa$h displays an error message with the correct command format.
-  - Use case resumes at step 1.
-
-- 3a. UniCa$h does not find any results matching the filter.
-  - 3a1. UniCa$h displays a message saying no results found.
-  - Use Case resumes at step 1
-
-**Use Case: UC03 - Delete a Transaction**
-
-**MSS:**
-1. User enters the command to delete a transaction with the correct format.
+1. User enters the command to delete a transaction.
 2. User submits the request.
 3. UniCa$h finds the transaction based on the passed in arguments.
 4. UniCa$h deletes the transaction.
@@ -220,11 +202,7 @@ the filtered transaction with a success message.
     - 2a1. UniCa$h displays an error message with the correct command format.
     - Use case resumes at step 1.
 
-- 3a. UniCa$h does not find any transactions matching the provided arguments.
-    - 3a1. UniCa$h displays a message saying no results found.
-    - Use Case resumes at step 1
-
-**Use Case: UC04 - Editing a Transaction**
+**Use Case: UC03 - Editing a Transaction**
 
 **MSS:**
 1. User enters the command to edit an existing transaction's fields.
@@ -248,10 +226,10 @@ the filtered transaction with a success message.
     - Use case resumes at step 1.
 
 
-**Use Case: UC05 - Listing all Transactions**
+**Use Case: UC04 - Listing all Transactions**
 
 **MSS:**
-1. User enters the command to list all transactions with the correct format (i.e. no parameters).
+1. User enters the command to list all transactions.
 2. User submits the request.
 3. UniCa$h retrieves the list of all transactions and displays them for the User.
 
@@ -266,10 +244,11 @@ the filtered transaction with a success message.
     - 3a1. UniCa$h displays no transactions, and informs the user that all transactions have been retrieved. 
     - Use Case ends.
 
-**Use Case: UC06 - Finding a Transaction**
+
+**Use Case: UC05 - Finding a Transaction**
 
 **MSS:**
-1. User enters the command to find transaction with the correct format.
+1. User enters the command to find transactions.
 2. User submits the request.
 3. UniCa$h filters the transactions based on the specified filters and returns the filtered list of expenses with a success message.
 
@@ -278,16 +257,10 @@ the filtered transaction with a success message.
 **Extensions**
 - 2a. User enters an incorrect format.
     - 2a1. UniCa$h displays an error message, requests for correct format.
-    - 2a2. User enters command with new format.
-    Steps 2a1-2a2 are repeated until the format entered is correct.
+    - Use case resumes from Step 1.
 
-    Use case resumes from Step 3.
-
-- 3a. UniCa$h does not find any results matching the filter.
-    - 3a1. UniCa$h displays a message informing the user that no results were found.
-    - Use Case ends.
-
-**Use Case: UC07 - Get Total Expenditure**
+  
+**Use Case: UC05 - Get Total Expenditure**
 
 **MSS:**
 1. User enters the command to get the total expenditure.
@@ -303,26 +276,39 @@ the filtered transaction with a success message.
     - 2a1. UniCa$h displays an error message, requests for command to be re-entered.
     - Use case resumes at step 1
 
-**Use Case: UC08 - Clear All Transactions**
+
+**Use Case: UC06 - Clear all transactions**
 
 **MSS:**
-1. User enters the command to clear all transactions with the correct format. (i.e. no parameters)
+1. User enters the command to clear all transactions.
 2. User submits the request.
 3. UniCa$h deletes all transactions in the transactions list.
 4. UniCa$h displays success message.
 
-   Use Case ends
+   Use Case ends.
 
 **Extensions**
 - 2a. User enters an incorrect format.
   - 2a1. UniCa$h displays an error message with the correct command format.
   - Use case resumes at step 1.
 
-- 3a. UniCa$h finds an empty transactions list.
-  - 3a1. UniCa$h displays a message saying that transactions list is empty.
-  - Use Case resumes at step 1
+**Use Case: UC07 - Reset UniCa$h**
 
-**Use Case: UC09 - Show Summary Statistics**
+**MSS:**
+1. User enters the command to reset UniCa$h.
+2. User submits the request.
+3. UniCa$h restores all transactions in the transactions list to the default transactions
+4. UniCa$h displays success message.
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
+
+**Use Case: UC08 - Show Summary Statistics**
 
 **MSS:**
 1. User enters the command to get the summary for their expenses.
@@ -338,28 +324,29 @@ the filtered transaction with a success message.
     - 2a1. UniCa$h displays a prompt informing the user that there are no expenses available.
     - Use case ends.
 
-**Use Case: UC10 - Show UniCa$h Help**
+**Use Case: UC09 - Show UniCa$h Help**
 
 **MSS:**
-1. User enters the command to show help with the correct format. (i.e. no parameters)
+1. User enters the command to show help.
 2. User submits the request.
-3. UniCa$h displays help message in the help window.
+3. UniCa$h opens help window with link to User Guide
+4. UniCa$h displays the default welcome message with overview of commands
 
-   Use Case ends
+   Use Case ends.
 
 **Extensions**
 - 2a. User enters an incorrect format.
   - 2a1. UniCa$h displays an error message with the correct command format.
   - Use case resumes at step 1.
 
-**Use Case: UC11 - Exit UniCa$h**
+**Use Case: UC10 - Exit UniCa$h**
 
 **MSS:**
-1. User enters the command to exit UniCa$h with the correct format (i.e. no parameters)
+1. User enters the command to exit UniCa$h.
 2. User submits the request. 
 3. UniCa$h displays exit message and application closes
 
-   Use Case ends
+   Use Case ends.
 
 **Extensions**
 - 2a. User enters an incorrect format.
@@ -367,7 +354,7 @@ the filtered transaction with a success message.
   - Use case resumes at step 1.
 
 
-**Use Case: UC12 - Set Budget**
+**Use Case: UC11 - Set Budget**
 
 **MSS:**
 1. User enters the command to set the budget.
@@ -387,7 +374,7 @@ the filtered transaction with a success message.
   - 4a1. UniCa$h replaces existing budget with new one.
   - Use case resumes at step 5.
 
-**Use Case: UC13 - Clear Budget**
+**Use Case: UC12 - Clear Budget**
 
 **MSS:**
 1. User enters the command to clear the budget.
@@ -404,7 +391,7 @@ the filtered transaction with a success message.
     - Use case ends.
 
 
-**Use Case: UC14 - Get Budget**
+**Use Case: UC13 - Get Budget**
 
 **MSS:**
 1. User enters the command to get the budget.
@@ -420,6 +407,21 @@ the filtered transaction with a success message.
     - 3a1. UniCa$h displays a prompt to create a budget first.
     - Use case ends.
 
+**Use Case: UC14 - Retrieve a transaction**
+
+**MSS:**
+1. User enters the command to retrieve (i.e. `get`) a transaction.
+2. User submits the request.
+3. UniCa$h retrieves the transaction based on the passed in arguments.
+4. UniCa$h displays expanded details of that transaction
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
 ---
 
 ## Design Overview
@@ -430,7 +432,8 @@ the filtered transaction with a success message.
 
 The architecture for UniCa$h leverages the existing architecture from AB3 and extends several components like supporting storage of transactions and the budget.
 
-### UI Component
+
+### User Interface (UI) Component
 
 UniCa$h is a Graphical User Interface (GUI) application, built using JavaFX. The following section describes the
 implementation of the various UI components in UniCa$h.
@@ -441,7 +444,7 @@ UniCa$sh consists of the following UI components:
 2. Help Window
 3. Statistics / Budget Window
 
-<img src="images/unicash/UiClassDiagram.png" width="404" />
+<img src="images/unicash/UiClassDiagram.png" width="800" />
 
 In this section, we will be going through the implementation of the main window.
 
@@ -454,7 +457,10 @@ the user with the ability to type their commands into the application.
 
 For the transaction list pane, we have a custom `TransactionListPanel` class that is a `ListView` to
 provide the user with a scrollable list of transactions. This view is updated whenever the user executes
-commands that modify the transaction list. (i.e. `add`, `delete`, `edit`, `clear`)
+commands that modify the transaction list. (i.e. `add`, `delete`, `edit`, `clear`). This `ListView` is displayed
+in a reverse scrolling manner so that the  user's most recent transactions will be added to the top of the
+`TransactionListPanel`, right below the `CommandBox`, so that the user will have immediate feedback after adding
+a transaction via text input into the `CommandBox`.
 
 For the command results pane, we have a custom `ResultDisplay` class. This pane displays the results of the
 user's command execution. This view is updated whenever the user executes commands that modify the transaction.
@@ -476,6 +482,146 @@ TransactionCard is specified in`TransactionCard.fxml`)
 The `UI` component is also responsible for:
 - executing commands using the `Logic` component, through the `executeCommand` method
 - listening for changes to the `Model` component, through the `listenToModelChanges` method
+
+### UI Layout
+
+UniCa$h is designed with users who prefer to use the keyboard in mind. Thus, almost all
+user input is designed for CLI-type usage, i.e. text-based keyboard input, and User Interface
+elements are intended to either supplement this main functionality, or provide graphical support
+for features.
+
+When UniCa$h is first opened, by default, the UniCa$h welcome message will be displayed in
+the `Results Display`. This message can also be invoked with the `help` command which will
+be explained in the [User Guide](UserGuide.md#help). Below are the main User Interface
+(UI) components and features we have implemented in UniCa$h.
+
+![img_2.png](images/unicash/UniCashUIAnnotated.png)
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The commands and inputs used for the purposes of demonstrating certain UI features are explained fully
+in the [User Guide](UserGuide.md) **Where applicable, consider those explanations as the single source of
+authority for those commands, as the representation here is merely for UI demonstration purposes only.**
+</div>
+
+#### UniCa$h Main Window
+
+- The Main Window in UniCa$h is resizeable, but has a minimum size enforced of `850 x 620`
+- The Menu bar contains the `File` and `Help` menus, of which `Help` can be opened with the
+  `F1` keyboard shortcut, which is also default to the original `AB-3`.
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+On macOS, using UniCa$h in fullscreen will sometimes cause the Summary Window and
+Help Window to also open in fullscreen, however this is an expected behaviour caused by
+macOS's window management style, and cannot be overridden, but does not cause any functional
+issues. Simply exit fullscreen mode to continue using UniCa$h as per normal. 
+</div>
+
+#### UniCa$h Help Window
+
+- The Help Window can be opened with the `F1` keyboard shortcut, which is also default to the original `AB-3`.
+- It can also be invoked with the `help` command, and doing so will populate
+  the `Results Display` with the default UniCa$h Welcome Message.
+- Clicking on the `Copy URL` button will copy the URL to the clipboard.
+
+
+![img_1.png](images/unicash/UniCashHelpWindow.png)
+
+
+#### Command Box
+- The `Command Box` is the primary means by which the user interacts actively with the application.
+- The user types specific inputs into the `Command Box` and presses `ENTER` after typing to "communicate" with UniCa$h.
+- Given that our application is targeted for users who prefer CLI-type text input interaction, the `Command Box`
+  is configured such that it can remember up to `10` latest user inputs.
+    - When a user presses `ENTER` on any input, the input is stored regardless of its validity.
+    - These inputs can be traversed through with the `UP` and `DOWN` arrow keys on the keyboard.
+    - Only the `10` most recent inputs are stored by the `Command Box`
+- At any point in time, the user can press the `ESC` to empty the current text field in the `Command Box`
+
+<div class="callout callout-info" markdown="span">
+The mouse cursor being too close to the menu can occasionally trigger the JavaFX built-in
+cursor control functionality that allows arrows keys to be used for navigating the menu bar. 
+If it happens, simply move your mouse cursor away from the menu bar and click on the `Command Box`
+to continue.
+</div>
+
+
+#### Transactions List
+- Each transaction stored in UniCa$h is displayed in the `Transactions List`.
+- The entire `Transactions List` will be displayed by default upon start-up.
+- Certain commands like `find` might limit the `Transactions List` to a particular configuration
+  which can be reversed with the `list` command to show the full list.
+- Transactions added will immediately appear at the top of the `Transactions List`, and this is to
+  provide immediate response to the user as they will be able to see their most recently input
+  transaction right away.
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The most recent transactions appear at the top of the `Transactions List` as the
+`Transactions List` is ordered by the time at which the user inputs the transaction, not the
+actual date and time associated with that particular transaction.
+</div>
+
+#### Transaction Card
+- The `Transactions List` contains individual `Transaction Cards`, each corresponding to
+  a single `Transaction` and they look like this:
+
+<img src="images/unicash/TransactionCardAnnotated.png" width="450">
+
+- **Transaction Index (or ID/Number):** All terms used synonymously to refer to the number shown on the left partition of the blue box.
+    - Transactions are not inherently indexed, the index values refer to the position of the
+      Transaction on the `Transactions List`
+    - Thus, index values are not static - depending on the configuration of currently displayed
+      `Transactions List`, this number might change.
+- **Transaction Name:** The name of the given transaction, shown on the right partition of the blue box.
+- **Transaction Date & Time:** The date & time assigned to the transaction, shown inside the pink box.
+- **Transaction Location:** The location assigned to the transaction, shown inside the red box.
+- **Transaction Categories:** The category/categories assigned to the transaction, shown inside the yellow box.
+  This can be empty if the transaction has no categories assigned to it.
+- **Transaction Amount:** The expense or income assigned to the transaction, shown inside the black box.
+    - _Given that `0.00` is a valid amount, its display colour and magnitude sign will depend
+      on the type of transaction only._
+
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+
+Certain properties above (such as name, location, categories and amount)
+are allowed values that exceed the UI's capacity to display them fully.
+
+<br><br><img align="center" src="images/unicash/TransactionCardFull.png" width="450">
+
+<br><br> This effect is accounted for as we do not wish to limit the user to arbitrary
+lengths. Thus, the `get` command is available to retrieve the full, expanded details
+of these transactions and display them in the `Results Display` component.
+</div>
+
+
+#### Results Display
+
+- The `Results Display` is the primary means by which UniCa$h "responds" back
+  to the user via text output.
+- The `Results Display` can be scrolled if the text output displayed is too long.
+
+#### Data Source Indicator
+
+- The `Data Source Indicator` shows the location of the current UniCa$h storage file.
+
+
+#### Rolling Balance Indicator
+
+- The `Rolling Balance Indicator` shows the net sum (i.e. `total income - total expense`)
+  for the **currently displayed** `Transactions List`.
+- For example, if the input `find n/friends` was used to find transactions whose names
+  contain the keyword `friends`, the `Transactions List` would be updated to
+  only show matching transactions and likewise the `Rolling Balance Indicator`
+  would reflect the net sum for these group of transactions **only**.
+- As UniCa$h starts up with the full `Transactions List` by default, the
+  `Rolling Balance Indicator` would likewise show the net sum of all transactions in UniCa$h
+  at start-up.
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+Unlike the color of the amount of a transaction in the `Transactions List`, the color of
+the `Rolling Balance Indicator` will change based on whether the net sum is positive (green)
+or negative (red) or zero (black).
+</div>
 
 ### Logic Component
 
@@ -730,9 +876,177 @@ These changes work around the limitation of Linux and MacOS runners on Github Ac
 
 By introducing UI testing into the code coverage reporting, we have been able to achieve a code coverage of > 90%!
 
-### General Classes and Components
+#### User Input Builder
 
-#### StyleSheet
+The `UserInputBuilder` class is a test utility class for the purposes of generating possible
+user inputs for a given `Transaction`. With a given `Transaction` object, it becomes possible 
+to generate a `String` that represents what a user might have input in order to have
+stored that `Transaction.` This allows for the conversion of a `Transaction` object
+into an equivalent user-input. Such a conversion would be beneficial for `FxRobot` which can use 
+`Transaction` objects' data directly to emulate user input and enter commands into the
+`Command Box`.
+
+Given below is a snippet of the class, including one of its constructors. As you can see,
+a `UserInputBuilder` object is created by taking in a `Transaction` as one of its parameters.
+
+```java
+public class UserInputBuilder {
+    
+    ...
+
+    private final Transaction transaction;
+    private String userInput;
+
+    
+    public UserInputBuilder(Transaction transaction) {
+        requireNonNull(transaction);
+        this.transaction = transaction;
+        userInput = "";
+
+    }
+```
+
+The code snippet below shows the `withAllProperties()` method in this class that uses the 
+encapsulated `Transaction` object to generate a concatenated string of possible user inputs.
+
+```java
+public UserInputBuilder withAllProperties() {
+        return new UserInputBuilder(transaction)
+                .addName()
+                .addAmount()
+                .addType()
+                .addLocation()
+                .addDateTime()
+                .addCategories();
+}
+```
+
+For each property `X`, the corresponding `addX()` method would append the appropriate CLI 
+`PREFIX` for that property, and the property itself in a manner similar to what a user would
+have to input.
+```java
+public UserInputBuilder addName() {
+    userInput = userInput + WHITESPACE + PREFIX_NAME + transaction.getName();
+
+    return this;
+}
+```
+Not all properties are relevant for every command, therefore each property's relevant `add()`
+method can be used individually to form a user input string instead of using the `withAllProperties`
+method.
+
+Optionally, a `COMMAND WORD` can also be prefixed to the
+userInput as shown below, taking the `CommandType` enum itself as the input parameter. 
+
+```java
+public UserInputBuilder addCommand(CommandType command) {
+    userInput = command.getMainCommandWord() + WHITESPACE + userInput;
+
+    return this;
+}
+```
+
+The use for such a utility class is demonstrated below: 
+
+
+```java
+public static List<String> getTestTransactionsAsUserInputs() {
+    ArrayList<String> userInputList = new ArrayList<>();
+    
+    for (Transaction transaction : getTestTransactions()) {
+        String userInput = new UserInputBuilder(transaction)
+                .withAllProperties()
+                .addCommand(CommandType.ADD_TRANSACTION)
+                .toString();
+
+        userInputList.add(userInput);
+
+    }
+    return userInputList;
+}
+```
+The above method belongs to another utility class, in which the `getTestTransactions()` method
+returns a `Transaction[]` array consisting of a variety of test transactions.
+
+
+```java
+    ...
+        for (String userInput : getTestTransactionsAsUserInputs()) {
+            robot.clickOn("#commandBoxPlaceholder");
+            robot.write(userInput);
+            robot.type(KeyCode.ENTER);
+        }
+    ... 
+```
+The output of the `getTransactionsAsUserInputs()` method is a `List` of `Strings` with each of them
+corresponding to the user input required to add that particular `Transaction` into UniCa$h. This list can then
+be passed to `FxRobot` to emulate user input for a variety of transactions. A snippet of such 
+procedure is shown above.
+
+### Support Classes and Components
+
+#### StyleSheet Class
+
+The `StyleSheet` class serves as a centralized information source for visual elements for all
+UI components requiring some form of graphical representation. Within this class, preset colors are
+defined as constants, which can then be used by UI elements across UniCa$h. Thus, when these
+preset colors are modified, all UI elements will have a consistent change across UniCa$h.
+
+In the future, given the extensibility and universality of the `StyleSheet` class, it is
+possible to allow the user to be able to choose their own themes for the app. Below is a snippet
+of constants from the `StyleSheet` class, used for text colour filling and font styling.
+
+```java
+/* Text colour filling */
+public static final String TEXT_FILL_RED = "-fx-text-fill: red";
+public static final String TEXT_FILL_GREEN = "-fx-text-fill: green";
+public static final String TEXT_FILL_BLACK = "-fx-text-fill: black";
+public static final String TEXT_FILL_WHITE = "-fx-text-fill: white";
+
+/* Font styling */
+public static final String FONT_STYLE_BOLD = "-fx-font-weight: bold";
+public static final String FONT_STYLE_REGULAR = "-fx-font-weight: normal";
+public static final String FONT_STYLE_ITALIC = "-fx-font-style: italic";
+```
+
+**Hash-Based Category Colouring:** UniCa$h doesn't place a restriction on the maximum number of
+categories available in total, across the app. Thus, colour coding each category was not possible,
+and a means for ensuring that unique categories (i.e. same case-insensitive name) have unique 
+colours needed to be devised. We found that using a category's hash code was the most optimal
+solution and so a method that converts a category's hash code into a 6-digit hexademical RGB
+colour code was created. To offset outlier values that resulted in dark colours with poor 
+legibility, a brightness offset function was also written, a modified snippet of that function
+is shown below.
+
+```java
+
+  int r = Integer.parseInt(...);
+  int g = Integer.parseInt(...);
+  int b = Integer.parseInt(...);
+    
+  int avg = (r + g + b) / 3;
+    
+  if (avg < BRIGHTNESS_THRESHOLD) {
+  r = adjustBrightness(r);
+  g = adjustBrightness(g);
+  b = adjustBrightness(b);
+        
+```
+_The above function determines the average brightness based on the average values of the
+red, green, and blue colour values, and an adjustment is made if this average falls below a certain
+threshold, and the threshold itself can be adjusted to achieve certain colour complexities._
+
+The focus on colour consistency and user experience across UniCa$h is motivated
+by certain scientific [studies](https://www.sciencedirect.com/science/article/abs/pii/S0167811623000599])
+that show a positive correlation between colour complexity and user engagement.
+[This](https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1788177&dswid=-2283) study found certain
+design elements contribute to increased user engagement especially by young adults.
+The UI components are intended to increase user engagement with UniCa$h amongst our target users, who are
+mostly young adults. This would consequently lead to improvement in personal financial management.
+Thus, even though these are not CLI features directly, they nonetheless benefit our target users
+and support our value proposition indirectly.
+
+
 
 #### Command Usage Message Builder
 
@@ -808,7 +1122,7 @@ For more details on the constraints of each property of `Transaction`, refer to 
 
 #### Add Transaction
 
-##### Overview
+**Overview**
 
 The `add_transaction` command adds a new `Transaction` to the `TransactionList` in UniCash.
 
@@ -840,7 +1154,7 @@ a specified value of 5 in the `UniqueCategoryList` class. Else, a `ParserExcepti
 
 #### Get Total Expenditure
 
-##### Overview
+**Overview**
 
 The `get_total_expenditure` command returns the total expenditure across a given month among all `expense` transactions in UniCa$h, with optional filters for a given category and year.
 
@@ -886,45 +1200,44 @@ The category is a single filter that is matched in a case-insensitive manner
 
 #### Delete Transaction
 
-##### Overview
+**Overview**
 
-The `DeleteCommand` function deletes an existing `Transaction` from `TransactionList` in UniCash.
+The `delete_transaction` command deletes an existing `Transaction` from the `TransactionList` in UniCa$h.
 
 The activity diagram of deleting a Transaction is as shown below
 
-<img src="images/unicash/DeleteTransactionActivityDiagram.png" width="600" />
+<img src="images/unicash/diagrams/DeleteTransactionActivityDiagram.png" width="500" />
 
 The following sequence diagram shows the interaction between different components of UniCash.
 
-<img src="images/unicash/DeleteTransactionSequenceDiagram.png" width="1200" />
+<img src="images/unicash/diagrams/DeleteTransactionSequenceDiagram.png" width="1200" />
 
 The above sequence diagram omits details on the filtering of `TransactionList` and assumes that
 the displayed `TransactionList` is showing all transactions. However, the logic of the `DeleteCommand`
 remains the same for all list deletion.
 
-ℹ️ **Note:** The lifeline for `DeleteTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML,
-the lifeline reaches the end of diagram.
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+**Note:** The lifeline for `DeleteTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
 
-##### Details
+**Details**
 
-1. The user specifies the transaction to be deleted by stating the integer index of the transaction to be deleted.
-2. The input will be parsed by `DeleteTransactionCommandParser` and if the provided input is invalid, `ParseException` will be thrown,
-   and the user is prompted to enter the command again with the correct input.
-3. If the input is valid, an `Index` object is created with the given input integer, and passed into `DeleteTransactionCommand` to be executed
+1. The user specifies the transaction to be deleted by stating the appropriate index of the transaction to be deleted.
+2. The input will be parsed by `DeleteTransactionCommandParser` and if the provided index is invalid, `ParseException` will be thrown,
+   and the user is prompted to enter the command again with the valid index.
+3. If the input is valid, an `Index` object is created with the given input index, and passed into `DeleteTransactionCommand` to be executed
    by `LogicManager`
-4. `LogicManger` will invoke the `execute` method of `DeleteTransactionCommand` which will delete the `Transaction` from UniCash.
+4. `LogicManger` will invoke the `execute` method of `DeleteTransactionCommand` which will delete the `Transaction` from UniCa$h.
 
-It is important to take note that when the user input is parsed, it is based on the currently displayed `TransactionList` inside
-`TransactionListPanel`. This means that even if a `TransactionList` contains `10` transactions, given a specific nominally valid
-number like `7`, it can still throw a `ParseException` if the shown `TransactionList` contains less than `7` items. This feature is
-intentional, as the User is able to, for example, `find` a particular group of transaction and immediately delete those transactions
-by just looking at their displayed index number without having to refer to an external identifier of that transaction. UniCash will
-automatically handle the visual ordering and representation of transactions with the `TransactionsListPanel` in the UI. The details
-and diagrams for this part will be elaborated further in the UI section (and other relevant sections) of this Developer Guide.
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+You can refer to the `INDEX` constraints in [command breakdown's Argument Types section](UserGuide.md#argument-types) in the User Guide.
+You can also refer to the [UI Layout's Transaction Card section](#transaction-card) to learn about the transaction index values that
+can change based on the current `Transactions List` configuration.
+</div>
 
 #### Edit Transaction
 
-##### Overview
+**Overview**
 
 The `edit_transaction` command edits an existing `Transaction` from the `TransactionList` in UniCa$h.
 
@@ -936,7 +1249,7 @@ The following sequence diagram shows how the different components of UniCa$h int
 **Note:** The lifeline for `EditTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
-##### Details
+**Details**
 
 1. The user specifies the transaction to be edited by first stating the (one-based) index of the transaction they want to edit. This
    is followed by listing the fields and updated values that they would like to edit.
@@ -955,6 +1268,174 @@ The following sequence diagram shows how the different components of UniCa$h int
 Although all fields can be edited, the `Name`, `Amount`, and `Type` fields cannot be left blank. The constraints laid
 out in the **Add Transaction** section above also remain.
 </div>
+
+
+#### Clear Transactions
+
+**Overview**
+
+The `clear_transactions` command deletes all existing `Transactions` from `TransactionList` in UniCash.
+
+The activity diagram of clearing all transactions is as shown below
+
+<img src="images/unicash/diagrams/ClearTransactionsActivityDiagram.png" width="450" />
+
+The following sequence diagram shows the interaction between different components of UniCa$h.
+
+<img src="images/unicash/diagrams/ClearTransactionsSequenceDiagram.png" width="800" />
+
+
+**Details**
+
+1. The user inputs the command to clear all transactions
+2. The input will be parsed by `ClearTransactionsCommandParser` and if the provided input is
+invalid (i.e. trailing arguments) `ParseException` will be thrown, and the 
+user is prompted to enter the command again with the correct input. 
+3. If the input is valid, a `ClearTransactionsCommand` object is created to be executed by `LogicManager`
+4. `LogicManager` will invoke the `execute` method of `ClearTransactionsCommand`
+   which will invoke the `Model` object to be set with a new `UniCash` object, which
+   would contain an empty `TransactionList`.
+
+Here, it must be noted that unlike `DeleteTransactionCommand`, individual transactions in the `TransactionList`
+are not deleted singularly. As opposed to iteratively deleting each transaction in the `TransactionList`, the more
+efficient way to achieve the same effect would be to simply set the `Model` contained in `LogicManager` to a new
+`UniCash` object, as the newly created `UniCash` object would now have an empty `TransactionList` encapsulated within.
+This emulates the deletion of all transactions in the `TransactionList`.
+
+#### Get Transaction
+
+**Overview**
+
+The `get` command retrives an existing `Transaction` from `TransactionList` in UniCa$h.
+
+The activity diagram of retrieving a Transaction is as shown below
+
+<img src="images/unicash/diagrams/GetTransactionActivityDiagram.png" width="500" />
+
+The following sequence diagram shows the interaction between different components of UniCa$h.
+
+<img src="images/unicash/diagrams/GetTransactionSequenceDiagram.png" width="1200" />
+
+The above sequence diagram omits details on the filtering of `TransactionList` and assumes that
+the displayed `TransactionList` is showing all transactions. However, the logic of the `GetCommand`
+remains the same for all transaction retrieval.
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+**Note:** The lifeline for `GetCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+**Details**
+
+1. The user specifies the transaction to be retrieved by stating the appropriate index of the transaction.
+2. The input will be parsed by `GetCommandParser` and if the provided input is invalid, `ParseException` will be thrown,
+   and the user is prompted to enter the command again with the correct input.
+3. If the input is valid, an `Index` object is created with the given input integer, and passed into `GetCommand` to be executed
+   by `LogicManager`
+4. `LogicManger` will invoke the `execute` method of `GetCommand` which will retrieve the `Transaction` from UniCa$h.
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+You can refer to the `INDEX` constraints in [command breakdown's Argument Types section](UserGuide.md#argument-types) in the User Guide.
+You can also refer to the [UI Layout's Transaction Card section](#transaction-card) to learn about the transaction index values that
+can change based on the current `Transactions List` configuration.
+</div>
+
+#### Reset UniCa$h
+
+**Overview**
+
+The `reset_unicash` command overwrites the `TransactionList`with the default
+UniCa$h `Transactions`. 
+
+The activity diagram of resetting UniCa$h is as shown below
+
+<img src="images/unicash/diagrams/ResetUniCashActivityDiagram.png" width="450" />
+
+The following sequence diagram shows the interaction between different components of UniCa$h.
+
+<img src="images/unicash/diagrams/ResetUniCashSequenceDiagram.png" width="800" />
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+**Note:** The lifeline for `ResetCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+
+**Details**
+
+1. The user inputs the command to reset UniCa$h.
+2. The input will be parsed by `ResetCommandParser` and if the provided input is
+   invalid (i.e. trailing arguments) `ParseException` will be thrown, and the
+   user is prompted to enter the command again with the correct input.
+3. If the input is valid, a `ResetCommand` object is created to be executed by `LogicManager`
+4. `LogicManager` will invoke the `execute` method of `ResetCommand`
+   which will invoke the `Model` object to be set with a sample `UniCash` object which would
+   contain a `TransactionList` populated with sample Transaction data.
+
+<div class="callout callout-info" markdown="span">
+It must be noted here that resetting UniCa$h to its original state refers to overwriting
+the internal `Transactions List` with the original transactions only, and does not refer to
+clearing any contained `budgets`
+</div>
+
+#### Find Transactions
+
+**Overview**
+
+The `find` command searches UniCa$h for `Transactions` that match the input search parameters.
+
+The activity diagram of finding transactions in UniCa$h is as shown below
+
+<img src="images/unicash/diagrams/FindTransactionsActivityDiagram.png" width="400" />
+
+The following sequence diagram shows the interaction between different components of UniCa$h
+during the sequence of processing and execution of the `find` command
+
+<img src="images/unicash/diagrams/FindTransactionsSequenceDiagram.png" width="800" />
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+**Note:** The lifeline for `FindCommandParser` should end at the destroy marker (X) but due to a
+limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
+
+
+**Details**
+
+1. The user inputs the command to search for transactions with specified parameters
+2. The input will be parsed by `FindCommandParser` and if the provided input is
+   invalid, `ParseException` will be thrown, and the user is prompted to enter the 
+command again with the correct input. 
+   - _You can refer to the User Guide for the input constraints for the `find` command [here](UserGuide.md#find-transactions)._
+3. If the input is valid, a `FindCommand` object containing a `Predicate<Transaction>` 
+is created by `FindCommandParser` to be executed by `LogicManager`
+4. `LogicManager` will invoke the `execute` method of `FindCommand`
+   which will invoke the `Model` property to update its filtered transactions list
+according to the predicate contained inside `FindCommand`.
+
+**Notes**
+- Every transaction property that can be searched with the `find` command contains an associated property predicate._
+- For the `find` command, these predicates are "composed" by the `TransactionContainsAllKeywordsPredicate` class.
+- This class simulates a composed predicate that represents a short-circuiting logical `AND` of all property
+predicates. 
+    - Encapsulated within the class is a list of transaction predicates.
+    - The overriding `test` method returns true only if the input `Transaction` 
+matches all predicates in this list, and a snippet of it is shown below.
+
+  ```java
+    public boolean test(Transaction transaction) {
+     if (predicateList.isEmpty()) {
+         return false;
+     }
+
+     return predicateList.stream()
+             .allMatch(predicate -> predicate.test(transaction));
+    }
+  ```
+
+- In summary, the `FindCommandParser` is responsible for parsing the user input and "converting" each input
+into the associated property predicate, and then creating the `FindCommand` object itself with
+the above-mentioned composed predicate class.
+
+
+
 
 ### Budget Management
 
@@ -1155,49 +1636,16 @@ expenses available or not. Also, the `showSummary` parameter will be set to `fal
 
 ### General Utility
 
-#### Clear Transactions
-
-##### Overview
-
-The `ClearTransactionsCommand` deletes all existing `Transactions` from `TransactionList` in UniCash.
-
-The activity diagram of clearing all transactions is as shown below
-
-<img src="images/unicash/ClearTransactionsActivityDiagram.png" width="400" />
-
-The following sequence diagram shows the interaction between different components of UniCash.
-
-<img src="images/unicash/ClearTransactionsSequenceDiagram.png" width="800" />
-
-**Note:** Given that `ClearTransactionsCommand` takes in no arguments, it does not have an associated Parser class
-like the other `Command` classes. This is currently the case, however, given that the command entirely erases the
-existing Unicash, a `ClearTransactionsCommandParser` is proposed to be implemented at a later date to ensure an
-additional layer of safety for the User.
-
-##### Details
-
-1. The user inputs the command to reset unicash
-2. A `ClearTransactionsCommand` object is created with no arguments.
-3. `LogicManager` will invoke the `execute` method of `ClearTransactionsCommand`
-   which will replace the existing `Model` property with a new `UniCash` object which
-   would contain an empty `TransactionList`.
-
-Here, it must be noted that unlike `DeleteTransactionCommand`, individual transactions in the `TransactionList`
-are not deleted singularly. As opposed to iteratively deleting each transaction in the `TransactionList`, the more
-efficient way to achieve the same effect would be to simply set the `Model` contained in `LogicManager` to an new
-`UniCash` object, as the newly created `UniCash` object would now have an empty `TransactionList` encapsulated within.
-This emulates the iterative deletion of all transactions in the `TransactionList`.
-
 #### Help 
 
-##### Overview
+**Overview**
 
 The `help` command can be used in 2 different ways.
 
 1. `help` with no arguments.
 2. `help COMMAND_WORD` with 1 argument containing a command word.
 
-##### Details
+**Details**
 
 1. `help`
 
@@ -1214,13 +1662,8 @@ information on that command and provide instructions on how to run that command.
 
 This command will exit UniCa$h.
 
-### User Interface
 
 [//]: # (#### etc)
-
-### Minor Features
-
-#### Hash-based coloring
 
 ---
 
@@ -1262,10 +1705,6 @@ Although we were able to loosely reference the existing code from AB3 to build t
 We had to alter `ModelManager` and `UniCash` to contain the relevant `Transaction` and `Budget` information. This involved adding additional methods to handle transaction and budget management. `UniCashStorage` was created to support persisting the transaction and budget data to a file. For this, we had to create `JsonAdaptedX` versions of the models like `Transaction`, `Budget`, and `Category` to ensure that the user's data would be safely written to and reliably read from the storage file (taking inspiration from AB3's `JsonAdaaptedPerson`).
 
 Additionally, removing all dependencies to the old AB3 architecture such as the `Person` model or `JsonAdaptedPerson` was a big challenge as we had to ensure that doing so did not cause any regression to the new models and classes. However, it was also a good exercise in revealing unintended dependencies between UniCa$h and the old AB3 models and classes.
-
-#### Improving the UI
-
-[//]: # (TODO: Rubesh)
 
 #### Providing Summary Statistics
 

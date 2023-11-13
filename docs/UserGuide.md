@@ -607,8 +607,8 @@ of the transaction to be retrieved, as shown in the currently displayed `Transac
 <div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
 There are some important `INDEX` constraints for which you can refer to the
 [command breakdown's Argument Types section](#argument-types). You can also refer to the
-[UI Layout's Transaction Card section](#transaction-card) to learn about the transaction index values that
-can change based on the current `Transactions List` configuration.
+[UI Layout's Transaction Card section](DeveloperGuide.md#transaction-card) in the Developer Guide
+to learn about the transaction index values that can change based on the current `Transactions List` configuration.
 </div>
 
 ##### Successful Execution
@@ -1541,12 +1541,6 @@ Thus, as an added layer of safety, the command has no short form alternatives.
 It also cannot be followed with any arguments, options, or non-whitespace text.
 </div>
 
-
-<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
-This command is subject to the filter applied by `find` or `get_total_expenditure`
-commands, which you can read about under the `find` command section [here](#find-transaction)
-or under the `get_total_expenditure` command section [here](#get-total-expenditure).
-</div>
 
 <div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
 While this command will restore the default UniCa$h transactions, the current `Transactions List`

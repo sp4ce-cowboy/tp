@@ -66,6 +66,7 @@ explanations in the respective PRs.
   _Note: The initial Find Command was implemented by [Jamie](https://github.com/jamz903)
   as mentioned [here](jamz903.md)_
 
+
 **User Interface Features**
 
 * **User Interface Overhaul & Enhancement** [PRs:
@@ -109,6 +110,7 @@ explanations in the respective PRs.
   ([1](https://www.sciencedirect.com/science/article/abs/pii/S0167811623000599),
   [2](https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1788177&dswid=-2283)) studies that show positive correlation between
   color complexity and target user engagement, which is also elaborated in the DG._
+* **User Input Builder:** A utility class to facilitate the emulation of user input by `FxRobot` during Ui Testing.
 
 
 **Decommissioned Features** (Some features that I had implemented prior but removed due to various constraints)
@@ -140,19 +142,19 @@ explanations in the respective PRs.
 
 **Documentation**
 * User Guide:
-  * Added documentation for own features (Delete, Clear, Reset, Find, Get, Help)
-  * Added annotated descriptions and overview of UI and UI Features
+  * Added documentation for own features (Delete, Clear, Reset, Find, Get)
+  * Added annotated descriptions and overview of UI
 * Developer Guide:
   * Migrated details of the DG from an external source (G Docs) and consolidated them in GitHub.
   * Set up DG skeleton for structured and convenient documentation by the team.
-  * Added documentation for own features (Delete, Clear, Reset, Find, Get, Help)
-  * Added documentation for UI and features (Command Box, Rolling Balance Indicator, Transactions Panel)
+  * Added documentation for own features (Delete, Clear, Reset, Find, Get) including UML diagrams.
+  * Added documentation for UI Layout & Features (including `StyleSheet class`) & also UI Testing features (`UserInputBuilder`)
 
 **Project Management & Team Tasks**
 * Created and initialized the CS2103-T16-3 organization on GitHub
 * Created a centralized meeting minutes repository for the team
 [here](https://docs.google.com/document/d/1EI2YeRjxt59N0oc0bauGXI06uFQLI_O54JJci_-JKGc/edit)
-* Created a testing branch for in UniCa$h
+* Created a test branch for convenient testing of UniCa$h by the team
 [PR: [#126](https://github.com/AY2324S1-CS2103-T16-3/tp/pull/126)]
 * Added a TestCommand for the above branch, intended for internal testing of UniCa$h.
 [PRs: [#126](https://github.com/AY2324S1-CS2103-T16-3/tp/pull/126)]
@@ -161,12 +163,13 @@ explanations in the respective PRs.
 * Managed release [v1.3b](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3b)
 and [v1.3.1](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3.1) on GitHub,
 also made and released demo video for release v1.3b [here](https://github.com/AY2324S1-CS2103-T16-3/tp/releases/tag/v1.3b)
+* Opened discussion for final consolidation of deliverables by the team [here](https://github.com/AY2324S1-CS2103-T16-3/tp/discussions/209)
 
 **Community**
 * **Pull Requests Reviewed**: Refer [here](https://github.com/AY2324S1-CS2103-T16-3/tp/pulls?q=is%3Apr+reviewed-by%3Asp4ce-cowboy)
-[Reviewed 41 PRs, with 91 PR comments in total thus far.]
+[Reviewed 51 PRs, with more than 91 PR comments in total.]
 * **Pull Requests Opened**: Refer [here](https://github.com/AY2324S1-CS2103-T16-3/tp/pulls?q=is%3Apr+author%3Asp4ce-cowboy+)
-[Opened 33 PRs. Almost all major PRs have full details and/or screenshots.]
+[Opened 41 PRs. Almost all major PRs have full details and/or screenshots.]
 * **Issues Assigned & Completed**: Refer [here](https://github.com/AY2324S1-CS2103-T16-3/tp/issues?q=is%3Aissue+author%3Asp4ce-cowboy+is%3Aclosed+)
 
 

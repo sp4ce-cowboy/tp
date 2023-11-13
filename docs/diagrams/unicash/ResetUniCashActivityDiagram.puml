@@ -5,14 +5,14 @@ skinparam ActivityFontSize 15
 skinparam ArrowFontSize 12
 start
 
-: User enters clear_transactions command;
+: User enters reset_unicash command;
 
 if () then ([command followed with trailing characters])
   :Parse exception thrown;
   stop
 
 else ([else])
-  :All transactions cleared successfully;
+  :UniCa$h successfully reset;
 
 endif
 

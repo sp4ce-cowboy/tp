@@ -46,10 +46,10 @@ destroy DeleteTransactionCommandParser
 UniCashParser --> LogicManager : d
 deactivate UniCashParser
 
-LogicManager -> DeleteTransactionCommand : execute()
+LogicManager -> DeleteTransactionCommand : execute(model)
 activate DeleteTransactionCommand
 
-DeleteTransactionCommand -> Model : deleteTransaction (1)
+DeleteTransactionCommand -> Model : deleteTransaction(transactionToDelete)
 activate Model
 
 Model --> DeleteTransactionCommand

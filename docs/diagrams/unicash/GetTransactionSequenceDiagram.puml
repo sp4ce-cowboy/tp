@@ -1,0 +1,70 @@
+@startuml
+!include ../style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant ":GetCommandParser" as GetCommandParser LOGIC_COLOR
+participant "d:GetCommand" as GetCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("get 1")
+activate LogicManager
+
+LogicManager -> UniCashParser : parseCommand("get 1")
+activate UniCashParser
+
+create GetCommandParser
+UniCashParser -> GetCommandParser
+activate GetCommandParser
+
+GetCommandParser --> UniCashParser
+deactivate GetCommandParser
+
+UniCashParser -> GetCommandParser : parse("1")
+activate GetCommandParser
+
+create GetCommand
+GetCommandParser -> GetCommand
+activate GetCommand
+
+GetCommand --> GetCommandParser :
+deactivate GetCommand
+
+GetCommandParser --> UniCashParser :
+deactivate GetCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+GetCommandParser -[hidden]-> UniCashParser
+destroy GetCommandParser
+
+UniCashParser --> LogicManager :
+deactivate UniCashParser
+
+LogicManager -> GetCommand : execute(model)
+activate GetCommand
+
+GetCommand -> Model : get(1)
+activate Model
+
+Model --> GetCommand
+deactivate Model
+
+create CommandResult
+GetCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> GetCommand
+deactivate CommandResult
+
+GetCommand --> LogicManager : result
+deactivate GetCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
