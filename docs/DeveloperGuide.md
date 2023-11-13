@@ -47,6 +47,10 @@ Ensure that the project is set up locally:
     ./gradlew run
     ```
 
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The Gradle instructions provided are for MacOS and Linux users. If you are using Windows, please refer to the [official documentation](https://docs.gradle.org/current/userguide/gradle_wrapper.html#sec:using_wrapper) on using the Gradle Wrapper (i.e. `./gradlew`) on Windows.
+</div>
+
 Then, to contribute to the project, we recommend the following flow:
 
 1. Setup the original repository as the `upstream` remote
@@ -59,10 +63,10 @@ Then, to contribute to the project, we recommend the following flow:
     ```bash
     git fetch upstream master
     git merge upstream/master
-    git checkout -b <feat/fix/docs/etc.>/<branch name>
+    git checkout -b <branch name>
     ```
 3. Make the necessary changes
-4. Create a Pull Request to the original repository
+4. Create a [Pull Request](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request) to the original repository
 
 ### Acknowledgements
 
@@ -1241,6 +1245,9 @@ The following sequence diagram shows how the different components of UniCa$h int
 
 <img src="images/unicash/EditTransactionSequenceDiagram.png" width="1200" />
 
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+**Note:** The lifeline for `EditTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML, the lifeline reaches the end of diagram.
+</div>
 
 **Details**
 
@@ -1654,6 +1661,7 @@ information on that command and provide instructions on how to run that command.
 `exit`
 
 This command will exit UniCa$h.
+
 
 [//]: # (#### etc)
 

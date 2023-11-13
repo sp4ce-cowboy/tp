@@ -5,7 +5,7 @@ title: User Guide
 
 UniCa$h **is a desktop application used for university students who want to be more financially conscious,
 optimized for use via a Command Line Interface** (CLI) while still having the benefits of a Graphical User Interface
-(GUI). If you can type fast, UniCa$h can get your contact management tasks done faster than traditional GUI apps.
+(GUI). If you can type fast, UniCa$h can get your finance management tasks done faster than traditional GUI apps.
 
 <div class="callout callout-important" markdown="span">
 Please read through sections [Installation](#installation) and [Command Breakdown](#command-breakdown) before approaching any command documentation
@@ -146,25 +146,25 @@ terms used in this User Guide, the annotated image of the UniCa$h window is dupl
 
 UniCa$h comprises four primary feature groups:
 
-- Transaction Management
-    - Add Transaction (`add_transaction`)
-    - Delete Transaction (`delete_transaction`)
-    - Edit Transaction (`edit_transaction`)
-    - List Transactions (`list`)
-    - Get Transaction (`get`)
-    - Find Transactions (`find`)
-    - Clear All Transactions (`clear_transactions`)
-- Budget Management
-    - Set Budget (`set_budget`)
-    - Clear Budget (`clear_budget`)
-    - Get Budget (`get_budget`)
-- Financial Statistics
-    - Get Total Expenditure (`get_total_expenditure`)
-    - Summary Statistics (`summary`)
-- General Utility
-    - Show Help (`help`)
-    - Reset UniCa$h (`reset_unicash`)
-    - Exit UniCa$h (`exit`)
+- [Transaction Management](#transaction-management)
+    - [Add Transaction](#add-transaction) (`add_transaction`)
+    - [Delete Transaction](#delete-transaction) (`delete_transaction`)
+    - [Edit Transaction](#edit-transaction) (`edit_transaction`)
+    - [List Transactions](#list-transactions) (`list`)
+    - [Get Transaction](#get-transaction) (`get`)
+    - [Find Transactions](#find-transactions) (`find`)
+    - [Clear All Transactions](#clear-transactions) (`clear_transactions`)
+- [Budget Management](#budget-management)
+    - [Set Budget](#set-budget) (`set_budget`)
+    - [Clear Budget](#clear-budget) (`clear_budget`)
+    - [Get Budget](#get-budget) (`get_budget`)
+- [Financial Statistics](#financial-statistics)
+    - [Get Total Expenditure](#get-total-expenditure) (`get_total_expenditure`)
+    - [Summary Statistics](#summary-statistics) (`summary`)
+- [General Utility](#general-utility)
+    - [Show Help](#help) (`help`)
+    - [Reset UniCa$h](#reset-unicash) (`reset_unicash`)
+    - [Exit UniCa$h](#exit-unicah) (`exit`)
 
 The instructions for the usage of each command within each feature group are elaborated in the sections below.
 For the command examples mentioned herein, you can assume that `Output` refers to the text
@@ -300,38 +300,43 @@ Edits an existing transaction in UniCa$h.
 
 Command: `edit_transaction INDEX [n/NAME] [type/TYPE] [amt/AMOUNT] [dt/DATETIME] [l/LOCATION] [c/CATEGORY]`
 
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+For more information about the prefix constraints, refer to the [command breakdown's prefix types section](#prefix-types)
+</div>
+
 Command Words Accepted: `edit_transaction`, `edit`, `et` (case-insensitive)
 
-Command Options:
-
-| Option Name | Optional? | Purpose                                                                                       | Remarks                                                                                                                                                        |
-|-------------|-----------|-----------------------------------------------------------------------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| INDEX       | No        | (One-based) index of the transaction to edit.                                                 | This ranges from 1 to the number of transactions saved                                                                                                         |
-| n/          | Yes       | Name of the transaction.                                                                      | There is a 500-character limit                                                                                                                                 |
-| type/       | Yes       | Transaction type of transaction.<br/>Valid types are `income` and `expense`.                  |                                                                                                                                                                |
-| amt/        | Yes       | Monetary amount of transaction. Has to be a positive value.                                   | Automatically rounded to 2 decimal places.                                                                                                                     |
-| dt/         | Yes       | Date and time where transaction was made.<br/>Defaults to current date time if not specified. | Can be in the `dd-MM-uuuu HH:mm` (e.g. 31-10-2023 12:00), `uuuu-MM-dd HH:mm` (e.g. 2023-10-31 22:59), or `dd MMM uuuu HH:mm` (e.g. 31 Oct 2023 22:59) formats. |
-| l/          | Yes       | Location where transaction was made.<br/>Defaults to `'-'` if not specified.                  | There is a 500-character limit                                                                                                                                 |
-| c/          | Yes       | Category tagged to that transaction.<br/>No categories tagged if not specified.               | There is a 15-character limit.<br/>`Category` entered will be converted and stored as all lowercase.<br/>Each transaction can have at most 5 categories.       |
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+**Added Constraints**
+<br><br>
+Similar to the Add command, there is a limit of 5 `Category` that can be added to a `Transaction`. <br/>
+</div>
 
 Important notes:
 
-1. While all options besides `INDEX` are optional, **you must specify at least one field** you wish to edit (
-   i.e. `Name`, `Type`, `Amount`, `Datetime`, `Location`, or `Category`).
-2. You must provide a non-empty value for the `Name`, `Type`, and `Amount` fields if you wish to edit them; they cannot
-   be left empty.
-3. The `INDEX` option must be specified first. The order in which you specify the other options does not matter.
-4. Modifying a transaction's category will result in the replacement of all existing categories. 
-   - For example, in the case of a `Transaction` with two existing categories (Entertainment and Hobbies), editing it with `edit INDEX c/Education` will replace all existing categories, leaving the transaction with a single category, Education."
+1. The value of `INDEX` provided must be between 1 and the total number of available transactions (inclusive).
+2. While all options besides `INDEX` are optional, **you must specify at least one field** you wish to edit (i.e. `Name`, `Type`, `Amount`, `Datetime`, `Location`, or `Category`).
+3. If the `Name`, `Type`, or `Amount` options are present in the edit command, the values provided for these options cannot be empty. (See [Failed Execution (Example 3) below](#example-3-2))
+4. **Specially for the Edit feature:** Empty values are allowed for `Datetime`, `Location`, and `Category`. If these options are provided in the edit command but left empty, the default values that these fields will take are stated in the table below. (See [Successful Execution (Example 3) below](#example-3-1))
+5. The `INDEX` option must be specified first. The order in which you specify the other options does not matter.
+6. Editing a transaction's category will result in the **replacement of all existing categories**. 
+   - For example, in the case of a `Transaction` with two existing categories (Entertainment and Hobbies), editing it with `edit INDEX c/Education` will replace all existing categories, leaving the transaction with a single category, "Education".
 
+**Default Values for Blank Options:**
 
-
-
-  
+| Option Name | Default Value                       |
+|-------------|-------------------------------------|
+| INDEX       | (NA)                                |
+| n/          | (NA)                                |
+| type/       | (NA)                                |
+| amt/        | (NA)                                |
+| dt/         | Current date time of system's clock |
+| l/          | `-`                                 |
+| c/          | (Blank)                             |
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: Edit an existing transaction's name, amount, type, datetime, location and categories.
 >
@@ -351,7 +356,7 @@ Important notes:
 >
 > <img src="images/unicash/command-outputs/editTransaction/editTransactionSuccessOutput1.png" width="1000" />
 
-###### Example 2
+**Example 2**
 
 > **Case**: Edit an existing transaction's datetime and amount only.
 >
@@ -368,10 +373,8 @@ Important notes:
 > Location: John home;
 > Categories: #tuition
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionSuccessOutput2.png" width="1000" />
 
-###### Example 3
+**Example 3**
 
 > **Case**: Edit an existing transaction's location and categories to default.
 >
@@ -388,12 +391,10 @@ Important notes:
 > Location: -;
 > Categories:
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionSuccessOutput3.png" width="1000" />
 
 ##### Failed Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: No attributes to edit
 >
@@ -403,10 +404,8 @@ Important notes:
 > ```
 > At least one field to edit must be provided.
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput1.png" width="1000" />
 
-###### Example 2
+**Example 2**
 
 > **Case**: No index provided
 >
@@ -424,10 +423,8 @@ Important notes:
 > 
 > Example: edit_transaction 1 n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput2.png" width="1000" />
 
-###### Example 3
+**Example 3**
 
 > **Case**: Attempting to leave compulsory field (E.g. `name`) blank
 >
@@ -437,10 +434,8 @@ Important notes:
 > ```
 > Names should only contain alphanumeric characters, spaces, (, ), _, @, -, #, &, ., and ',', up to 500 characters and it should not be blank
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput3.png" width="1000" />
 
-###### Example 4
+**Example 4**
 
 > **Case**: There are only 5 transactions, but the user tries to edit expense 6
 >
@@ -450,10 +445,8 @@ Important notes:
 > ```
 > The transaction index provided is invalid
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput4.png" width="1000" />
 
-###### Example 5
+**Example 5**
 
 > **Case**: Wrong input format (e.g. `Datetime` is not specified in any of the accepted formats)
 >
@@ -466,8 +459,6 @@ Important notes:
 > 2. uuuu-MM-dd HH:mm
 > 3. dd MMM uuuu HH:mm
 > ```
->
-> <img src="images/unicash/command-outputs/editTransaction/editTransactionFailedOutput5.png" width="1000" />
 
 #### Delete Transaction
 
@@ -876,7 +867,7 @@ Command Words Accepted: `list`, `ls` (case-insensitive)
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: Calling the command when there are no existing transactions.
 >
@@ -891,7 +882,7 @@ Command Words Accepted: `list`, `ls` (case-insensitive)
 >
 > **Note:** There are no transactions to display, so the GUI will be empty. This is expected behaviour.
 
-###### Example 2
+**Example 2**
 
 > **Case**: Calling the command with existing transactions.
 >
@@ -908,7 +899,7 @@ Command Words Accepted: `list`, `ls` (case-insensitive)
 
 ##### Failed Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: Command entered with parameters
 >
@@ -1389,19 +1380,35 @@ Command: `summary`
 
 Command Words Accepted: `summary` (case-insensitive)
 
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+Any additional arguments given to `summary` will be ignored.
+</div>
+
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+The summary of expenses is a pop-up window. If there are no expenses saved in UniCa$h, the pop-up window will not appear.
+<br>
+Please be aware that if you open the summary window and subsequently delete all expenses from UniCa$h without
+closing the summary window, it is intended to stay open until you manually close it. In such a scenario, the summary
+window will look like the following:
+<img src="images/unicash/command-outputs/summary/summarySuccessOutput3.png" width="1000" />
+</div>
+
 Important notes:
 
-1. Expected Behaviour: The summary of expenses is a pop-up window. If there are no expenses saved in UniCa$h, the pop-up
-   window will not appear. Do note that the summary window will remain open should you decide to remove all expenses
-   after it is opened, until you manually close it.
-2. When making changes to your transactions in UniCa$h, the plots in the summary window will automatically update to
+1. When making changes to your transactions in UniCa$h, the plots in the summary window will automatically update to
    reflect your modifications.
-3. The pie chart showcases the **top 10 expense categories** based on their respective amounts.
-4. The line chart exclusively showcases expenses **from the past one year**, according to the system's clock.
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The **pie chart** showcases the **top 10 expense categories** based on their respective amounts, while the
+**line chart** exclusively showcases expenses **from the past one year**, according to the system's clock.
+<br>
+This indicates that it is possible for only one plot to have data, while the other does not. (E.g. If there are
+only expenses recorded from over a year ago, then only the pie chart will display data, while the line chart will not.)
+</div>
 
 ##### Successful Execution
 
-###### Example 1
+**Example 1**
 
 > **Case**: There are expenses saved in UniCa$h
 >
@@ -1414,25 +1421,13 @@ Important notes:
 > Opened UniCa$h summary window.
 > ```
 >
-> <img src="images/unicash/command-outputs/summary/summarySuccessOutput1.png" width="1000" />
->
 > Here is what the summary pop-up window looks like:
 >
 > <img src="images/unicash/command-outputs/summary/summarySuccessOutput2.png" width="1000" />
 
-###### Example 2
+**Example 2**
 
-> **Case**: All expenses are removed from UniCa$h while the summary window was open
->
-> **Input**: `clear_transactions`
->
-> **Output**: Here is what the summary window will look like
->
-> <img src="images/unicash/command-outputs/summary/summarySuccessOutput3.png" width="1000" />
-
-###### Example 3
-
-> **Case**: There are no expenses saved in UniCa$h, and the summary window is closed.
+> **Case**: There are no expenses saved in UniCa$h, and the summary window was not originally opened.
 >
 > **Input**: `summary`
 >

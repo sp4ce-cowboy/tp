@@ -6,8 +6,6 @@
 > UniCa$h is a finance tracking application for university students who want to be more financially conscious.
 
 ## About
-
-[//]: # (TODO Change this image)
 ![Ui](docs/images/Ui.png)
 
 User Target Profile: Our application is for university students who want to be more financially conscious about their
@@ -17,6 +15,8 @@ purchasing power.
 Value Proposition: It provides university students with an intuitive and frictionless experience to have transparency on
 their expenditure to help them better understand their spendings so they can develop better financial habits as they
 transition into adulthood.
+
+You can find our User Guide [here](https://ay2324s1-cs2103-t16-3.github.io/tp/UserGuide.html), and our Developer Guide [here](https://ay2324s1-cs2103-t16-3.github.io/tp/DeveloperGuide.html)!
 
 ## Credits
 

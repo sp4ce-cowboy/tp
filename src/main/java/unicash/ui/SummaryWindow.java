@@ -138,6 +138,7 @@ public class SummaryWindow extends UiPart<Stage> {
      * or EARLIEST_YEAR_MONTH
      */
     private static boolean isValidYearMonth(YearMonth yearMonth) {
+        assert yearMonth != null : "yearMonth cannot be null";
         boolean afterMostRecentYearMonth = yearMonth.compareTo(EARLIEST_YEAR_MONTH) >= 0;
         boolean beforeCurrentYearMonth = yearMonth.compareTo(LATEST_YEAR_MONTH) <= 0;
         return afterMostRecentYearMonth & beforeCurrentYearMonth;
