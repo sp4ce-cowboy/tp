@@ -65,7 +65,6 @@ activate SetBudgetCommand
 
 SetBudgetCommand -> Model : setBudget(budget)
 activate Model
-Model --> SetBudgetCommand
 deactivate Model
 
 create CommandResult

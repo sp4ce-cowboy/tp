@@ -50,14 +50,13 @@ alt budget is not null
 
     ClearBudgetCommand -> Model : clearBudget(budget)
     activate Model
-    Model --> ClearBudgetCommand
     deactivate Model
 
     create CommandResult
     ClearBudgetCommand -> CommandResult
     activate CommandResult
 
-    CommandResult --> ClearBudgetCommand : success
+    CommandResult --> ClearBudgetCommand : success message
     deactivate CommandResult
 
     ClearBudgetCommand --> LogicManager

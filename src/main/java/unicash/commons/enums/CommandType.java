@@ -232,7 +232,7 @@ public enum CommandType {
 
         @Override
         public String getMessageSuccess() {
-            return "Found %1$d transactions:\n\n%2$s";
+            return "%1$d transactions listed!";
         }
     },
     GET("get", "g") {
@@ -398,7 +398,7 @@ public enum CommandType {
     }
 
     public String getMessageFailure() {
-        return "Command not recognised. Try using the command " + getMainCommandWord()
+        return "Command not recognised. Try using the command " + getCommandWords()
                 + " without any parameters instead.";
     }
 
