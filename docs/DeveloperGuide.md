@@ -1347,9 +1347,22 @@ predicates.
 publicly, and modified.
     - The overriding test method returns true only if the input Transaction 
 matches all predicates in this list.
+    - The method responsible for this is given as such:
+  ```java
+    public boolean test(Transaction transaction) {
+        if (predicateList.isEmpty()) {
+            return false;
+        }
+
+        return predicateList.stream()
+                .allMatch(predicate -> predicate.test(transaction));
+    }
+  ```
 - The `FindCommandParser` is responsible for parsing the user input and "converting" each input
 into the associated property predicate, and then creating the `FindCommand` object itself with
 the above-mentioned composed predicate class.
+
+
 
 
 ### Budget Management
