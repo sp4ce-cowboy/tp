@@ -220,7 +220,7 @@ public enum CommandType {
                     .addParameter(PREFIX_CATEGORY, "Category", true, false)
                     .setExample(
                             ExampleGenerator.generate(
-                                    getCommandWords(),
+                                    getMainCommandWord(),
                                     PREFIX_NAME,
                                     PREFIX_LOCATION,
                                     PREFIX_CATEGORY
