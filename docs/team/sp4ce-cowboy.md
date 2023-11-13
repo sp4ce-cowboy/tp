@@ -148,7 +148,7 @@ explanations in the respective PRs.
   * Migrated details of the DG from an external source (G Docs) and consolidated them in GitHub.
   * Set up DG skeleton for structured and convenient documentation by the team.
   * Added documentation for own features (Delete, Clear, Reset, Find, Get) including UML diagrams.
-  * Added documentation for UI and UI features (Command Box, Rolling Balance Indicator, Transactions Panel)
+  * Added documentation for UI and UI features (Including StyleSheet class) & also UI Testing features (`UserInputBuilder`)
 
 **Project Management & Team Tasks**
 * Created and initialized the CS2103-T16-3 organization on GitHub
