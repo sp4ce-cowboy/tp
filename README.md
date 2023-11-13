@@ -6,7 +6,7 @@
 > UniCa$h is a finance tracking application for university students who want to be more financially conscious.
 
 ## About
-![Ui](docs/images/unicash/UniCashWelcome.png)
+![Ui](docs/images/Ui.png)
 
 User Target Profile: Our application is for university students who want to be more financially conscious about their
 spending habits, to enable them to make more economical decisions that provide students on a limited budget with more
