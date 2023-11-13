@@ -1107,11 +1107,11 @@ The `delete_transaction` command deletes an existing `Transaction` from `Transac
 
 The activity diagram of deleting a Transaction is as shown below
 
-<img src="images/unicash/DeleteTransactionActivityDiagram.png" width="500" />
+<img src="images/unicash/diagrams/DeleteTransactionActivityDiagram.png" width="500" />
 
 The following sequence diagram shows the interaction between different components of UniCash.
 
-<img src="images/unicash/DeleteTransactionSequenceDiagram.png" width="1200" />
+<img src="images/unicash/diagrams/DeleteTransactionSequenceDiagram.png" width="1200" />
 
 The above sequence diagram omits details on the filtering of `TransactionList` and assumes that
 the displayed `TransactionList` is showing all transactions. However, the logic of the `DeleteCommand`
@@ -1230,6 +1230,38 @@ the lifeline reaches the end of diagram.
 
 It is important to take note that when the user input is parsed, it is based on the currently displayed `TransactionList` inside
 `TransactionListPanel`. For more information, you can refer back to how [DeleteTransactionCommand]() handles indices.
+
+#### Reset UniCa$h
+
+**Overview**
+
+The `reset_unicash` command overwrites all existing `Transactions` in `TransactionList`
+with the default UniCa$h `Transactions` 
+
+The activity diagram of resetting UniCa$h is as shown below
+
+<img src="images/unicash/diagrams/ResetUniCashActivityDiagram.png" width="450" />
+
+The following sequence diagram shows the interaction between different components of UniCash.
+
+<img src="images/unicash/diagrams/ResetUniCashSequenceDiagram.png" width="800" />
+
+
+**Details**
+
+1. The user inputs the command to clear all transactions
+2. The input will be parsed by `ResetCommandParser` and if the provided input is
+   invalid (i.e. trailing arguments) `ParseException` will be thrown, and the
+   user is prompted to enter the command again with the correct input.
+3. If the input is valid, a `ResetCommand` object is created to be executed by `LogicManager`
+4. `LogicManager` will invoke the `execute` method of `ResetCommand`
+   which will replace the existing `Model` property with a sample `UniCash` object which
+   would contain a `TransactionList` populated with sample `Transaction` data.
+
+<div class="callout callout-info" markdown="span">
+It must be noted here that resetting UniCa$h to its original state refers to overwriting
+the internal st
+</div>
 
 ### Budget Management
 

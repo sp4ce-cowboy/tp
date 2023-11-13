@@ -1,0 +1,70 @@
+@startuml
+!include ../style.puml
+skinparam ArrowFontStyle plain
+
+box Logic LOGIC_COLOR_T1
+participant ":LogicManager" as LogicManager LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant ":ResetCommandParser" as ResetCommandParser LOGIC_COLOR
+participant "d:ResetCommand" as ResetCommand LOGIC_COLOR
+participant ":CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> LogicManager : execute("reset_unicash")
+activate LogicManager
+
+LogicManager -> UniCashParser : parseCommand("reset_unicash")
+activate UniCashParser
+
+create ResetCommandParser
+UniCashParser -> ResetCommandParser
+activate ResetCommandParser
+
+ResetCommandParser --> UniCashParser
+deactivate ResetCommandParser
+
+UniCashParser -> ResetCommandParser : parse("")
+activate ResetCommandParser
+
+create ResetCommand
+ResetCommandParser -> ResetCommand
+activate ResetCommand
+
+ResetCommand --> ResetCommandParser :
+deactivate ResetCommand
+
+ResetCommandParser --> UniCashParser :
+deactivate ResetCommandParser
+'Hidden arrow to position the destroy marker below the end of the activation bar.
+ResetCommandParser -[hidden]-> UniCashParser
+destroy ResetCommandParser
+
+UniCashParser --> LogicManager :
+deactivate UniCashParser
+
+LogicManager -> ResetCommand : execute(model)
+activate ResetCommand
+
+ResetCommand -> Model : setUniCash(getSampleUniCash())
+activate Model
+
+Model --> ResetCommand
+deactivate Model
+
+create CommandResult
+ResetCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> ResetCommand
+deactivate CommandResult
+
+ResetCommand --> LogicManager : command result
+deactivate ResetCommand
+
+[<--LogicManager
+deactivate LogicManager
+@enduml
