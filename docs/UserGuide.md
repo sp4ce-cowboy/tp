@@ -163,7 +163,7 @@ UniCa$h comprises four primary feature groups:
     - [Summary Statistics](#summary-statistics) (`summary`)
 - [General Utility](#general-utility)
     - [Show Help](#help) (`help`)
-    - [Reset UniCa$h](#reset-unicah) (`reset_unicash`)
+    - [Reset UniCa$h](#reset-unicash) (`reset_unicash`)
     - [Exit UniCa$h](#exit-unicah) (`exit`)
 
 The instructions for the usage of each command within each feature group are elaborated in the sections below.
@@ -1380,21 +1380,27 @@ Command Words Accepted: `summary` (case-insensitive)
 Any additional arguments given to `summary` will be ignored.
 </div>
 
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
+The summary of expenses is a pop-up window. If there are no expenses saved in UniCa$h, the pop-up window will not appear.
+<br>
+Please be aware that if you open the summary window and subsequently delete all expenses from UniCa$h without
+closing the summary window, it is intended to stay open until you manually close it. In such a scenario, the summary
+window will look like the following:
+<img src="images/unicash/command-outputs/summary/summarySuccessOutput3.png" width="1000" />
+</div>
+
 Important notes:
 
-1. Expected Behaviour: The summary of expenses is a pop-up window. If there are no expenses saved in UniCa$h, the pop-up
-   window will not appear.
-   - Please be aware that if you open the summary window and subsequently delete all expenses from UniCa$h without
-   closing the summary window, it is intended to stay open until you manually close it. In such a scenario, the summary
-   window will look like the following:
-<img src="images/unicash/command-outputs/summary/summarySuccessOutput3.png" width="1000" />
-2. When making changes to your transactions in UniCa$h, the plots in the summary window will automatically update to
+1. When making changes to your transactions in UniCa$h, the plots in the summary window will automatically update to
    reflect your modifications.
-3. The **pie chart** showcases the **top 10 expense categories** based on their respective amounts, while the
-   **line chart** exclusively showcases expenses **from the past one year**, according to the system's clock.
-   - This indicates that it is possible for only one plot to have data, while the other does not. (E.g. If there are
-     only expenses recorded from over a year ago, then only the pie chart will display data, while the line chart will
-     not.)
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The **pie chart** showcases the **top 10 expense categories** based on their respective amounts, while the
+**line chart** exclusively showcases expenses **from the past one year**, according to the system's clock.
+<br>
+This indicates that it is possible for only one plot to have data, while the other does not. (E.g. If there are
+only expenses recorded from over a year ago, then only the pie chart will display data, while the line chart will not.)
+</div>
 
 ##### Successful Execution
 
