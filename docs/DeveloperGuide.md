@@ -562,9 +562,9 @@ actual date and time associated with that particular transaction.
 <img src="images/unicash/TransactionCardAnnotated.png" width="450">
 
 - **Transaction Index (or ID/Number):** All terms used synonymously to refer to the number shown on the left partition of the blue box.
-    - Transactions are not inherently indexed, the Index values refer to the position of the
+    - Transactions are not inherently indexed, the index values refer to the position of the
       Transaction on the `Transactions List`
-    - Thus, Index values are not static - depending on the configuration of currently displayed
+    - Thus, index values are not static - depending on the configuration of currently displayed
       `Transactions List`, this number might change.
 - **Transaction Name:** The name of the given transaction, shown on the right partition of the blue box.
 - **Transaction Date & Time:** The date & time assigned to the transaction, shown inside the pink box.
