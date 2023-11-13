@@ -431,7 +431,7 @@ For the following Use Cases (unless specified otherwise):
 The architecture for UniCa$h leverages the existing architecture from AB3 and extends several components like supporting storage of transactions and the budget.
 
 
-### UI Component
+### User Interface (UI) Component
 
 UniCa$h is a Graphical User Interface (GUI) application, built using JavaFX. The following section describes the
 implementation of the various UI components in UniCa$h.
@@ -478,7 +478,7 @@ The `UI` component is also responsible for:
 - executing commands using the `Logic` component, through the `executeCommand` method
 - listening for changes to the `Model` component, through the `listenToModelChanges` method
 
-### User Interface (UI) Layout
+### UI Layout
 
 UniCa$h is designed with users who prefer to use the keyboard in mind. Thus, almost all
 user input is designed for CLI-type usage, i.e. text-based keyboard input, and User Interface
@@ -517,12 +517,9 @@ issues. Simply exit fullscreen mode to continue using UniCa$h as per normal.
 - It can also be invoked with the `help` command, and doing so will populate
   the `Results Display` with the default UniCa$h Welcome Message.
 
-  ![img_1.png](images/unicash/UniCashHelpWindow.png)
 
-<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
-Refer to the [Known Issues section of the User Guide](UserGuide.md#known-issues), for more information
-about some faulty window movement behaviour when running UniCa$h on macOS.  
-</div>
+![img_1.png](images/unicash/UniCashHelpWindow.png)
+
 
 #### Command Box
 - The `Command Box` is the primary means by which the user interacts actively with the application.
