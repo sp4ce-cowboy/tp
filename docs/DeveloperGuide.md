@@ -983,12 +983,70 @@ corresponding to the user input required to add that particular `Transaction`. T
 be passed to `FxRobot` to emulate user input for a variety of transactions. A snippet of such 
 procedure is shown above.
 
-### General Classes and Components
+### Support Classes and Components
 
-#### StyleSheet
+#### StyleSheet Class
 
-The StyleSheet class serves as a centralized information source for visual elements for all
-UI components requiring some form of graphical representation.
+The `StyleSheet` class serves as a centralized information source for visual elements for all
+UI components requiring some form of graphical representation. Within this class, preset colors are
+defined as constants, which can then be used by UI elements across UniCa$h. Thus, when these
+preset colors are modified, all UI elements will have a consistent change.
+
+In the future, given the extensibility and universality of the `StyleSheet` class, it is
+possible to allow the user to be able to choose their own themes for the app. Below is a snippet
+of constants from the `StyleSheet` class, used for text coloring and font styling.
+
+```java
+/* Text colour filling */
+public static final String TEXT_FILL_RED = "-fx-text-fill: red";
+public static final String TEXT_FILL_GREEN = "-fx-text-fill: green";
+public static final String TEXT_FILL_BLACK = "-fx-text-fill: black";
+public static final String TEXT_FILL_WHITE = "-fx-text-fill: white";
+
+/* Font styling */
+public static final String FONT_STYLE_BOLD = "-fx-font-weight: bold";
+public static final String FONT_STYLE_REGULAR = "-fx-font-weight: normal";
+public static final String FONT_STYLE_ITALIC = "-fx-font-style: italic";
+```
+
+**Hash-Based Category Coloring:** UniCa$h doesn't place a restriction on the maximum number of
+categories available in total, across the app. Thus, color coding each category was not possible,
+and a means for ensuring that unique categories (i.e. same case-insensitive name) have unique 
+colors needed to be devised. We found that using a category's hash code was the most optimal
+solution and so a method that converts a category's hash code into a 6-digit hexademical RGB
+color code was created. To offset outlier values that resulted in dark colors with poor 
+legibility, a brightness offset function was also written, a modified snippet of that function
+is shown below.
+
+```java
+
+  int r = Integer.parseInt(...);
+  int g = Integer.parseInt(...);
+  int b = Integer.parseInt(...);
+    
+  int avg = (r + g + b) / 3;
+    
+  if (avg < BRIGHTNESS_THRESHOLD) {
+  r = adjustBrightness(r);
+  g = adjustBrightness(g);
+  b = adjustBrightness(b);
+        
+```
+_The above function determines the average brightness based on the average values of the
+red, green, and blue colors, and an adjustment is made if this average falls below a certain
+threshold, and the threshold itself can be adjusted to achieve certain color complexities._
+
+The focus on color consistency and user experience across UniCa$h is motivated
+by certain scientific [studies](https://www.sciencedirect.com/science/article/abs/pii/S0167811623000599])
+that show a positive correlation between color complexity and user engagement.
+[This](https://www.diva-portal.org/smash/record.jsf?pid=diva2%3A1788177&dswid=-2283) study found certain
+design elements contribute to increased user engagement especially by young adults.
+The UI components are intended to increase user engagement with UniCa$h amongst our target users, who are
+university students i.e. mostly young adults. This would consequently lead to improvement in
+personal financial management. Thus, even though these are not CLI features, they are intended
+to complement the CLI features that we have in place by provided appropriate visual response.
+
+
 
 #### Command Usage Message Builder
 
