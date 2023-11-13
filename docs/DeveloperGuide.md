@@ -181,26 +181,7 @@ For the following Use Cases (unless specified otherwise):
   - 2b2. User confirms the request
   - Use case resumes at step 3.
 
-**Use Case: UC02 - Finding a transaction**
-
-**MSS:**
-1. User enters the command to find a transaction with the correct format.
-2. User submits the request.
-3. UniCa$h filters all the transactions based on the specified filters and returns
-the filtered transaction with a success message.
-
-   Use Case ends
-
-**Extensions**
-- 2a. User enters an incorrect format.
-  - 1a1. UniCa$h displays an error message with the correct command format.
-  - Use case resumes at step 1.
-
-- 3a. UniCa$h does not find any results matching the filter.
-  - 3a1. UniCa$h displays a message saying no results found.
-  - Use Case resumes at step 1
-
-**Use Case: UC03 - Delete a transaction**
+**Use Case: UC02 - Delete a transaction**
 
 **MSS:**
 1. User enters the command to delete a transaction with the correct format.
@@ -221,7 +202,7 @@ the filtered transaction with a success message.
     - Use Case resumes at step 1
 
 
-**Use Case: UC04 - Listing All Transactions**
+**Use Case: UC03 - Listing All Transactions**
 
 **MSS:**
 1. User enters the command to list all transactions with the correct format (i.e. no parameters).
@@ -239,7 +220,7 @@ the filtered transaction with a success message.
     - 3a1. UniCa$h displays no transactions, and informs the user that all transactions have been retrieved. 
     - Use Case ends.
 
-**Use Case: UC05 - Finding a Transaction**
+**Use Case: UC04 - Finding a Transaction**
 
 **MSS:**
 1. User enters the command to find transaction with the correct format.
@@ -252,15 +233,11 @@ the filtered transaction with a success message.
 - 2a. User enters an incorrect format.
     - 2a1. UniCa$h displays an error message, requests for correct format.
     - 2a2. User enters command with new format.
-    Steps 2a1-2a2 are repeated until the format entered is correct.
+    - Steps 2a1-2a2 are repeated until the format entered is correct. 
+    - Use case resumes from Step 3.
 
-    Use case resumes from Step 3.
 
-- 3a. UniCa$h does not find any results matching the filter.
-    - 3a1. UniCa$h displays a message informing the user that no results were found.
-    - Use Case ends.
-
-**Use Case: UC06 - Get Total Expenditure**
+**Use Case: UC05 - Get Total Expenditure**
 
 **MSS:**
 1. User enters the command to get the total expenditure.
@@ -276,7 +253,7 @@ the filtered transaction with a success message.
     - 2a1. UniCa$h displays an error message, requests for command to be re-entered.
     - Use case resumes at step 1
 
-**Use Case: UC07 - Clear all transactions**
+**Use Case: UC06 - Clear all transactions**
 
 **MSS:**
 1. User enters the command to clear all transactions with the correct format. (i.e. no parameters)
@@ -284,23 +261,36 @@ the filtered transaction with a success message.
 3. UniCa$h deletes all transactions in the transactions list.
 4. UniCa$h displays success message.
 
-   Use Case ends
+   Use Case ends.
 
 **Extensions**
 - 2a. User enters an incorrect format.
   - 2a1. UniCa$h displays an error message with the correct command format.
   - Use case resumes at step 1.
 
-- 3a. UniCa$h finds an empty transactions list.
-  - 3a1. UniCa$h displays a message saying that transactions list is empty.
-  - Use Case resumes at step 1
+**Use Case: UC07 - Reset UniCa$h**
+
+**MSS:**
+1. User enters the command to reset UniCa$h with the correct format. (i.e. no parameters)
+2. User submits the request.
+3. UniCa$h restores all transactions in the transactions list to the default transactions
+4. UniCa$h displays success message.
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
 
 **Use Case: UC08 - Show UniCa$h Help**
 
 **MSS:**
 1. User enters the command to show help with the correct format. (i.e. no parameters)
 2. User submits the request.
-3. UniCa$h displays help message in the help window.
+3. UniCa$h opens help window with link to User Guide
+4. UniCa$h displays the default welcome message with overview of commands
 
    Use Case ends
 
@@ -375,6 +365,21 @@ the filtered transaction with a success message.
     - 3a1. UniCa$h displays a prompt to create a budget first.
     - Use case ends.
 
+**Use Case: UC13 - Retrieve a transaction**
+
+**MSS:**
+1. User enters the command to retrieve (i.e. `get`) a transaction with the correct format.
+2. User submits the request.
+3. UniCa$h retrieves the transaction based on the passed in arguments.
+4. UniCa$h displays expanded details of that transaction
+
+   Use Case ends
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
 ---
 
 ## Design Overview
@@ -394,21 +399,19 @@ for features.
 
 When UniCa$h is first opened, by default, the UniCa$h welcome message will be displayed in
 the `Results Display`. This message can also be invoked with the `help` command which will
-be explained later on in the [User Guide](UserGuide.md) Below are the main User Interface
+be explained later on in the [User Guide](UserGuide.md). Below are the main User Interface
 (UI) components and features we have implemented in UniCa$h.
 
 ![img_2.png](images/unicash/UniCashUIAnnotated.png)
 
 
-These main UI components are explained below. For the purposes of demonstrating certain UI features, certain commands
-and inputs that are yet to be explained are mentioned here. However, at a later section of this User Guide,
-all of these commands and inputs will be explained, feel free to refer to them at your discretion. **Where applicable,
-consider those explanations as the single source of authority for those commands, as the representation here is merely
-for UI demonstration purposes only.**
+The commands and inputs used for the purposes of demonstrating certain UI features are explained fully
+in the [User Guide](UserGuide.md) **Where applicable, consider those explanations as the single source of
+authority for those commands, as the representation here is merely for UI demonstration purposes only.**
 
 #### UniCa$h Main Window
 
-- The Main Window in UniCa$h is resizeable, but has a minimum size enforced.
+- The Main Window in UniCa$h is resizeable, but has a minimum size enforced of `850 x 620`
 - The Menu bar contains the `File` and `Help` menus, of which `Help` can be opened with the
   `F1` keyboard shortcut, which is also default to the original `AB-3`.
 
@@ -417,6 +420,19 @@ On macOS, using UniCa$h in fullscreen will sometimes cause the Summary Window an
 Help Window to also open in fullscreen, however this is an expected behaviour caused by
 macOS's window management style, and cannot be overridden, but does not cause any functional
 issues. Simply exit fullscreen mode to continue using UniCa$h as per normal. 
+</div>
+
+#### UniCa$h Help Window
+
+- The Help Window can be opened with the `F1` keyboard shortcut, which is also default to the original `AB-3`.
+- It can also be invoked with the `help` command, and doing so will populate
+  the `Results Display` with the default UniCa$h Welcome Message.
+
+  ![img_1.png](images/unicash/UniCashHelpWindow.png)
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+Refer to the [Known Issues section of the User Guide](UserGuide.md#known-issues), for more information
+about some faulty window movement behaviour when running UniCa$h on macOS.  
 </div>
 
 #### Command Box
@@ -514,6 +530,8 @@ Unlike the color of the amount of a transaction in the `Transactions List`, the 
 the `Rolling Balance Indicator` will change based on whether the net sum is positive (green)
 or negative (red) or zero (black).
 </div>
+
+
 
 ### UI Component
 
