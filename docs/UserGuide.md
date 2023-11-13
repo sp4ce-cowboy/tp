@@ -1544,12 +1544,6 @@ It also cannot be followed with any arguments, options, or non-whitespace text.
 
 
 <div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
-This command is subject to the filter applied by `find` or `get_total_expenditure`
-commands, which you can read about under the `find` command section [here](#find-transaction)
-or under the `get_total_expenditure` command section [here](#get-total-expenditure).
-</div>
-
-<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
 While this command will restore the default UniCa$h transactions, the current `Transactions List`
 configuration is still subject to any filters applied by `find` or `get_total_expenditure`,
 which you can read about under the `find` command section [here](#find-transaction)
