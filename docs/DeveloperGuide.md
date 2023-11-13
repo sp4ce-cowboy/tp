@@ -169,7 +169,7 @@ UniCa$sh consists of the following UI components:
 2. Help Window
 3. Statistics / Budget Window
 
-<img src="images/unicash/UiClassDiagram.png" width="800" />
+<img src="images/unicash/UiClassDiagram.png" />
 
 In this section, we will be going through the implementation of the main window.
 
