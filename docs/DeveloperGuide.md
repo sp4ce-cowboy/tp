@@ -1260,7 +1260,8 @@ The following sequence diagram shows the interaction between different component
 
 <div class="callout callout-info" markdown="span">
 It must be noted here that resetting UniCa$h to its original state refers to overwriting
-the internal st
+the internal `Transactions List` with the original transactions only, and does not refer to
+clearing any contained `budgets`
 </div>
 
 ### Budget Management
