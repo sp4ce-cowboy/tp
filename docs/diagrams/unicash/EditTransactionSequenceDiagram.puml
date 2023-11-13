@@ -2,12 +2,16 @@
 @startuml
 !include ../style.puml
 
+skinparam arrow {
+    FontSize 16
+}
+
 box Logic LOGIC_COLOR_T1
 participant ":LogicManager" as LogicManager LOGIC_COLOR
 participant ":UniCashParser" as UniCashParser LOGIC_COLOR
 participant ":EditTransactionCommandParser" as EditTransactionCommandParser LOGIC_COLOR
 participant ":EditTransactionDescriptor" as EditTransactionDescriptor LOGIC_COLOR
-participant "editedTransaction:Transaction" as Transaction LOGIC_COLOR
+participant "newTransaction:Transaction" as Transaction LOGIC_COLOR
 participant "command:EditTransactionCommand" as EditTransactionCommand LOGIC_COLOR
 participant "commandResult:CommandResult" as CommandResult LOGIC_COLOR
 
@@ -17,10 +21,10 @@ box Model MODEL_COLOR_T1
 participant ":Model" as Model MODEL_COLOR
 end box
 
-[-> LogicManager : execute("edit_transaction 4 c/food")
+[-> LogicManager : execute("edit 4 c/food")
 activate LogicManager
 
-LogicManager -> UniCashParser : parseCommand("edit_transaction 4 c/food")
+LogicManager -> UniCashParser : parseCommand("edit 4 c/food")
 activate UniCashParser
 
 create EditTransactionCommandParser
@@ -53,7 +57,7 @@ deactivate EditTransactionCommandParser
 UniCashParser --> LogicManager : command
 deactivate UniCashParser
 
-LogicManager -> EditTransactionCommand : command.execute(model)
+LogicManager -> EditTransactionCommand : execute(model)
 activate EditTransactionCommand
 
 create Transaction
@@ -63,7 +67,7 @@ activate Transaction
 Transaction --> EditTransactionCommand
 deactivate Transaction
 
-EditTransactionCommand -> Model : setTransaction(transactionToEdit, editedTransaction)
+EditTransactionCommand -> Model : setTransaction(oldTransaction, newTransaction)
 activate Model
 
 Model --> EditTransactionCommand

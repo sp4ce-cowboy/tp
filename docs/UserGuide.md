@@ -1197,6 +1197,10 @@ Command: `get_total_expenditure month/Month [c/Category] [year/Year]`
 For more information about the prefix constraints, refer to the [command breakdown's prefix types section](#prefix-types)
 </div>
 
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+The default value for the `year/` prefix, if not provided, is the current year in which the command is executed.
+</div>
+
 Command Words Accepted: `get_total_expenditure`, `get_total_exp`, `gte` (case-insensitive)
 
 <div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
@@ -1222,7 +1226,7 @@ For more information on how `get_total_expenditure` is computed, refer to the [d
 > Your total expenditure in October 2023 was $1028.00
 > ```
 > 
-> **Note:** The transaction list will be filtered
+> **Note:** The year defaults to the current year (2023 in this case) and the transaction list will be filtered
 > 
 > <img src="images/unicash/command-outputs/get-total-expenditure/getTotalExpenditureMonthOnlySuccess.png" width="550">
 

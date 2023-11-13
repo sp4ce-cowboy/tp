@@ -1,0 +1,93 @@
+@startuml
+!include ../style.puml
+
+box Ui UI_COLOR_T1
+participant ":MainWindow" as MainWindow UI_COLOR
+participant ":ResultDisplay" as ResultDisplay UI_COLOR
+participant ":SummaryWindow" as SummaryWindow UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant "logic:LogicManager" as LogicManager LOGIC_COLOR
+end box
+
+[-> MainWindow : executeCommand("summary")
+activate MainWindow
+
+MainWindow -> LogicManager : execute("summary")
+activate LogicManager
+
+LogicManager --> MainWindow : commandResult
+deactivate LogicManager
+
+MainWindow -> ResultDisplay : setFeedbackToUser(commandResult.getFeedbackToUser())
+activate ResultDisplay
+
+ResultDisplay --> MainWindow
+deactivate ResultDisplay
+
+MainWindow -> LogicManager : get expense data
+activate LogicManager
+
+LogicManager --> MainWindow : expense data
+deactivate LogicManager
+
+MainWindow -> SummaryWindow : update with expense data
+activate SummaryWindow
+
+SummaryWindow --> MainWindow
+deactivate SummaryWindow
+
+
+alt commandResult.isShowSummary()
+
+    MainWindow -> MainWindow : handleSummary()
+    activate MainWindow
+
+    MainWindow -> SummaryWindow : isShowing()
+    activate SummaryWindow
+
+    SummaryWindow --> MainWindow
+
+    alt summary window is not opened
+
+        MainWindow -> LogicManager : getExpenseSummaryPerCategory()
+        activate LogicManager
+
+        LogicManager --> MainWindow : expenseSummary
+        deactivate LogicManager
+
+        MainWindow -> SummaryWindow : show(expenseSummary)
+        activate SummaryWindow
+
+        opt expenseSummary is not empty
+            SummaryWindow -> SummaryWindow : open summary window
+            activate SummaryWindow
+
+            SummaryWindow --> SummaryWindow
+            deactivate SummaryWindow
+        end
+
+        SummaryWindow --> MainWindow
+        deactivate SummaryWindow
+
+    else else
+
+        MainWindow -> SummaryWindow : focus()
+        activate SummaryWindow
+
+        SummaryWindow --> MainWindow
+        deactivate SummaryWindow
+
+    end
+
+end
+
+MainWindow --> MainWindow
+deactivate MainWindow
+
+MainWindow -->[ : commandResult
+deactivate MainWindow
+
+
+@enduml

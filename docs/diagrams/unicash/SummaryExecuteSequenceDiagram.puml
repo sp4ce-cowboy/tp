@@ -1,0 +1,60 @@
+@startuml
+!include ../style.puml
+
+box Ui UI_COLOR_T1
+participant ":MainWindow" as MainWindow UI_COLOR
+end box
+
+box Logic LOGIC_COLOR_T1
+participant "logic:LogicManager" as LogicManager LOGIC_COLOR
+participant ":UniCashParser" as UniCashParser LOGIC_COLOR
+participant "command:SummaryCommand" as SummaryCommand LOGIC_COLOR
+participant "commandResult:CommandResult" as CommandResult LOGIC_COLOR
+end box
+
+box Model MODEL_COLOR_T1
+participant ":Model" as Model MODEL_COLOR
+end box
+
+[-> MainWindow : executeCommand("summary")
+activate MainWindow
+
+MainWindow -> LogicManager : execute("summary")
+activate LogicManager
+
+LogicManager -> UniCashParser : parseCommand("summary")
+activate UniCashParser
+
+create SummaryCommand
+UniCashParser -> SummaryCommand
+activate SummaryCommand
+
+SummaryCommand --> UniCashParser : command
+deactivate SummaryCommand
+
+UniCashParser --> LogicManager : command
+deactivate UniCashParser
+
+LogicManager -> SummaryCommand : execute(model)
+activate SummaryCommand
+
+SummaryCommand -> Model : hasExpenses()
+activate Model
+
+Model --> SummaryCommand
+deactivate Model
+
+create CommandResult
+SummaryCommand -> CommandResult
+activate CommandResult
+
+CommandResult --> SummaryCommand : commandResult
+deactivate CommandResult
+
+SummaryCommand --> LogicManager : commandResult
+deactivate SummaryCommand
+
+LogicManager --> MainWindow : commandResult
+deactivate LogicManager
+
+@enduml

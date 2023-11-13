@@ -1,0 +1,24 @@
+@startuml
+skin rose
+skinparam ActivityFontSize 15
+skinparam ArrowFontSize 12
+
+start
+
+:User inputs "summary" command;
+if () then ([summary window is not open])
+  if () then ([there are no expenses])
+    :Tell user that they have no expenses to summarize;
+  else ([there is at least 1 expense])
+    :Open summary window;
+  endif
+else ([summary window is already open])
+  if () then ([user deletes all expenses])
+    :Tell user that there are no expenses available;
+  else ([user does not delete all expenses])
+  endif
+endif
+
+stop
+
+@enduml
