@@ -1183,9 +1183,12 @@ The following sequence diagram shows the interaction between different component
 
 **Details**
 
-1. The user inputs the command to reset unicash
-2. A `ClearTransactionsCommand` object is created with no arguments.
-3. `LogicManager` will invoke the `execute` method of `ClearTransactionsCommand`
+1. The user inputs the command to clear all transactions
+2. The input will be parsed by `ClearTransactionsCommandParser` and if the provided input is
+invalid (i.e. trailing arguments) `ParseException` will be thrown, and the 
+user is prompted to enter the command again with the correct input. 
+3. If the input is valid, a `ClearTransactionsCommand` object is created to be executed by `LogicManager`
+4. `LogicManager` will invoke the `execute` method of `ClearTransactionsCommand`
    which will replace the existing `Model` property with a new `UniCash` object which
    would contain an empty `TransactionList`.
 
@@ -1194,6 +1197,39 @@ are not deleted singularly. As opposed to iteratively deleting each transaction 
 efficient way to achieve the same effect would be to simply set the `Model` contained in `LogicManager` to a new
 `UniCash` object, as the newly created `UniCash` object would now have an empty `TransactionList` encapsulated within.
 This emulates the deletion of all transactions in the `TransactionList`.
+
+#### Get Transaction
+
+**Overview**
+
+The `get` command retrives an existing `Transaction` from `TransactionList` in UniCash.
+
+The activity diagram of retrieving a Transaction is as shown below
+
+<img src="images/unicash/diagrams/GetTransactionActivityDiagram.png" width="500" />
+
+The following sequence diagram shows the interaction between different components of UniCash.
+
+<img src="images/unicash/diagrams/GetTransactionSequenceDiagram.png" width="1200" />
+
+The above sequence diagram omits details on the filtering of `TransactionList` and assumes that
+the displayed `TransactionList` is showing all transactions. However, the logic of the `DeleteCommand`
+remains the same for all list deletion.
+
+ℹ️ **Note:** The lifeline for `GetCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML,
+the lifeline reaches the end of diagram.
+
+**Details**
+
+1. The user specifies the transaction to be retrieved by stating the integer index of the transaction to be retrieved.
+2. The input will be parsed by `GetCommandParser` and if the provided input is invalid, `ParseException` will be thrown,
+   and the user is prompted to enter the command again with the correct input.
+3. If the input is valid, an `Index` object is created with the given input integer, and passed into `GetCommand` to be executed
+   by `LogicManager`
+4. `LogicManger` will invoke the `execute` method of `GetCommand` which will retrieve the `Transaction` from UniCa$h.
+
+It is important to take note that when the user input is parsed, it is based on the currently displayed `TransactionList` inside
+`TransactionListPanel`. For more information, you can refer back to how [DeleteTransactionCommand]() handles indices.
 
 ### Budget Management
 
