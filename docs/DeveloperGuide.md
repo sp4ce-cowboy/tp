@@ -1864,9 +1864,3 @@ TestFX has allowed us to create test suites for both individual UI components an
 ### Appendix: Known Bugs
 
 - Light scrollbars hard to see
-
-### Links
-
-- [User Stories](https://github.com/orgs/AY2324S1-CS2103-T16-3/projects/1/views/2)
-- [Project Website Home](https://ay2324s1-cs2103-t16-3.github.io/tp/)
-- [UniCa$h Demo](https://drive.google.com/file/d/1l2Erx-qMpM274AUePf6DDlvSl9G15y6T/view?usp=share_link)
