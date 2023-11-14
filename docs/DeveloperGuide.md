@@ -1826,16 +1826,44 @@ Expected: UniCa$h closes.
 
 ### Appendix: Planned Enhancements
 
+**Get_Budget Command**
+
 - The current `get_budget` command does not alter the transaction list when processing the expenses within the interval. This can lead to confusion as users may not be aware of the specific transactions that are being included in the calculation of the budget remainder, and as a result, mistaking the budget calculation as not working. 
  
     We plan to apply a filter to the transaction list, like in `get_total_expenditure`, when `get_budget` is run to accurately display the list of transactions that we have included for the calculation to reduce this potential user confusion.
 - The current `get_budget`'s weekly interval calculation uses the week of year. However, given that this information is not immediately intuitive to users, users may not be aware of how weekly budgets are calculated, leading to confusion.
 
   We plan to modify `get_budget`'s weekly interval calculation to use the previous `6` days + today to make the command more intuitive for users.
-- `find` to support all properties
-- Add confirmation to some data deletion commands (`delete`, `clear_transactions`, `reset_unicash`)
-- Expand summary window to incomes as well
-- Batch deletion/clear (by day, by month, etc)
+
+**Find Command**
+- The current `find` command is limited to searching for the name, location, and category of transactions only.
+
+  We plan to add support for searching across all properties, including date & time, amount, and transaction type.
+This would allow users to have even more precise control over the scope of transactions search.
+
+**Filter Clearing**
+- Currently, the `find` (as mentioned [here](UserGuide.md#find-transactions))
+and `get_total_expenditure` (as mentioned [here](UserGuide.md#get-total-expenditure))
+commands have a persisting filter on the current `Transactions List` configuration. 
+
+  We plan to clear this filter on every command to avoid confusion.
+
+**Deletion Confirmation**
+- The data deletion commands (`delete`, `clear_transactions`, `reset_unicash`) currently do not have any
+confirmation required for execution. This means that the user can enter the command and the data deletion will
+be executed immediately.
+
+  We plan to add and additional step of deletion confirmation as a layer of safety for
+the user's data.
+
+**Summary Window**
+- The current summary window is limited to showing the summary of expenses only.
+
+  We plan to extend this to showing a summary of incomes as well.
+
+**Batch Deletion**
+
+- 
 
 ### Appendix: Potential Features
 
@@ -1846,6 +1874,7 @@ Every user can...
 - Set recurring transactions
 - Support more than one global budget to allow users to set budgets for each category or different budgets for day/week/month
 - Support more types of transaction such as `transfer`
+- Delete transactions in batches (by day, by month, etc)
 
 ### Appendix: Effort
 
