@@ -863,7 +863,7 @@ The above sequence diagram omits details on the creation of the attributes of a 
 `Name`, `Type` and `Amount` as it would make the diagram cluttered and difficult to read without adding
 additional value.
 
-<div class="callout callout-info" markdown="span">
+<div class="callout callout-important" markdown="span">
 **Note:** The lifeline for `AddTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML,
 the lifeline reaches the end of diagram.
 </div>
@@ -901,7 +901,7 @@ The above sequence diagram omits details on the creation of the arguments of a `
 `Category` as it would make the diagram cluttered and difficult to read without adding additional value. It also omits
 the specific `predicate` behavior of provided to perform the filtering.
 
-<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
 The lifeline for `GetTotalExpenditureCommandParser` should end at the destroy marker (X) but due to a
 limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -1224,7 +1224,7 @@ The above sequence diagram omits details on the creation of the arguments of a `
 
 It also omits the file saving aspect of this, where the updated budget is saved to the `data/unicash.json` file.
 
-<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
 The lifeline for `SetBudgetCommandParser` should end at the destroy marker (X) but due to a
 limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
