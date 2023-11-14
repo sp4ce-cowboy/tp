@@ -72,6 +72,12 @@ Then, to contribute to the project, we recommend the following flow:
 
 This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
 
+The UniCa$h App icon is an open source icon named "wallet", available for
+personal and commercial uses, sourced from [here](https://iconduck.com/icons/228311/wallet).
+
+UniCa$h uses the Inter font throughout, licensed under the Open Font License
+and available for personal and commercial uses, sourced from [here](https://fonts.google.com/specimen/Inter/about).
+
 ### Terminology
 
 | Term        | Meaning                                                                                                             |
@@ -141,287 +147,6 @@ The bulk of this milestone was improving the documentation, ensuring clarity for
 - Adding detailed documentation about argument and prefix constraints
 - Provide documentation on logic, model, and storage components
 
-## Requirements
-
-### Non-Functional Requirements
-
-1. The application should be cross-platform functional on major operating systems, i.e. Windows, MacOS, Linux, running at least Java 11
-2. All transactions and budget managed by the user should be saved and backed up locally and restored the next session as long as the data has not been corrupted
-3. The user guide should be clear and straightforward so that the user can perform all major tasks intuitively
-4. All non-private methods should be well-documented to ensure that the codebase is maintainable
-5. The application should have an intuitive interface with easy navigation commands and clear instructions/errors
-6. The application achieves at least 85% in test coverage with comprehensive unit and integration tests
-7. The user should not experience excessive sluggishness while using the application
-8. The application should serve the latest updates of transactions the moment these updates are confirmed
-9. The application should not require an active Internet connection to function
-10. The application should be able to generate visualisations for 1000 expenses without any excessive sluggishness
-
-### User Stories
-
-The user stories for UniCa$h can be [found on GitHub.](https://github.com/orgs/AY2324S1-CS2103-T16-3/projects/1)
-
-### Use Cases
-The following documents use cases for our application
-
-For the following Use Cases (unless specified otherwise):
-- The System is `UniCa$h`
-- The Actor is `User`
-
-**Use Case: UC01 - Adding a Transaction**
-
-**MSS:**
-1. User enters the command to add a transaction.
-2. User submits the request.
-3. UniCa$h adds the transaction to the transactions list and displays success message.
-    
-    Use Case ends
-
-**Extensions**
-- 2a. User enters an incorrect format
-  - 2a1. UniCa$h displays an error message with the correct command format.
-  - Use case resumes at step 1.
-- 2b. User enters an extremely high number
-  - 2b1. UniCa$h prompts the user with a warning of the input
-  - 2b2. User confirms the request
-  - Use case resumes at step 3.
-
-
-**Use Case: UC02 - Delete a transaction**
-
-**MSS:**
-1. User enters the command to delete a transaction.
-2. User submits the request.
-3. UniCa$h finds the transaction based on the passed in arguments.
-4. UniCa$h deletes the transaction.
-5. UniCa$h displays success message.
-
-   Use Case ends
-
-**Extensions**
-- 2a. User enters an incorrect format.
-    - 2a1. UniCa$h displays an error message with the correct command format.
-    - Use case resumes at step 1.
-
-**Use Case: UC03 - Editing a Transaction**
-
-**MSS:**
-1. User enters the command to edit an existing transaction's fields.
-2. User submits the request.
-3. UniCa$h makes the edits specified in the command and displays all the fields of that transaction.
-
-   Use Case ends.
-
-**Extensions**
-- 2a. User provides a field in an incorrect format. (e.g. amount is not expressed as a float, name is empty,
-  unrecognized datetime format, etc.)
-    - 2a1. UniCa$h displays an error message that requests for correct format.
-    - Use case resumes at step 1.
-
-- 2b. User requests to edit a transaction that does not exist
-    - 2b1. UniCa$h displays an error message informing the user that the transaction cannot be found.
-    - Use case resumes at step 1.
-
-- 2c. User does not specify which field of a transaction to edit
-    - 2c1. UniCa$h displays an error message and displays the correct way to format the edit command.
-    - Use case resumes at step 1.
-
-
-**Use Case: UC04 - Listing all Transactions**
-
-**MSS:**
-1. User enters the command to list all transactions.
-2. User submits the request.
-3. UniCa$h retrieves the list of all transactions and displays them for the User.
-
-   Use Case ends.
-
-**Extensions**
-- 2a. User enters the command with the incorrect format (i.e. with parameters).
-    - 2a1. UniCa$h displays an error message, requests for the correct format.
-    - Use case resumes from step 1.
-
-- 3a. There are no transactions for UniCa$h to retrieve.
-    - 3a1. UniCa$h displays no transactions, and informs the user that all transactions have been retrieved. 
-    - Use Case ends.
-
-
-**Use Case: UC05 - Finding a Transaction**
-
-**MSS:**
-1. User enters the command to find transactions.
-2. User submits the request.
-3. UniCa$h filters the transactions based on the specified filters and returns the filtered list of expenses with a success message.
-
-   Use Case ends.
-
-**Extensions**
-- 2a. User enters an incorrect format.
-    - 2a1. UniCa$h displays an error message, requests for correct format.
-    - Use case resumes from Step 1.
-
-  
-**Use Case: UC05 - Get Total Expenditure**
-
-**MSS:**
-1. User enters the command to get the total expenditure.
-2. User submits the request.
-3. UniCa$h parses the command, and it is in the right format.
-4. UniCa$h calculates the expenditure based on the parameters passed in.
-5. UniCa$h displays the calculated expenditure.
-
-   Use Case ends.
-
-**Extensions**
-- 3a. UniCa$h parses command, and detects that user entered the incorrect format (missing fields)
-    - 2a1. UniCa$h displays an error message, requests for command to be re-entered.
-    - Use case resumes at step 1
-
-
-**Use Case: UC06 - Clear all transactions**
-
-**MSS:**
-1. User enters the command to clear all transactions.
-2. User submits the request.
-3. UniCa$h deletes all transactions in the transactions list.
-4. UniCa$h displays success message.
-
-   Use Case ends.
-
-**Extensions**
-- 2a. User enters an incorrect format.
-  - 2a1. UniCa$h displays an error message with the correct command format.
-  - Use case resumes at step 1.
-
-**Use Case: UC07 - Reset UniCa$h**
-
-**MSS:**
-1. User enters the command to reset UniCa$h.
-2. User submits the request.
-3. UniCa$h restores all transactions in the transactions list to the default transactions
-4. UniCa$h displays success message.
-
-   Use Case ends.
-
-**Extensions**
-- 2a. User enters an incorrect format.
-    - 2a1. UniCa$h displays an error message with the correct command format.
-    - Use case resumes at step 1.
-
-
-**Use Case: UC08 - Show Summary Statistics**
-
-**MSS:**
-1. User enters the command to get the summary for their expenses.
-2. User submits the request.
-3. UniCa$h summarizes the user's saved expenses by month and by category.
-4. UniCa$h displays summary plots for the user to analyze their expenses.
-
-   Use Case ends.
-
-**Extensions:**
-
-- 2a. UniCa$h does not contain any of the user's expenses.
-    - 2a1. UniCa$h displays a prompt informing the user that there are no expenses available.
-    - Use case ends.
-
-**Use Case: UC09 - Show UniCa$h Help**
-
-**MSS:**
-1. User enters the command to show help.
-2. User submits the request.
-3. UniCa$h opens help window with link to User Guide
-4. UniCa$h displays the default welcome message with overview of commands
-
-   Use Case ends.
-
-**Extensions**
-- 2a. User enters an incorrect format.
-  - 2a1. UniCa$h displays an error message with the correct command format.
-  - Use case resumes at step 1.
-
-**Use Case: UC10 - Exit UniCa$h**
-
-**MSS:**
-1. User enters the command to exit UniCa$h.
-2. User submits the request. 
-3. UniCa$h displays exit message and application closes
-
-   Use Case ends.
-
-**Extensions**
-- 2a. User enters an incorrect format.
-  - 2a1. UniCa$h displays an error message with the correct command format.
-  - Use case resumes at step 1.
-
-
-**Use Case: UC11 - Set Budget**
-
-**MSS:**
-1. User enters the command to set the budget.
-2. User submits the request.
-3. UniCa$h parses the command, and it is in the right format.
-4. UniCa$h sets the global budget.
-5. UniCa$h displays the new budget.
-
-   Use Case ends.
-
-**Extensions:**
-
-- 3a. UniCa$h parses command, and detects that user entered the incorrect format (missing fields)
-  - 3a1. UniCa$h displays an error message with the correct command format
-  - Use case resumes at step 1.
-- 4a. UniCa$h contains existing budget.
-  - 4a1. UniCa$h replaces existing budget with new one.
-  - Use case resumes at step 5.
-
-**Use Case: UC12 - Clear Budget**
-
-**MSS:**
-1. User enters the command to clear the budget.
-2. User submits the request.
-3. UniCa$h clears the existing budget.
-4. UniCa$h displays a success message.
-
-   Use Case ends.
-
-**Extensions:**
-
-- 3a. UniCa$h does not contain an existing budget.
-    - 3a1. UniCa$h displays a prompt to create a budget first.
-    - Use case ends.
-
-
-**Use Case: UC13 - Get Budget**
-
-**MSS:**
-1. User enters the command to get the budget.
-2. User submits the request.
-3. UniCa$h tabulates the expenditure relative to the budget set for the given interval.
-4. UniCa$h displays the budget and the net amount of the budget.
-
-   Use Case ends.
-
-**Extensions:**
-
-- 3a. UniCa$h does not contain an existing budget.
-    - 3a1. UniCa$h displays a prompt to create a budget first.
-    - Use case ends.
-
-**Use Case: UC14 - Retrieve a transaction**
-
-**MSS:**
-1. User enters the command to retrieve (i.e. `get`) a transaction.
-2. User submits the request.
-3. UniCa$h retrieves the transaction based on the passed in arguments.
-4. UniCa$h displays expanded details of that transaction
-
-   Use Case ends.
-
-**Extensions**
-- 2a. User enters an incorrect format.
-    - 2a1. UniCa$h displays an error message with the correct command format.
-    - Use case resumes at step 1.
-
 ---
 
 ## Design Overview
@@ -444,7 +169,7 @@ UniCa$sh consists of the following UI components:
 2. Help Window
 3. Statistics / Budget Window
 
-<img src="images/unicash/UiClassDiagram.png" width="800" />
+<img src="images/unicash/UiClassDiagram.png" width="1010"/>
 
 In this section, we will be going through the implementation of the main window.
 
@@ -1138,10 +863,12 @@ The above sequence diagram omits details on the creation of the attributes of a 
 `Name`, `Type` and `Amount` as it would make the diagram cluttered and difficult to read without adding
 additional value.
 
-ℹ️ **Note:** The lifeline for `AddTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML,
+<div class="callout callout-important" markdown="span">
+**Note:** The lifeline for `AddTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML,
 the lifeline reaches the end of diagram.
+</div>
 
-##### Details
+**Details**
 
 1. The user specifies the transaction to be added by stating the name, amount, transaction type as well as any other optional fields.
 2. The input will be parsed by `AddCommandTransactionParser`, and if it is invalid, `ParserException` is thrown, prompting for the user to enter again.
@@ -1174,12 +901,12 @@ The above sequence diagram omits details on the creation of the arguments of a `
 `Category` as it would make the diagram cluttered and difficult to read without adding additional value. It also omits
 the specific `predicate` behavior of provided to perform the filtering.
 
-<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
 The lifeline for `GetTotalExpenditureCommandParser` should end at the destroy marker (X) but due to a
 limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
-##### Details
+**Details**
 
 1. The user specifies the month to retrieve the total expenditure and the optional category
 2. The input will be parsed by `GetTotalExpenditureCommandParser`, and if it is invalid, `ParserException` is thrown,
@@ -1471,7 +1198,7 @@ The [prefix types section in the user guide](UserGuide.html#prefix-types) contai
 <br><br>
 Expenses that fall within the interval are included and the total expense is computed relative to the budget.
 <br>
-1. Daily: expenses that occur within the same **day of year** (i.e. the expenses that occur on day `x` are included if today is day `x`, expenses on day `x +/- 1` are not includued)
+1. Daily: expenses that occur within the same **day of year** (i.e. the expenses that occur on day `x` are included if today is day `x`, expenses on day `x +/- 1` are not included)
 <br>
 2. Weekly: expenses that occur within the same **week of year**. This is dependent on the current year, for more information refer to the [documentation here.](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/temporal/WeekFields.html#weekOfYear())
 <br>
@@ -1497,7 +1224,7 @@ The above sequence diagram omits details on the creation of the arguments of a `
 
 It also omits the file saving aspect of this, where the updated budget is saved to the `data/unicash.json` file.
 
-<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+<div class="callout callout-important" markdown="span" style="margin-bottom: 20px;">
 The lifeline for `SetBudgetCommandParser` should end at the destroy marker (X) but due to a
 limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
@@ -1666,6 +1393,436 @@ This command will exit UniCa$h.
 [//]: # (#### etc)
 
 ---
+## Appendix
+
+### Appendix: Requirements
+
+#### Non-Functional Requirements
+
+1. The application should be cross-platform functional on major operating systems, i.e. Windows, MacOS, Linux, running at least Java 11
+2. All transactions and budget managed by the user should be saved and backed up locally and restored the next session as long as the data has not been corrupted
+3. The user guide should be clear and straightforward so that the user can perform all major tasks intuitively
+4. All non-private methods should be well-documented to ensure that the codebase is maintainable
+5. The application should have an intuitive interface with easy navigation commands and clear instructions/errors
+6. The application achieves at least 85% in test coverage with comprehensive unit and integration tests
+7. The user should not experience excessive sluggishness while using the application
+8. The application should serve the latest updates of transactions the moment these updates are confirmed
+9. The application should not require an active Internet connection to function
+10. The application should be able to generate visualisations for 1000 expenses without any excessive sluggishness
+
+#### User Stories
+
+<div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
+Priorities for user stories are marked as follows: <br>
+High (must have) - `* * *` <br>
+Medium (nice to have) - `* *` <br>
+Low (unlikely to have) - `*`
+</div>
+
+| Priority | As a …​                | I want to …​                                                        | So that I can…​                                                                                      |
+|----------|------------------------|---------------------------------------------------------------------|------------------------------------------------------------------------------------------------------|
+| `* * *`  | tech-savvy NUS student | add a new transaction                                               | track my cash flow                                                                                   |
+| `* * *`  | tech-savvy NUS student | retrieve a list of all my transactions with all transaction details | check if I have forgotten to log some transactions                                                   |
+| `* * *`  | tech-savvy NUS student | get a transaction                                                   | locate details of a transaction without having to go through the entire list                         |
+| `* * *`  | tech-savvy NUS student | delete transactions                                                 | remove transactions I no longer need                                                                 |
+| `* * *`  | tech-savvy NUS student | edit transactions that have been created                            | rectify incorrect inputs in my transactions                                                          |
+| `* * *`  | tech-savvy NUS student | view my total expenditure                                           | see at a glance how much I have spent in total without having to manually tabulate                   |
+| `* * *`  | tech-savvy NUS student | find transaction(s) by name, location and/or category               | locate specific transactions and its associated details without having to go through the entire list |
+| `* * *`  | tech-savvy NUS student | view my total expenditure by month/year and filter by category      | check my expenditure in specific areas without having to manually tabulate                           |
+| `* * *`  | tech-savvy NUS student | clear all my transactions                                           | start afresh with no transaction history                                                             |
+| `* *`    | tech-savvy NUS student | set a daily/weekly/monthly budget                                   | spend within my limits                                                                               |
+| `* *`    | tech-savvy NUS student | check the budget that I set                                         | the spending limit I set for myself                                                                  |
+| `* *`    | tech-savvy NUS student | check my remaining budget                                           | see at a glance if I am spending within limits                                                       |
+| `* *`    | tech-savvy NUS student | clear my current budget                                             | start afresh with no budget set                                                                      |
+| `* *`    | tech-savvy NUS student | view a graphical summary of my transactions                         | see my cash flow at a glance                                                                         |
+| `* *`    | tech-savvy NUS student | input different DateTime formats in my transactions                 | use the application with ease                                                                        |
+| `* *`    | tech-savvy NUS student | use command keyword abbreviations                                   | use the application efficiently                                                                      |
+| `* * *`  | tech-savvy NUS student | see usage instructions                                              | refer to instructions when I forget how to the App                                                   |
+| `* *`    | tech-savvy NUS student | see usage instructions for a command                                | refer to instructions when I forget how to the command                                               |
+| `* * *`  | tech-savvy NUS student | reset the application                                               | restore it to the original state                                                                     |
+| `* * *`  | tech-savvy NUS student | exit the application                                                | close the application                                                                                |
+| `*`      | tech-savvy NUS student | import my transaction data from a spreadsheet to the app            | input all my historical expenses without having to manually input them one at a time                 |
+| `*`      | tech-savvy NUS student | export my transaction data to a spreadsheet                         | backup my transaction data                                                                           |
+| `*`      | tech-savvy NUS student | fix a ratio to be set aside from my excess funds every month        | still have a portion of my savings even when I make big purchases                                    |
+| `*`      | tech-savvy NUS student | add transactions that are due on a recurring basis                  | include recurring expenditures without having to manually input them every time they occur           |
+| `*`      | tech-savvy NUS student | receive autofill recommendations based on my historical inputs      | save time typing the full command and reduce the chance of making a mistake                          |
+
+#### Use Cases
+The following documents use cases for our application
+
+For the following Use Cases (unless specified otherwise):
+- The System is `UniCa$h`
+- The Actor is `User`
+
+**Use Case: UC01 - Adding a Transaction**
+
+**MSS:**
+1. User enters the command to add a transaction.
+2. User submits the request.
+3. UniCa$h adds the transaction to the transactions list and displays success message.
+
+   Use Case ends
+
+**Extensions**
+- 2a. User enters an incorrect format
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+- 2b. User enters an extremely high number
+    - 2b1. UniCa$h prompts the user with a warning of the input
+    - 2b2. User confirms the request
+    - Use case resumes at step 3.
+
+
+**Use Case: UC02 - Delete a transaction**
+
+**MSS:**
+1. User enters the command to delete a transaction.
+2. User submits the request.
+3. UniCa$h finds the transaction based on the passed in arguments.
+4. UniCa$h deletes the transaction.
+5. UniCa$h displays success message.
+
+   Use Case ends
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
+**Use Case: UC03 - Editing a Transaction**
+
+**MSS:**
+1. User enters the command to edit an existing transaction's fields.
+2. User submits the request.
+3. UniCa$h makes the edits specified in the command and displays all the fields of that transaction.
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User provides a field in an incorrect format. (e.g. amount is not expressed as a float, name is empty,
+  unrecognized datetime format, etc.)
+    - 2a1. UniCa$h displays an error message that requests for correct format.
+    - Use case resumes at step 1.
+
+- 2b. User requests to edit a transaction that does not exist
+    - 2b1. UniCa$h displays an error message informing the user that the transaction cannot be found.
+    - Use case resumes at step 1.
+
+- 2c. User does not specify which field of a transaction to edit
+    - 2c1. UniCa$h displays an error message and displays the correct way to format the edit command.
+    - Use case resumes at step 1.
+
+
+**Use Case: UC04 - Listing all Transactions**
+
+**MSS:**
+1. User enters the command to list all transactions.
+2. User submits the request.
+3. UniCa$h retrieves the list of all transactions and displays them for the User.
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters the command with the incorrect format (i.e. with parameters).
+    - 2a1. UniCa$h displays an error message, requests for the correct format.
+    - Use case resumes from step 1.
+
+- 3a. There are no transactions for UniCa$h to retrieve.
+    - 3a1. UniCa$h displays no transactions, and informs the user that all transactions have been retrieved.
+    - Use Case ends.
+
+
+**Use Case: UC05 - Finding a Transaction**
+
+**MSS:**
+1. User enters the command to find transactions.
+2. User submits the request.
+3. UniCa$h filters the transactions based on the specified filters and returns the filtered list of expenses with a success message.
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message, requests for correct format.
+    - Use case resumes from Step 1.
+
+
+**Use Case: UC05 - Get Total Expenditure**
+
+**MSS:**
+1. User enters the command to get the total expenditure.
+2. User submits the request.
+3. UniCa$h parses the command, and it is in the right format.
+4. UniCa$h calculates the expenditure based on the parameters passed in.
+5. UniCa$h displays the calculated expenditure.
+
+   Use Case ends.
+
+**Extensions**
+- 3a. UniCa$h parses command, and detects that user entered the incorrect format (missing fields)
+    - 2a1. UniCa$h displays an error message, requests for command to be re-entered.
+    - Use case resumes at step 1
+
+
+**Use Case: UC06 - Clear all transactions**
+
+**MSS:**
+1. User enters the command to clear all transactions.
+2. User submits the request.
+3. UniCa$h deletes all transactions in the transactions list.
+4. UniCa$h displays success message.
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
+**Use Case: UC07 - Reset UniCa$h**
+
+**MSS:**
+1. User enters the command to reset UniCa$h.
+2. User submits the request.
+3. UniCa$h restores all transactions in the transactions list to the default transactions
+4. UniCa$h displays success message.
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
+
+**Use Case: UC08 - Show Summary Statistics**
+
+**MSS:**
+1. User enters the command to get the summary for their expenses.
+2. User submits the request.
+3. UniCa$h summarizes the user's saved expenses by month and by category.
+4. UniCa$h displays summary plots for the user to analyze their expenses.
+
+   Use Case ends.
+
+**Extensions:**
+
+- 2a. UniCa$h does not contain any of the user's expenses.
+    - 2a1. UniCa$h displays a prompt informing the user that there are no expenses available.
+    - Use case ends.
+
+**Use Case: UC09 - Show UniCa$h Help**
+
+**MSS:**
+1. User enters the command to show help.
+2. User submits the request.
+3. UniCa$h opens help window with link to User Guide
+4. UniCa$h displays the default welcome message with overview of commands
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
+**Use Case: UC10 - Exit UniCa$h**
+
+**MSS:**
+1. User enters the command to exit UniCa$h.
+2. User submits the request.
+3. UniCa$h displays exit message and application closes
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
+
+**Use Case: UC11 - Set Budget**
+
+**MSS:**
+1. User enters the command to set the budget.
+2. User submits the request.
+3. UniCa$h parses the command, and it is in the right format.
+4. UniCa$h sets the global budget.
+5. UniCa$h displays the new budget.
+
+   Use Case ends.
+
+**Extensions:**
+
+- 3a. UniCa$h parses command, and detects that user entered the incorrect format (missing fields)
+    - 3a1. UniCa$h displays an error message with the correct command format
+    - Use case resumes at step 1.
+- 4a. UniCa$h contains existing budget.
+    - 4a1. UniCa$h replaces existing budget with new one.
+    - Use case resumes at step 5.
+
+**Use Case: UC12 - Clear Budget**
+
+**MSS:**
+1. User enters the command to clear the budget.
+2. User submits the request.
+3. UniCa$h clears the existing budget.
+4. UniCa$h displays a success message.
+
+   Use Case ends.
+
+**Extensions:**
+
+- 3a. UniCa$h does not contain an existing budget.
+    - 3a1. UniCa$h displays a prompt to create a budget first.
+    - Use case ends.
+
+
+**Use Case: UC13 - Get Budget**
+
+**MSS:**
+1. User enters the command to get the budget.
+2. User submits the request.
+3. UniCa$h tabulates the expenditure relative to the budget set for the given interval.
+4. UniCa$h displays the budget and the net amount of the budget.
+
+   Use Case ends.
+
+**Extensions:**
+
+- 3a. UniCa$h does not contain an existing budget.
+    - 3a1. UniCa$h displays a prompt to create a budget first.
+    - Use case ends.
+
+**Use Case: UC14 - Retrieve a transaction**
+
+**MSS:**
+1. User enters the command to retrieve (i.e. `get`) a transaction.
+2. User submits the request.
+3. UniCa$h retrieves the transaction based on the passed in arguments.
+4. UniCa$h displays expanded details of that transaction
+
+   Use Case ends.
+
+**Extensions**
+- 2a. User enters an incorrect format.
+    - 2a1. UniCa$h displays an error message with the correct command format.
+    - Use case resumes at step 1.
+
+---
+
+### Appendix: Instructions for manual testing
+#### Initial launch
+1. Download the jar file (`unicash.jar`) and copy it into an empty folder
+2. Open a terminal and navigate to the folder
+3. Run `java --version`, ensure that you are running on Java 11. If not, download and install Java 11.
+4. Run `java -jar unicash.jar`
+    * Expected output: A GUI window should appear with the title "UniCa$h", with a set of sample transactions.
+
+#### Transactions
+**1. Adding a transaction**
+
+Use `add n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food`
+
+Expected output: Transaction is added and a success message is displayed.
+
+**2. Deleting a transaction**
+
+Use `delete 1`
+
+Expected output: Transaction is deleted and a success message is displayed.
+
+**3. Editing a transaction**
+
+Use `edit 1 n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food`
+
+Expected output: Transaction is edited and a success message is displayed.
+
+**4. Listing all transactions**
+
+Use `list`
+
+Expected output: All transactions are displayed.
+
+**5. Finding transaction(s)**
+
+Use `find n/Buying groceries l/NTUC c/Food`
+
+Expected output: All transactions that match the specified filters are displayed.
+
+**6. Get a transaction**
+
+Prerequisite: There is at least 1 transaction stored in UniCa$h.
+
+Use `get 1`
+
+Expected output: The retrieved transaction is displayed.
+
+**7. Clear all transactions**
+
+Use `clear_transactions`
+
+Expected output: All transactions are cleared and a success message is displayed.
+
+#### Expenditure
+**1. Get total expenditure**
+
+Prerequisite: There is at least 1 transaction of category expense stored in UniCa$h.
+
+Use `get_total_expenditure month/10 c/Food year/2006`
+
+Expected output: The total expenditure is displayed.
+
+#### Statistics
+**1. Summary statistics**
+
+Use `summary`
+
+Expected output: The summary statistics window pops up and displays the summary statistics.
+
+#### Budget
+**1. Set your budget**
+
+Use `set_budget amt/300 interval/day`
+
+Expected output: Budget is set and a success message is displayed.
+
+**2. Get your budget**
+
+Use `get_budget`
+
+Expected output: Budget is displayed.
+
+**3. Clear your budget**
+
+Use `clear_budget`
+
+Expected output: Budget is cleared and a success message is displayed.
+
+#### Utility
+**1. Reset**
+
+Use `reset_unicash`
+
+Expected output: UniCa$h resets to default state and restores the sample transactions.
+
+**2. Help**
+
+Use `help`
+
+Expected output: The help window pops up and displays the link to the User Guide. Message with all commands is displayed on the right panel.
+
+Use `help <command word>` (e.g. `help add_transaction`)
+
+Expected output: The help window pops up and displays the usage for the specified command.
+
+**3. Exit**
+
+Use `exit`
+
+Expected: UniCa$h closes.
+
+---
 
 ### Appendix: Planned Enhancements
 
@@ -1706,10 +1863,6 @@ We had to alter `ModelManager` and `UniCash` to contain the relevant `Transactio
 
 Additionally, removing all dependencies to the old AB3 architecture such as the `Person` model or `JsonAdaptedPerson` was a big challenge as we had to ensure that doing so did not cause any regression to the new models and classes. However, it was also a good exercise in revealing unintended dependencies between UniCa$h and the old AB3 models and classes.
 
-#### Providing Summary Statistics
-
-[//]: # (TODO: Ernest)
-
 #### Increasing Test Coverage
 
 The original AB3 project had a severe lack of coverage of the UI components and this resulted in bugs that may be difficult to replicate and that could be easily missed when performing manual testing. By implementing [TestFX](https://github.com/TestFX/TestFX/blob/master/README.md) and modifying both Gradle and GitHub Actions, we were able to support UI testing. This raised our test coverage to over 90%! 
@@ -1718,10 +1871,10 @@ TestFX has allowed us to create test suites for both individual UI components an
 
 ### Appendix: Known Bugs
 
-- Light scrollbars hard to see
-
-### Links
-
-- [User Stories](https://github.com/orgs/AY2324S1-CS2103-T16-3/projects/1/views/2)
-- [Project Website Home](https://ay2324s1-cs2103-t16-3.github.io/tp/)
-- [UniCa$h Demo](https://drive.google.com/file/d/1l2Erx-qMpM274AUePf6DDlvSl9G15y6T/view?usp=share_link)
+1. Light scrollbars hard to see
+2. Help pop-up window shifts to the bottom left corner of the screen before re-centering on `help` command. Steps to reproduce the issue:
+    1. Type help in the command box.
+    2. Shift the pop-up window to anywhere on the screen.
+    3. Close the pop-up window.
+    4. Type help in the command box again.
+    5. The pop-up window will shift to the bottom left corner before re-centering itself.
