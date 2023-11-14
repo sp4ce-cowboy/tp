@@ -1885,6 +1885,8 @@ Every user can...
 - Get suggestions for cheaper alternatives to their purchases based on their purchase history
 - Manage multiple financial accounts within UniCa$h
 - Get intelligent autofill suggestions for frequently input commands
+- Export UniCa$h transactions data into a spreadsheet
+- Import transactions from spreadsheet into UniCa$h
 
 ### Appendix: Effort
 
