@@ -866,7 +866,7 @@ additional value.
 ℹ️ **Note:** The lifeline for `AddTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML,
 the lifeline reaches the end of diagram.
 
-##### Details
+**Details**
 
 1. The user specifies the transaction to be added by stating the name, amount, transaction type as well as any other optional fields.
 2. The input will be parsed by `AddCommandTransactionParser`, and if it is invalid, `ParserException` is thrown, prompting for the user to enter again.
@@ -904,7 +904,7 @@ The lifeline for `GetTotalExpenditureCommandParser` should end at the destroy ma
 limitation of PlantUML, the lifeline reaches the end of diagram.
 </div>
 
-##### Details
+**Details**
 
 1. The user specifies the month to retrieve the total expenditure and the optional category
 2. The input will be parsed by `GetTotalExpenditureCommandParser`, and if it is invalid, `ParserException` is thrown,
@@ -1196,7 +1196,7 @@ The [prefix types section in the user guide](UserGuide.html#prefix-types) contai
 <br><br>
 Expenses that fall within the interval are included and the total expense is computed relative to the budget.
 <br>
-1. Daily: expenses that occur within the same **day of year** (i.e. the expenses that occur on day `x` are included if today is day `x`, expenses on day `x +/- 1` are not includued)
+1. Daily: expenses that occur within the same **day of year** (i.e. the expenses that occur on day `x` are included if today is day `x`, expenses on day `x +/- 1` are not included)
 <br>
 2. Weekly: expenses that occur within the same **week of year**. This is dependent on the current year, for more information refer to the [documentation here.](https://docs.oracle.com/en/java/javase/11/docs/api/java.base/java/time/temporal/WeekFields.html#weekOfYear())
 <br>
@@ -1391,10 +1391,11 @@ This command will exit UniCa$h.
 [//]: # (#### etc)
 
 ---
+## Appendix
 
-## Requirements
+### Appendix: Requirements
 
-### Non-Functional Requirements
+#### Non-Functional Requirements
 
 1. The application should be cross-platform functional on major operating systems, i.e. Windows, MacOS, Linux, running at least Java 11
 2. All transactions and budget managed by the user should be saved and backed up locally and restored the next session as long as the data has not been corrupted
@@ -1407,7 +1408,7 @@ This command will exit UniCa$h.
 9. The application should not require an active Internet connection to function
 10. The application should be able to generate visualisations for 1000 expenses without any excessive sluggishness
 
-### User Stories
+#### User Stories
 
 <div class="callout callout-info" markdown="span" style="margin-bottom: 20px;">
 Priorities for user stories are marked as follows: <br>
@@ -1444,7 +1445,7 @@ Low (unlikely to have) - `*`
 | `*`      | tech-savvy NUS student | add transactions that are due on a recurring basis                  | include recurring expenditures without having to manually input them every time they occur           |
 | `*`      | tech-savvy NUS student | receive autofill recommendations based on my historical inputs      | save time typing the full command and reduce the chance of making a mistake                          |
 
-### Use Cases
+#### Use Cases
 The following documents use cases for our application
 
 For the following Use Cases (unless specified otherwise):
@@ -1708,7 +1709,7 @@ For the following Use Cases (unless specified otherwise):
 
 ---
 
-## Instructions for manual testing
+## Appendix: Instructions for manual testing
 ### Initial launch
 1. Download the jar file (`unicash.jar`) and copy it into an empty folder
 2. Open a terminal and navigate to the folder
@@ -1821,7 +1822,6 @@ Expected: UniCa$h closes.
 
 ---
 
-## Appendix
 ### Appendix: Planned Enhancements
 
 - The current `get_budget` command does not alter the transaction list when processing the expenses within the interval. This can lead to confusion as users may not be aware of the specific transactions that are being included in the calculation of the budget remainder, and as a result, mistaking the budget calculation as not working. 
