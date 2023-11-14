@@ -1841,7 +1841,7 @@ Expected: UniCa$h closes.
   We plan to add support for searching across all properties, including date & time, amount, and transaction type.
 This would allow users to have even more precise control over the scope of transactions search.
 
-**Filter Clearing**
+**Transactions List Filter Auto-Clearing**
 - Currently, the `find` (as mentioned [here](UserGuide.md#find-transactions))
 and `get_total_expenditure` (as mentioned [here](UserGuide.md#get-total-expenditure))
 commands have a persisting filter on the current `Transactions List` configuration. 
