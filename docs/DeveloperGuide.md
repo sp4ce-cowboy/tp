@@ -1709,15 +1709,15 @@ For the following Use Cases (unless specified otherwise):
 
 ---
 
-## Appendix: Instructions for manual testing
-### Initial launch
+### Appendix: Instructions for manual testing
+#### Initial launch
 1. Download the jar file (`unicash.jar`) and copy it into an empty folder
 2. Open a terminal and navigate to the folder
 3. Run `java --version`, ensure that you are running on Java 11. If not, download and install Java 11.
 4. Run `java -jar unicash.jar`
     * Expected output: A GUI window should appear with the title "UniCa$h", with a set of sample transactions.
 
-### Transactions
+#### Transactions
 **1. Adding a transaction**
 
 Use `add n/Buying groceries type/expense amt/300 dt/18-08-2023 19:30 l/NTUC c/Food`
@@ -1762,7 +1762,7 @@ Use `clear_transactions`
 
 Expected output: All transactions are cleared and a success message is displayed.
 
-### Expenditure
+#### Expenditure
 **1. Get total expenditure**
 
 Prerequisite: There is at least 1 transaction of category expense stored in UniCa$h.
@@ -1771,14 +1771,14 @@ Use `get_total_expenditure month/10 c/Food year/2006`
 
 Expected output: The total expenditure is displayed.
 
-### Statistics
+#### Statistics
 **1. Summary statistics**
 
 Use `summary`
 
 Expected output: The summary statistics window pops up and displays the summary statistics.
 
-### Budget
+#### Budget
 **1. Set your budget**
 
 Use `set_budget amt/300 interval/day`
@@ -1797,7 +1797,7 @@ Use `clear_budget`
 
 Expected output: Budget is cleared and a success message is displayed.
 
-### Utility
+#### Utility
 **1. Reset**
 
 Use `reset_unicash`
