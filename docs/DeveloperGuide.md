@@ -1886,7 +1886,7 @@ Every user can...
 - Manage multiple financial accounts within UniCa$h
 - Get intelligent autofill suggestions for frequently input commands
 - Export UniCa$h transactions data into a spreadsheet
-- Import transactions from spreadsheet into UniCa$h
+- Import transactions from a spreadsheet into UniCa$h
 
 ### Appendix: Effort
 
