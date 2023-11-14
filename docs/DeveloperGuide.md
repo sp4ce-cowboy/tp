@@ -1861,6 +1861,16 @@ the user's data.
 
   We plan to extend this to showing a summary of incomes as well.
 
+**Command Box**
+- The current `CommandBox` only maintains user input history for up to `10` previous inputs.
+
+  We plan to support the storing of a larger number of previous user inputs.
+
+***Add Transaction**
+- Currently, there is no warning for the input of excessively high incomes or expenses.
+
+  We plan to add a warning message to alert the users when such excessive amounts are added.
+
 
 ### Appendix: Potential Features
 
@@ -1873,6 +1883,8 @@ Every user can...
 - Support more types of transaction such as `transfer`
 - Delete transactions in batches (by day, by month, etc)
 - Get suggestions for cheaper alternatives to their purchases based on their purchase history
+- Manage multiple financial accounts within UniCa$h
+- Get intelligent autofill suggestions for frequently input commands
 
 ### Appendix: Effort
 
