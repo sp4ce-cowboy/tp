@@ -1861,9 +1861,6 @@ the user's data.
 
   We plan to extend this to showing a summary of incomes as well.
 
-**Batch Deletion**
-
-- 
 
 ### Appendix: Potential Features
 
@@ -1875,6 +1872,7 @@ Every user can...
 - Support more than one global budget to allow users to set budgets for each category or different budgets for day/week/month
 - Support more types of transaction such as `transfer`
 - Delete transactions in batches (by day, by month, etc)
+- Get suggestions for cheaper alternatives to their purchases based on their purchase history
 
 ### Appendix: Effort
 
