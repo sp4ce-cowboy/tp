@@ -863,8 +863,10 @@ The above sequence diagram omits details on the creation of the attributes of a 
 `Name`, `Type` and `Amount` as it would make the diagram cluttered and difficult to read without adding
 additional value.
 
-ℹ️ **Note:** The lifeline for `AddTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML,
+<div class="callout callout-important" markdown="span">
+**Note:** The lifeline for `AddTransactionCommandParser` should end at the destroy marker (X) but due to a limitation of PlantUML,
 the lifeline reaches the end of diagram.
+</div>
 
 **Details**
 
