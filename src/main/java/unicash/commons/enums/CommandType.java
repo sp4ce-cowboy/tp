@@ -15,6 +15,8 @@ import java.util.Arrays;
 import unicash.commons.util.CommandUsage;
 import unicash.commons.util.ExampleGenerator;
 
+// Solution below inspired by
+// https://github.com/AY2223S1-CS2103T-W16-2/tp/blob/master/src/main/java/seedu/foodrem/commons/enums/CommandType.java
 /**
  * Represents the type of command that can be executed by UniCa$h.
  */
@@ -372,6 +374,9 @@ public enum CommandType {
         return Arrays.toString(commandWords).replaceAll("[\\[\\]]", "");
     }
 
+    //@@author jamz903-reused
+    //Reused from https://github.com/AY2223S1-CS2103T-W16-2/tp/blob/master/src/main
+    // /java/seedu/foodrem/commons/enums/CommandType.java
     /**
      * Returns the {@code CommandType} that matches the given {@code commandWord}.
      */

@@ -3,6 +3,8 @@ package unicash.commons.enums;
 import java.util.Arrays;
 import java.util.StringJoiner;
 
+// Solution below inspired by
+// https://github.com/AY2223S1-CS2103T-W16-2/tp/blob/master/src/main/java/seedu/foodrem/commons/enums/CommandType.java
 /**
  * Represents the transaction type for a given transaction.
  */
