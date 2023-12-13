@@ -21,3 +21,9 @@ You can find our User Guide [here](https://ay2324s1-cs2103-t16-3.github.io/tp/Us
 ## Credits
 
 This project is based on the AddressBook-Level3 project created by the [SE-EDU initiative](https://se-education.org).
+
+## WakaTime
+
+My WakaTime dashboard from Oct 13 [first milestone] to Nov 14 [last milestone]
+
+![WakaTime](https://github.com/sp4ce-cowboy/tp/assets/19762596/ac10d9e4-196a-458d-b287-09c5a4dec3e4)
