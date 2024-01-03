@@ -33,5 +33,6 @@ This project is based on the AddressBook-Level3 project created by the [SE-EDU i
 ## WakaTime
 
 My WakaTime dashboard from Oct 13 [first milestone] to Nov 14 [last milestone]
+
 <img src="https://github.com/sp4ce-cowboy/tp/assets/19762596/ac10d9e4-196a-458d-b287-09c5a4dec3e4">
 
