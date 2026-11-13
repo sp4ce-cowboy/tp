@@ -70,7 +70,7 @@ The four components of AddressBook-Level3, adapted to finance: the parser turns 
 `Command`, commands change the `Model`, the UI observes the model's filtered list, and `Storage`
 saves to JSON. More in [ARCHITECTURE.md](ARCHITECTURE.md).
 
-## Skills shown
+## Skills covered
 
 | Skill | Where it shows (click the links for the code) | Docs |
 |---|---|---|
